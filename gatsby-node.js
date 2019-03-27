@@ -2,6 +2,8 @@ const path = require('path')
 const _ = require('lodash')
 const slugify = require('@sindresorhus/slugify')
 const {createFilePath} = require('gatsby-source-filesystem')
+const remark = require('remark')
+const stripMarkdownPlugin = require('strip-markdown')
 
 const PAGINATION_OFFSET = 7
 
@@ -69,6 +71,14 @@ const createPaginatedPages = (createPage, edges, pathPrefix, paginationTemplate,
   })
 }
 
+
+function stripMarkdown(markdownString) {
+  return remark()
+    .use(stripMarkdownPlugin)
+    .processSync(markdownString)
+    .toString()
+}
+
 function createBlogPages ({blogPath, data, paginationTemplate, actions}) {
   if (_.isEmpty(data.edges)) {
     throw new Error('There are no posts!')
@@ -99,7 +109,6 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       createFilePath({node, getNode, basePath: `pages`})
 
     if (node.fileAbsolutePath.includes('content/blog/')) {
-      console.log('Hello');
       slug = `/blog/${node.frontmatter.slug || slugify(parent.name)}`
     }
 
@@ -116,15 +125,33 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
     })
 
     createNodeField({
+      name: 'unlisted',
+      node,
+      value: node.frontmatter.unlisted,
+    })
+
+    createNodeField({
       name: 'title',
       node,
       value: node.frontmatter.title,
     })
 
     createNodeField({
+      name: 'author',
+      node,
+      value: node.frontmatter.author || 'Ayomide Bakare',
+    })
+
+    createNodeField({
       name: 'description',
       node,
       value: node.frontmatter.description,
+    })
+
+    createNodeField({
+      name: 'plainTextDescription',
+      node,
+      value: stripMarkdown(node.frontmatter.description),
     })
 
     createNodeField({
@@ -143,6 +170,12 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       name: 'banner',
       node,
       value: node.frontmatter.banner,
+    })
+
+    createNodeField({
+      name: 'bannerCredit',
+      node,
+      value: node.frontmatter.bannerCredit,
     })
 
     createNodeField({
@@ -197,11 +230,13 @@ exports.createPages = async ({ actions, graphql }) => {
         scope
       }
     }
-
     query {
       blog: allMdx(
-        filter: { frontmatter: { published: { ne: false } } }
-        sort: { order: DESC, fields: [frontmatter___date] }
+        filter: {
+          frontmatter: {published: {ne: false}}
+          fileAbsolutePath: {regex: "//content/blog//"}
+        }
+        sort: {order: DESC, fields: [frontmatter___date]}
       ) {
         edges {
           node {

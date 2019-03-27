@@ -10,19 +10,24 @@ import { fonts } from '../lib/typography'
 import Share from '../components/share'
 import config from '../../config/website'
 import { bpMaxSM } from '../lib/breakpoints'
+import {get} from 'lodash'
 
-export default function Post({
-  data: { site, mdx },
-  pageContext: { next, prev },
-}) {
-  const author = mdx.frontmatter.author || config.author
-  const date = mdx.frontmatter.date
-  const title = mdx.frontmatter.title
-  const banner = mdx.frontmatter.banner
+export default function Post({data: { site, mdx }, pageContext: { next, prev },}) {
+  const {
+    editLink,
+    title,
+    slug,
+    date,
+    banner,
+  } = mdx.fields
+
+  const blogPostUrl = `${config.siteUrl}${slug}`
 
   return (
-    <Layout site={site} frontmatter={mdx.frontmatter}>
-      <SEO frontmatter={mdx.frontmatter} isBlogPost />
+    <Layout site={site} frontmatter={mdx.fields}>
+      <SEO frontmatter={mdx.fields}
+           metaImage={get(mdx, 'fields.banner.childImageSharp.fluid.src')}
+           isBlogPost />
       <article
         css={css`
           width: 100%;
@@ -54,8 +59,6 @@ export default function Post({
               }
             `}
           >
-            {author && <h3>{author}</h3>}
-            {author && <span>—</span>}
             {date && <h3>{date}</h3>}
           </div>
           {banner && (
@@ -80,11 +83,30 @@ export default function Post({
       </article>
       <Container noVerticalPadding>
         <Share
-          url={`${config.siteUrl}/${mdx.frontmatter.slug}/`}
+          url={blogPostUrl}
           title={title}
           twitterHandle={config.twitterHandle}
         />
         <br />
+      </Container>
+      <Container noVerticalPadding>
+        <p>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            // using mobile.twitter.com because if people haven't upgraded
+            // to the new experience, the regular URL wont work for them
+            href={`https://mobile.twitter.com/search?q=${encodeURIComponent(
+              blogPostUrl,
+            )}`}
+          >
+            Discuss on Twitter
+          </a>
+          {` • `}
+          <a target="_blank" rel="noopener noreferrer" href={editLink}>
+            Edit post on GitHub
+          </a>
+        </p>
       </Container>
     </Layout>
   )
@@ -93,17 +115,20 @@ export default function Post({
 export const pageQuery = graphql`
   query($id: String!) {
     site {
-      ...site
+        ...site
+      siteMetadata {
+        keywords
+      }
     }
     mdx(fields: { id: { eq: $id } }) {
-      frontmatter {
+      fields {
+        editLink
         title
         date(formatString: "MMMM DD, YYYY")
-        author
         banner {
           childImageSharp {
-            fluid(maxWidth: 900) {
-              ...GatsbyImageSharpFluid_withWebp_tracedSVG
+            fluid {
+              src
             }
           }
         }
