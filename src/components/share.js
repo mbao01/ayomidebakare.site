@@ -1,10 +1,12 @@
 import React from 'react'
-import { css } from '@emotion/core'
+import {css} from '@emotion/core'
 import theme from '../../config/theme'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 
-import { TwitterShareButton, FacebookShareButton } from 'react-share'
+import {TwitterShareButton, FacebookShareButton} from 'react-share'
 
-const Share = ({ url, title, twitterHandle }) => (
+const Share = ({type, url, title, twitterHandle}) => (
   <div
     css={css`
       display: flex;
@@ -32,13 +34,16 @@ const Share = ({ url, title, twitterHandle }) => (
         border-top: 1px solid ${theme.colors.gray};
       `}
     />
-    <span>Share article</span>
+    <span>Share post</span>
     <TwitterShareButton
       url={url}
       title={title}
       via={twitterHandle.split('@').join('')}
     >
-      Twitter
+      {type === 'icon' ?
+        <FontAwesomeIcon
+          className=''
+          icon={faTwitter}/> : `Twitter`}
     </TwitterShareButton>
     <FacebookShareButton
       url={url}
@@ -48,7 +53,10 @@ const Share = ({ url, title, twitterHandle }) => (
         cursor: pointer;
       `}
     >
-      Facebook
+      {type === 'icon' ?
+        <FontAwesomeIcon
+          className=''
+          icon={faFacebook}/> : `Facebook`}
     </FacebookShareButton>
   </div>
 )

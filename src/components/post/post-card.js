@@ -1,10 +1,11 @@
-import {bpMaxSM} from '../../lib/breakpoints';
 import Link from '../link';
 import {css} from '@emotion/core'
 import React from 'react';
 import styled from '@emotion/styled';
 import {rhythm} from '../../lib/typography';
 import theme from '../../../config/theme';
+import config from '../../../config/website';
+import Share from '../share';
 
 const PostTitle = styled.h2`
   margin: ${rhythm(0.4)} 0;
@@ -45,7 +46,13 @@ const PostCard = ({post: {id, excerpt, fields, frontmatter}}) => (
         Read →
       </Link>
     </Description>
-    <span />
+    <Share
+      type={`icon`}
+      url={`${config.siteUrl}${fields.slug}`}
+      title={frontmatter.title}
+      twitterHandle={config.twitterHandle}
+    />
+    <span/>
   </div>
 )
 

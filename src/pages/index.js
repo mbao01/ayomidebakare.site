@@ -8,7 +8,7 @@ import { rhythm } from '../lib/typography'
 import theme from '../../config/theme'
 import PostCard from '../components/post/post-card';
 
-const Intro = ({site}) => (
+const Intro = () => (
   <section
     css={css`
       * {
@@ -56,7 +56,7 @@ export default function Index({ data: { site, blog } }) {
       headerColor={theme.colors.white}
       headerBg={theme.brand.primary}
     >
-      <Intro site={site}/>
+      <Intro />
       <Container
         maxWidth={640}
         css={css`

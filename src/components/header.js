@@ -4,7 +4,7 @@ import {css} from '@emotion/core'
 import theme from '../../config/theme'
 
 import Container from './container'
-import {GitHub, Twitter} from './social';
+import {GitHub, GitLab, Twitter} from './social';
 
 const Header = ({dark, bgColor = 'none', siteTitle, headerColor = 'black', site}) => (
   <header
@@ -74,6 +74,7 @@ const Header = ({dark, bgColor = 'none', siteTitle, headerColor = 'black', site}
         >
           <span>{site.siteMetadata.social.handle}</span>
           <Twitter/>
+          <GitLab/>
           <GitHub/>
         </div>
       </nav>
