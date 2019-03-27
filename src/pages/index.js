@@ -4,7 +4,7 @@ import { css } from '@emotion/core'
 import styled from '@emotion/styled'
 import Layout from '../components/layout'
 import Link from '../components/link'
-import Container from 'components/Container'
+import Container from 'components/container'
 import { rhythm } from '../lib/typography'
 import theme from '../../config/theme'
 
