@@ -45,7 +45,7 @@ const Header = ({dark, bgColor = 'none', siteTitle, headerColor = 'black', site}
               max-width: 50px;
               border-radius: 100%;
             `}
-            src={site.siteMetadata.image}
+            src={`/${site.siteMetadata.image}`}
             alt={site.siteMetadata.title}
           />
           <span>{siteTitle}</span>
@@ -87,8 +87,8 @@ export default props => (
       query {
         site {
           siteMetadata {
-            title,
-            image,
+            title
+            image
             social {
               handle
             }

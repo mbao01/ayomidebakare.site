@@ -11,22 +11,26 @@ import Share from '../components/share'
 import config from '../../config/website'
 import { bpMaxSM } from '../lib/breakpoints'
 import {get} from 'lodash'
+import theme from '../../config/theme';
 
-export default function Post({data: { site, mdx }, pageContext: { next, prev },}) {
+export default function Post({data: { site, post }, pageContext: { next, prev },}) {
   const {
     editLink,
     title,
     slug,
     date,
     banner,
-  } = mdx.fields
+  } = post.fields
 
   const blogPostUrl = `${config.siteUrl}${slug}`
 
   return (
-    <Layout site={site} frontmatter={mdx.fields}>
-      <SEO frontmatter={mdx.fields}
-           metaImage={get(mdx, 'fields.banner.childImageSharp.fluid.src')}
+    <Layout site={site}
+            headerColor={theme.colors.white}
+            headerBg={theme.brand.primary}
+            frontmatter={post.fields}>
+      <SEO frontmatter={post.fields}
+           metaImage={get(post, 'fields.banner.childImageSharp.fluid.src')}
            isBlogPost />
       <article
         css={css`
@@ -77,7 +81,7 @@ export default function Post({data: { site, mdx }, pageContext: { next, prev },}
             </div>
           )}
           <br />
-          <MDXRenderer>{mdx.code.body}</MDXRenderer>
+          <MDXRenderer>{post.code.body}</MDXRenderer>
         </Container>
         {/* <SubscribeForm /> */}
       </article>
@@ -115,12 +119,14 @@ export default function Post({data: { site, mdx }, pageContext: { next, prev },}
 export const pageQuery = graphql`
   query($id: String!) {
     site {
-        ...site
+      ...site
       siteMetadata {
+        title
+        image
         keywords
       }
     }
-    mdx(fields: { id: { eq: $id } }) {
+    post: mdx(fields: { id: { eq: $id } }) {
       fields {
         editLink
         title

@@ -64,7 +64,7 @@ const Description = styled.p`
   display: inline-block;
 `
 
-export default function Index({ data: { site, allMdx } }) {
+export default function Index({ data: { site, blog } }) {
   return (
     <Layout
       site={site}
@@ -77,7 +77,7 @@ export default function Index({ data: { site, allMdx } }) {
           padding-bottom: 0;
         `}
       >
-        {allMdx.edges.map(({ node: post }) => (
+        {blog.edges.map(({ node: post }) => (
           <div
             key={post.id}
             css={css`
@@ -120,11 +120,11 @@ export const pageQuery = graphql`
     site {
       ...site
       siteMetadata {
-        title,
+        title
         image
       }
     }
-    allMdx(
+    blog: allMdx(
       limit: 5
       sort: { fields: [frontmatter___date], order: DESC }
       filter: {

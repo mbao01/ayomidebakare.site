@@ -7,16 +7,14 @@ import SEO from '../components/seo'
 import Layout from '../components/layout'
 import Link from '../components/link'
 import { bpMaxSM } from '../lib/breakpoints'
+import theme from '../../config/theme';
 
-const Blog = ({
-  data: { site, allMdx },
-  pageContext: { pagination, categories },
-}) => {
+const Blog = ({ data: { site, blog }, pageContext: { pagination, categories },}) => {
   const { page, nextPagePath, previousPagePath } = pagination
 
   const posts = page
     .map(id =>
-      allMdx.edges.find(
+      blog.edges.find(
         edge =>
           edge.node.id === id &&
           edge.node.parent.sourceInstanceName !== 'pages',
@@ -25,7 +23,9 @@ const Blog = ({
     .filter(post => post !== undefined)
 
   return (
-    <Layout site={site}>
+    <Layout site={site}
+            headerColor={theme.colors.white}
+            headerBg={theme.brand.primary}>
       <SEO />
       <Container
         noVerticalPadding
@@ -146,8 +146,12 @@ export const pageQuery = graphql`
   query {
     site {
       ...site
+      siteMetadata {
+        title
+        image
+      }
     }
-    allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
+    blog: allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
       edges {
         node {
           excerpt(pruneLength: 300)
