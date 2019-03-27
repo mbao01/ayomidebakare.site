@@ -26,9 +26,10 @@ const PostCard = ({post: {id, excerpt, fields, frontmatter}}) => (
   <div
     key={id}
     css={css`
+      background-color: #fafafa;
       margin-bottom: ${rhythm(1)};
       padding: ${rhythm(.4)} ${rhythm(1)};
-      box-shadow: 0 0 ${rhythm(0.4)} rgba(40, 40, 40, .05);
+      box-shadow: 0 0 ${rhythm(0.4)} rgba(80, 80, 80, .05);
     `}
   >
     <Link
@@ -43,7 +44,13 @@ const PostCard = ({post: {id, excerpt, fields, frontmatter}}) => (
         to={fields.slug}
         aria-label={`View ${frontmatter.title}`}
       >
-        Read →
+        <div
+          css={css`
+            display: flex;
+            justify-content: flex-end;
+          `}>
+          <small>Read</small>
+        </div>
       </Link>
     </Description>
     <Share

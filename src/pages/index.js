@@ -58,20 +58,32 @@ export default function Index({ data: { site, blog } }) {
     >
       <Intro />
       <Container
-        maxWidth={640}
+        maxWidth={840}
+        noVerticalPadding={true}
         css={css`
           padding-bottom: 0;
         `}
       >
-        {blog.edges.map(({ node: post }) => <PostCard post={post} />)}
-        <Link
-          to="/blog"
-          aria-label="Visit blog page"
-          className="button-secondary"
-        >
-          View all articles
-        </Link>
-        <hr />
+        <Container
+          maxWidth={840}
+          css={css`
+            background-color: rgba(120, 120, 120, .01);
+          `}>
+          <h2
+            css={css`
+              margin-bottom: ${rhythm(1)};
+              font-size: ${rhythm(1)};
+            `}>Blog</h2>
+          {blog.edges.map(({ node: post }) => <PostCard post={post} />)}
+          <Link
+            to="/blog"
+            aria-label="Visit blog page"
+            className="button-secondary"
+          >
+            View all articles
+          </Link>
+          <hr />
+        </Container>
       </Container>
     </Layout>
   )

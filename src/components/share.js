@@ -13,8 +13,10 @@ const Share = ({type, url, title, twitterHandle}) => (
       align-items: center;
       justify-content: flex-start;
       div {
-        margin-right: 20px;
         cursor: pointer;
+        :not(:last-of-type) {
+          margin-right: 20px;
+        }
         :hover {
           color: ${theme.brand.primary};
         }
