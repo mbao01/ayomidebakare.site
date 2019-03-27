@@ -11,7 +11,7 @@ module.exports = {
   organization: 'Unparked LLC',
 
   // siteFBAppID: '123456789', // Facebook App ID - Optional
-  userTwitter: '@mbao01', // Twitter Username
+  userTwitter: '@mbao_01', // Twitter Username
   ogSiteName: 'Ayomide Bakare', // Facebook Site Name
   ogLanguage: 'en_US',
   googleAnalyticsID: '',
@@ -21,8 +21,9 @@ module.exports = {
   backgroundColor: '#2b2e3c',
 
   // Social component
-  twitter: 'https://twitter.com/mbao01/',
-  twitterHandle: '@mbao01',
+  handle: '@mbao01',
+  twitter: 'https://twitter.com/mbao_01/',
+  twitterHandle: '@mbao_01',
   github: 'https://github.com/mbao01/',
   gitlab: 'https://gitlab.com/mbao01/',
   linkedin: 'https://linkedin.com/in/ayomidebakare/',

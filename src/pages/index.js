@@ -4,11 +4,12 @@ import { css } from '@emotion/core'
 import styled from '@emotion/styled'
 import Layout from '../components/layout'
 import Link from '../components/link'
-import Container from 'components/container'
+import Container from '../components/container'
 import { rhythm } from '../lib/typography'
 import theme from '../../config/theme'
 
-const Hero = () => (
+/*
+const Intro = ({site}) => (
   <section
     css={css`
       * {
@@ -37,6 +38,7 @@ const Hero = () => (
       >
         Your blog says the things you want to say.
       </h1>
+      <img src={site.siteMetadata.image} alt={site.siteMetadata.title} />
     </Container>
     <div
       css={css`
@@ -46,6 +48,7 @@ const Hero = () => (
     />
   </section>
 )
+*/
 
 const PostTitle = styled.h2`
   margin-bottom: ${rhythm(0.3)};
@@ -68,7 +71,7 @@ export default function Index({ data: { site, allMdx } }) {
       headerColor={theme.colors.white}
       headerBg={theme.brand.primary}
     >
-      <Hero />
+      {/*<Intro site={site}/>*/}
       <Container
         css={css`
           padding-bottom: 0;
@@ -82,7 +85,7 @@ export default function Index({ data: { site, allMdx } }) {
             `}
           >
             <Link
-              to={post.frontmatter.slug}
+              to={post.fields.slug}
               aria-label={`View ${post.frontmatter.title}`}
             >
               <PostTitle>{post.frontmatter.title}</PostTitle>
@@ -90,7 +93,7 @@ export default function Index({ data: { site, allMdx } }) {
             <Description>
               {post.excerpt}{' '}
               <Link
-                to={post.frontmatter.slug}
+                to={post.fields.slug}
                 aria-label={`View ${post.frontmatter.title}`}
               >
                 Read Article →
@@ -117,7 +120,8 @@ export const pageQuery = graphql`
     site {
       ...site
       siteMetadata {
-        title
+        title,
+        image
       }
     }
     allMdx(

@@ -81,7 +81,7 @@ const Blog = ({
               >
                 <Link
                   aria-label={`View ${post.frontmatter.title} article`}
-                  to={`/${post.fields.slug}`}
+                  to={`${post.fields.slug}`}
                 >
                   <Img sizes={post.frontmatter.banner.childImageSharp.fluid} />
                 </Link>
@@ -95,7 +95,7 @@ const Blog = ({
             >
               <Link
                 aria-label={`View ${post.frontmatter.title} article`}
-                to={`/${post.fields.slug}`}
+                to={`${post.fields.slug}`}
               >
                 {post.frontmatter.title}
               </Link>
@@ -109,7 +109,7 @@ const Blog = ({
               {post.excerpt}
             </p>{' '}
             <Link
-              to={`/${post.fields.slug}`}
+              to={`${post.fields.slug}`}
               aria-label={`view "${post.frontmatter.title}" article`}
             >
               Read Article →

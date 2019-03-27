@@ -1,9 +1,9 @@
 const path = require('path')
 const _ = require('lodash')
-const paginate = require('gatsby-awesome-pagination')
+const slugify = require('@sindresorhus/slugify')
+const {createFilePath} = require('gatsby-source-filesystem')
 
 const PAGINATION_OFFSET = 7
-
 
 const createPosts = (createPage, createRedirect, edges) => {
   edges.forEach(({ node }, i) => {
@@ -34,7 +34,7 @@ const createPosts = (createPage, createRedirect, edges) => {
   })
 }
 
-const createPaginatedPages = (createPage, edges, pathPrefix, context) => {
+const createPaginatedPages = (createPage, edges, pathPrefix, paginationTemplate, context) => {
   const pages = edges.reduce((acc, value, index) => {
     const pageIndex = Math.floor(index / PAGINATION_OFFSET)
 
@@ -53,7 +53,7 @@ const createPaginatedPages = (createPage, edges, pathPrefix, context) => {
 
     createPage({
       path: index > 0 ? `${pathPrefix}/${index}` : `${pathPrefix}`,
-      component: path.resolve(`src/templates/blog.js`),
+      component: paginationTemplate,
       context: {
         pagination: {
           page,
@@ -69,7 +69,7 @@ const createPaginatedPages = (createPage, edges, pathPrefix, context) => {
   })
 }
 
-const createBlogPages = ({blogPath, data, paginationTemplate, actions}) => {
+function createBlogPages ({blogPath, data, paginationTemplate, actions}) {
   if (_.isEmpty(data.edges)) {
     throw new Error('There are no posts!')
   }
@@ -94,14 +94,14 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 
   if (node.internal.type === `Mdx`) {
     const parent = getNode(node.parent)
-    const titleSlugged = _.join(_.drop(parent.name.split('-'), 3), '-')
+    let slug =
+      node.frontmatter.slug ||
+      createFilePath({node, getNode, basePath: `pages`})
 
-    const slug =
-      parent.sourceInstanceName === 'legacy'
-        ? `blog/${node.frontmatter.date
-          .split('T')[0]
-          .replace(/-/g, '/')}/${titleSlugged}`
-        : node.frontmatter.slug || titleSlugged
+    if (node.fileAbsolutePath.includes('content/blog/')) {
+      console.log('Hello');
+      slug = `/blog/${node.frontmatter.slug || slugify(parent.name)}`
+    }
 
     createNodeField({
       name: 'id',
@@ -161,6 +161,15 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       name: 'redirects',
       node,
       value: node.frontmatter.redirects,
+    })
+
+    createNodeField({
+      name: 'editLink',
+      node,
+      value: `https://github.com/mbao01/ayomidebakare.site-blog/edit/master${node.fileAbsolutePath.replace(
+        __dirname,
+        '',
+      )}`,
     })
   }
 }

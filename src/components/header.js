@@ -1,26 +1,22 @@
 import React from 'react'
-import { Link } from 'gatsby'
-import { css } from '@emotion/core'
+import {Link, StaticQuery, graphql} from 'gatsby'
+import {css} from '@emotion/core'
 import theme from '../../config/theme'
 
 import Container from './container'
+import {GitHub, Twitter} from './social';
 
-const Header = ({
-  dark,
-  bgColor = 'none',
-  siteTitle,
-  headerColor = 'black',
-}) => (
+const Header = ({dark, bgColor = 'none', siteTitle, headerColor = 'black', site}) => (
   <header
     css={css`
       width: 100%;
       flex-shrink: 0;
       background: none;
-      padding: 30px 0 0 0;
+      padding: 15px 0;
       background: ${dark ? '#090909' : `${bgColor}` || 'none'};
     `}
   >
-    <Container noVerticalPadding>
+    <Container maxWidth={900} noVerticalPadding>
       <nav
         css={css`
           width: 100%;
@@ -33,13 +29,26 @@ const Header = ({
           }
           a:hover {
             color: ${headerColor === theme.colors.white
-              ? 'white'
-              : theme.colors.link_color_hover};
+          ? 'white'
+          : theme.colors.link_color_hover};
           }
         `}
       >
-        <Link to="/" aria-label="go to homepage" activeClassName="active">
-          {siteTitle}
+        <Link css={css`
+                display: flex;
+                align-items: center;
+              `}
+              to="/" aria-label="go to homepage" activeClassName="active">
+          <img
+            css={css`
+              margin: 0 20px 0 0;
+              max-width: 50px;
+              border-radius: 100%;
+            `}
+            src={site.siteMetadata.image}
+            alt={site.siteMetadata.title}
+          />
+          <span>{siteTitle}</span>
         </Link>
         <div
           css={css`
@@ -50,39 +59,43 @@ const Header = ({
             a {
               color: ${dark ? '#fbfbfb' : 'rgba(0,0,0,0.85)'};
               text-decoration: none;
-              & + a {
-                margin-left: 32px;
+              & {
+                margin-left: 20px;
               }
             }
             .active {
               display: none;
               visibility: hidden;
             }
+            span {
+              font-weight: bold;
+            }
           `}
         >
-          {/*
-          <Link
-            to="/blog"
-            activeClassName="active"
-            aria-label="View blog page"
-          >
-            Blog
-          </Link>
-          */}
+          <span>{site.siteMetadata.social.handle}</span>
+          <Twitter/>
+          <GitHub/>
         </div>
       </nav>
     </Container>
   </header>
 )
 
-export default Header
-
-export const pageQuery = graphql`
-  query {
-    site {
-      siteMetadata {
-        title
+export default props => (
+  <StaticQuery
+    query={graphql`
+      query {
+        site {
+          siteMetadata {
+            title,
+            image,
+            social {
+              handle
+            }
+          }
+        }
       }
-    }
-  }
-`
+    `}
+    render={data => <Header site={data.site} {...props} bgColor={theme.brand.primary}/>}
+  />
+)
