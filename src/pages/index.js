@@ -1,14 +1,13 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 import { css } from '@emotion/core'
-import styled from '@emotion/styled'
 import Layout from '../components/layout'
 import Link from '../components/link'
 import Container from '../components/container'
 import { rhythm } from '../lib/typography'
 import theme from '../../config/theme'
+import PostCard from '../components/post/post-card';
 
-/*
 const Intro = ({site}) => (
   <section
     css={css`
@@ -22,6 +21,7 @@ const Intro = ({site}) => (
     `}
   >
     <Container
+      maxWidth={'80%'}
       css={css`
         display: flex;
         flex-direction: column;
@@ -36,9 +36,9 @@ const Intro = ({site}) => (
           max-width: ${rhythm(15)};
         `}
       >
-        Your blog says the things you want to say.
+        Hi! Welcome to my blog. Feel free to leave a comment, let me know what interests you on here!
       </h1>
-      <img src={site.siteMetadata.image} alt={site.siteMetadata.title} />
+      {/*<img src={site.siteMetadata.image} alt={site.siteMetadata.title} />*/}
     </Container>
     <div
       css={css`
@@ -48,21 +48,6 @@ const Intro = ({site}) => (
     />
   </section>
 )
-*/
-
-const PostTitle = styled.h2`
-  margin-bottom: ${rhythm(0.3)};
-  transition: ${theme.transition.ease};
-  :hover {
-    color: ${theme.brand.primary};
-    transition: ${theme.transition.ease};
-  }
-`
-
-const Description = styled.p`
-  margin-bottom: 10px;
-  display: inline-block;
-`
 
 export default function Index({ data: { site, blog } }) {
   return (
@@ -71,37 +56,14 @@ export default function Index({ data: { site, blog } }) {
       headerColor={theme.colors.white}
       headerBg={theme.brand.primary}
     >
-      {/*<Intro site={site}/>*/}
+      <Intro site={site}/>
       <Container
+        maxWidth={640}
         css={css`
           padding-bottom: 0;
         `}
       >
-        {blog.edges.map(({ node: post }) => (
-          <div
-            key={post.id}
-            css={css`
-              margin-bottom: 40px;
-            `}
-          >
-            <Link
-              to={post.fields.slug}
-              aria-label={`View ${post.frontmatter.title}`}
-            >
-              <PostTitle>{post.frontmatter.title}</PostTitle>
-            </Link>
-            <Description>
-              {post.excerpt}{' '}
-              <Link
-                to={post.fields.slug}
-                aria-label={`View ${post.frontmatter.title}`}
-              >
-                Read Article →
-              </Link>
-            </Description>
-            <span />
-          </div>
-        ))}
+        {blog.edges.map(({ node: post }) => <PostCard post={post} />)}
         <Link
           to="/blog"
           aria-label="Visit blog page"
