@@ -1,0 +1,20 @@
+version: "3"
+services:
+  ayomidebakare_service:
+    build: .
+    image: ayomidebakare
+    container_name: ayomidebakare_main
+    stdin_open: true
+    tty: true
+    ports:
+    - 5553:5553
+    - 5552:5552
+    networks:
+    - ayomidebakare_network
+    volumes:
+    - .:/ayomidebakare.site-blog
+
+networks:
+  ayomidebakare_network:
+    external:
+      name: ayomidebakare_network
