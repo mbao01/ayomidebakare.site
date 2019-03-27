@@ -5,8 +5,8 @@ import { css } from '@emotion/core'
 import theme from '../../../config/theme'
 import { rhythm } from '../../lib/typography'
 import { bpMaxSM } from '../../lib/breakpoints'
-import Message from '../ConfirmMessage/Message'
-import { PleaseConfirmIllustration } from '../ConfirmMessage/Illustrations'
+import Message from '../confirm-message/message'
+import { PleaseConfirmIllustration } from '../confirm-message/illustrations'
 
 const FORM_ID = process.env.CONVERTKIT_SIGNUP_FORM
 
