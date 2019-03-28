@@ -8,6 +8,7 @@ import Layout from '../components/layout'
 import Link from '../components/link'
 import { bpMaxSM } from '../lib/breakpoints'
 import theme from '../../config/theme';
+import PostCard from '../components/post/post-card';
 
 const Blog = ({ data: { site, blog }, pageContext: { pagination, categories },}) => {
   const { page, nextPagePath, previousPagePath } = pagination
@@ -43,79 +44,7 @@ const Blog = ({ data: { site, blog }, pageContext: { pagination, categories },})
           }
         `}
       >
-        {posts.map(({ node: post }) => (
-          <div
-            key={post.id}
-            css={css`
-              :not(:first-of-type) {
-                margin-top: 20px;
-                ${bpMaxSM} {
-                  margin-top: 20px;
-                }
-              }
-              :first-of-type {
-                margin-top: 20px;
-                ${bpMaxSM} {
-                  margin-top: 20px;
-                }
-              }
-              .gatsby-image-wrapper {
-              }
-              background: white;
-              padding: 40px;
-              ${bpMaxSM} {
-                padding: 20px;
-              }
-              display: flex;
-              flex-direction: column;
-            `}
-          >
-            {post.frontmatter.banner && (
-              <div
-                css={css`
-                  padding: 60px 60px 40px 60px;
-                  ${bpMaxSM} {
-                    padding: 20px;
-                  }
-                `}
-              >
-                <Link
-                  aria-label={`View ${post.frontmatter.title} article`}
-                  to={`${post.fields.slug}`}
-                >
-                  <Img sizes={post.frontmatter.banner.childImageSharp.fluid} />
-                </Link>
-              </div>
-            )}
-            <h2
-              css={css`
-                margin-top: 30px;
-                margin-bottom: 10px;
-              `}
-            >
-              <Link
-                aria-label={`View ${post.frontmatter.title} article`}
-                to={`${post.fields.slug}`}
-              >
-                {post.frontmatter.title}
-              </Link>
-            </h2>
-            {/* <small>{post.frontmatter.date}</small> */}
-            <p
-              css={css`
-                margin-top: 10px;
-              `}
-            >
-              {post.excerpt}
-            </p>{' '}
-            <Link
-              to={`${post.fields.slug}`}
-              aria-label={`view "${post.frontmatter.title}" article`}
-            >
-              Read Article →
-            </Link>
-          </div>
-        ))}
+        {posts.map(({ node: post }) => <PostCard key={post.id} post={post} type='large'/>)}
         <br />
         <br />
         <div>
