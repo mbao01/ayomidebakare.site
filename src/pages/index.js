@@ -7,6 +7,7 @@ import Container from '../components/container'
 import {rhythm} from '../lib/typography'
 import theme from '../../config/theme'
 import PostCard from '../components/post/post-card';
+import Announcement from '../components/announcement';
 
 const Intro = () => (
   <section
@@ -28,17 +29,7 @@ const Intro = () => (
         flex-direction: column;
       `}
     >
-      <h1
-        css={css`
-          position: relative;
-          z-index: 5;
-          line-height: 1.5;
-          margin: 0;
-          max-width: ${rhythm(15)};
-        `}
-      >
-        Hi! Welcome to my blog. Feel free to leave a comment, let me know what interests you on here!
-      </h1>
+      <Announcement />
       {/*<img src={site.siteMetadata.image} alt={site.siteMetadata.title} />*/}
     </Container>
   </section>

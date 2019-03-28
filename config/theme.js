@@ -11,6 +11,7 @@ const colors = {
   primary_light: `${lighten(0.15, brand.primary)}`,
   secondary_light: `${lighten(0.05, brand.secondary)}`,
   gray: '#E3E3E3',
+  gray_dark: '#939393',
   black: '#000',
   white: '#fff',
   bg_color: '#fafafa',

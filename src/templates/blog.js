@@ -1,12 +1,10 @@
 import React from 'react'
 import { graphql } from 'gatsby'
-import Img from 'gatsby-image'
 import { css } from '@emotion/core'
 import Container from '../components/container'
 import SEO from '../components/seo'
 import Layout from '../components/layout'
 import Link from '../components/link'
-import { bpMaxSM } from '../lib/breakpoints'
 import theme from '../../config/theme';
 import PostCard from '../components/post/post-card';
 

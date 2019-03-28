@@ -6,7 +6,7 @@ import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 
 import {TwitterShareButton, FacebookShareButton} from 'react-share'
 
-const Share = ({type, url, title, twitterHandle}) => (
+const Share = ({color = theme.colors.gray_dark, type, url, title, twitterHandle}) => (
   <div
     css={css`
       display: flex;
@@ -14,6 +14,7 @@ const Share = ({type, url, title, twitterHandle}) => (
       justify-content: flex-start;
       div {
         cursor: pointer;
+        color: ${color};
         :not(:last-of-type) {
           margin-right: 20px;
         }
@@ -44,7 +45,7 @@ const Share = ({type, url, title, twitterHandle}) => (
     >
       {type === 'icon' ?
         <FontAwesomeIcon
-          className=''
+          /*color={color}*/
           icon={faTwitter}/> : `Twitter`}
     </TwitterShareButton>
     <FacebookShareButton
@@ -57,7 +58,7 @@ const Share = ({type, url, title, twitterHandle}) => (
     >
       {type === 'icon' ?
         <FontAwesomeIcon
-          className=''
+          /*color={color}*/
           icon={faFacebook}/> : `Facebook`}
     </FacebookShareButton>
   </div>
