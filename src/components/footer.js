@@ -1,20 +1,12 @@
 import React from 'react'
 import { css } from '@emotion/core'
-import { bpMaxSM } from '../lib/breakpoints'
 import SubscribeForm from './forms/subscribe'
 import {Twitter, GitHub, GitLab} from './social'
 import Container from './container'
 
 const Footer = ({ author, noSubscribeForm }) => (
   <footer>
-    <Container
-      css={css`
-        padding-top: 0;
-        ${bpMaxSM} {
-          padding-top: 0;
-        }
-      `}
-    >
+    <Container>
       {!noSubscribeForm && (
         <div>
           <SubscribeForm />

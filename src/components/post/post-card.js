@@ -29,7 +29,7 @@ const PostCard = ({post: {id, excerpt, fields, frontmatter}}) => (
       background-color: #fafafa;
       margin-bottom: ${rhythm(1)};
       padding: ${rhythm(.4)} ${rhythm(1)};
-      box-shadow: 0 0 ${rhythm(0.4)} rgba(80, 80, 80, .05);
+      box-shadow: 0 0 ${rhythm(0.4)} rgba(80, 80, 80, .01);
     `}
   >
     <Link

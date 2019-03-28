@@ -89,6 +89,7 @@ export default function Post({data: { site, post }, pageContext: { next, prev },
         <Share
           url={blogPostUrl}
           title={title}
+          type={'icon'}
           twitterHandle={config.twitterHandle}
         />
         <br />
