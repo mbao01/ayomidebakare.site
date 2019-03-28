@@ -56,13 +56,6 @@ module.exports = {
         gatsbyRemarkPlugins: [
           {resolve: 'gatsby-remark-copy-linked-files'},
           {
-            resolve: 'gatsby-remark-external-links',
-            options: {
-              target: '_self',
-              rel: 'nofollow'
-            }
-          },
-          {
             resolve: 'gatsby-remark-images',
             options: {
               backgroundColor: '#fafafa',
@@ -125,7 +118,7 @@ module.exports = {
         `,
         feeds: [
           {
-            serialize: ({query: {site, allMdx}}) => {
+            serialize: ({ query: { site, allMdx } }) => {
               return allMdx.edges.map(edge => {
                 return Object.assign({}, edge.node.frontmatter, {
                   description: edge.node.excerpt,

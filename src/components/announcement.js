@@ -3,10 +3,11 @@ import {StaticQuery, graphql} from 'gatsby'
 import {css} from '@emotion/core'
 import {rhythm} from '../lib/typography';
 import theme from '../../config/theme'
+import MDXRenderer from 'gatsby-mdx/mdx-renderer';
 
 function renderAnnouncements(announcements) {
   console.log(announcements)
-  return (announcements && announcements.map(({node: {id, excerpt, fields}}) =>
+  return (announcements && announcements.map(({node: {id, code, fields}}) =>
     <div
       key={id}
       css={css`
@@ -42,8 +43,12 @@ function renderAnnouncements(announcements) {
               background-color: ${theme.colors.white};
               white-space: pre-wrap;
               word-wrap: break-word;
+              a {
+                color: ${fields.typeColor || theme.colors.green};
+                text-decoration: underline;
+              }
             `}>
-            {excerpt}
+              <MDXRenderer>{code.body}</MDXRenderer>
           </pre>
     </div>
   ))
@@ -78,6 +83,9 @@ const Announcement = () => {
                   type
                   published
                   unlisted
+                }
+                code {
+                  body
                 }
               }
             }
