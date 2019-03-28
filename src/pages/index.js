@@ -74,15 +74,14 @@ export default function Index({ data: { site, blog } }) {
               margin-bottom: ${rhythm(1)};
               font-size: ${rhythm(1)};
             `}>Blog</h2>
-          {blog.edges.map(({ node: post }) => <PostCard post={post} />)}
+          {blog.edges.map(({ node: post }) => <PostCard key={post.id} post={post} />)}
           <Link
             to="/blog"
             aria-label="Visit blog page"
             className="button-secondary"
           >
-            View all articles
+            All posts
           </Link>
-          <hr />
         </Container>
       </Container>
     </Layout>

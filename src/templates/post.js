@@ -26,8 +26,8 @@ export default function Post({data: { site, post }, pageContext: { next, prev },
 
   return (
     <Layout site={site}
-            headerColor={theme.colors.white}
-            headerBg={theme.brand.primary}
+            headerColor={theme.colors.primary}
+            headerBg={theme.brand.secondary}
             frontmatter={post.fields}>
       <SEO frontmatter={post.fields}
            metaImage={get(post, 'fields.banner.childImageSharp.fluid.src')}

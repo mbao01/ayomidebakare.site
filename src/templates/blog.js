@@ -24,8 +24,8 @@ const Blog = ({ data: { site, blog }, pageContext: { pagination, categories },})
 
   return (
     <Layout site={site}
-            headerColor={theme.colors.white}
-            headerBg={theme.brand.primary}>
+            headerColor={theme.colors.primary}
+            headerBg={theme.brand.secondary}>
       <SEO />
       <Container
         noVerticalPadding

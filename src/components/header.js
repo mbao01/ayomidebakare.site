@@ -37,6 +37,9 @@ const Header = ({dark, bgColor = 'none', siteTitle, headerColor = 'black', site}
         <Link css={css`
                 display: flex;
                 align-items: center;
+                span {
+                  font-size: 120%;
+                }
               `}
               to="/" aria-label="go to homepage" activeClassName="active">
           <img
@@ -73,9 +76,9 @@ const Header = ({dark, bgColor = 'none', siteTitle, headerColor = 'black', site}
           `}
         >
           <span>{site.siteMetadata.social.handle}</span>
-          <Twitter/>
-          <GitLab/>
-          <GitHub/>
+          <Twitter color={headerColor}/>
+          <GitLab color={headerColor}/>
+          <GitHub color={headerColor}/>
         </div>
       </nav>
     </Container>
@@ -97,6 +100,6 @@ export default props => (
         }
       }
     `}
-    render={data => <Header site={data.site} {...props} bgColor={theme.brand.primary}/>}
+    render={data => <Header site={data.site} bgColor={theme.brand.primary} {...props}/>}
   />
 )

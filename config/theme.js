@@ -3,12 +3,13 @@ import { fonts } from '../src/lib/typography'
 
 const brand = {
   primary: '#3896E6',
-  secondary: '#EEF4F2',
+  secondary: '#FAFAFA',
 }
 
 const colors = {
+  primary: '#3896E6',
   primary_light: `${lighten(0.55, brand.primary)}`,
-  gray: '#D3D3D3',
+  gray: '#E3E3E3',
   black: '#000',
   white: '#fff',
   bg_color: '#fafafa',

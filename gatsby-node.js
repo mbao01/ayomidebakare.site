@@ -49,12 +49,15 @@ const createPaginatedPages = (createPage, edges, pathPrefix, paginationTemplate,
     return acc
   }, [])
 
+  const rootPathPrefix = pathPrefix;
+  pathPrefix = `${pathPrefix}/page`
+
   pages.forEach((page, index) => {
     const previousPagePath = `${pathPrefix}/${index + 1}`
-    const nextPagePath = index === 1 ? pathPrefix : `${pathPrefix}/${index - 1}`
+    const nextPagePath = index === 1 ? rootPathPrefix : `${pathPrefix}/${index - 1}`
 
     createPage({
-      path: index > 0 ? `${pathPrefix}/${index}` : `${pathPrefix}`,
+      path: index > 0 ? `${pathPrefix}/${index}` : `${rootPathPrefix}`,
       component: paginationTemplate,
       context: {
         pagination: {

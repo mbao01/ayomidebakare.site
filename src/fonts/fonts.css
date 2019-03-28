@@ -40,3 +40,61 @@
   src: url('Inter-UI-BoldItalic.woff') format('woff');
   font-display: fallback;
 }
+
+/** Muli Typeface **/
+@font-face {
+  font-family: 'Muli Light';
+  font-style: normal;
+  font-weight: 300;
+  src: url('muli/Muli-Light.ttf') format('woff');
+  font-display: fallback;
+}
+@font-face {
+  font-family: 'Muli Light Italic';
+  font-style: italic;
+  font-weight: 300;
+  src: url('muli/Muli-LightItalic.ttf') format('woff');
+  font-display: fallback;
+}
+@font-face {
+  font-family: 'Muli Regular';
+  font-style: normal;
+  font-weight: 400;
+  src: url('muli/Muli-Regular.ttf') format('woff');
+  font-display: fallback;
+}
+@font-face {
+  font-family: 'Muli Regular Italic';
+  font-style: italic;
+  font-weight: 400;
+  src: url('muli/Muli-Italic.ttf') format('woff');
+  font-display: fallback;
+}
+@font-face {
+  font-family: 'Muli SemiBold';
+  font-style: normal;
+  font-weight: 600;
+  src: url('muli/Muli-SemiBold.ttf') format('woff');
+  font-display: fallback;
+}
+@font-face {
+  font-family: 'Muli SemiBold Italic';
+  font-style: italic;
+  font-weight: 600;
+  src: url('muli/Muli-SemiBoldItalic.ttf') format('woff');
+  font-display: fallback;
+}
+@font-face {
+  font-family: 'Muli Bold';
+  font-style: normal;
+  font-weight: 700;
+  src: url('muli/Muli-Bold.ttf') format('woff');
+  font-display: fallback;
+}
+@font-face {
+  font-family: 'Muli Bold Italic';
+  font-style: italic;
+  font-weight: 700;
+  src: url('muli/Muli-BoldItalic.ttf') format('woff');
+  font-display: fallback;
+}
