@@ -1,10 +1,10 @@
 import React from 'react'
-import { graphql } from 'gatsby'
-import { css } from '@emotion/core'
+import {graphql} from 'gatsby'
+import {css} from '@emotion/core'
 import Layout from '../components/layout'
 import Link from '../components/link'
 import Container from '../components/container'
-import { rhythm } from '../lib/typography'
+import {rhythm} from '../lib/typography'
 import theme from '../../config/theme'
 import PostCard from '../components/post/post-card';
 
@@ -16,8 +16,9 @@ const Intro = () => (
       }
       width: 100%;
       background: ${theme.brand.primary};
-      padding: 20px 0 30px 0;
+      padding: 20px 0 0 0;
       display: flex;
+      flex-flow: column;
     `}
   >
     <Container
@@ -40,23 +41,17 @@ const Intro = () => (
       </h1>
       {/*<img src={site.siteMetadata.image} alt={site.siteMetadata.title} />*/}
     </Container>
-    <div
-      css={css`
-        height: 150px;
-        overflow: hidden;
-      `}
-    />
   </section>
 )
 
-export default function Index({ data: { site, blog } }) {
+export default function Index({data: {site, blog}}) {
   return (
     <Layout
       site={site}
       headerColor={theme.colors.white}
       headerBg={theme.brand.primary}
     >
-      <Intro />
+      <Intro/>
       <Container
         maxWidth={840}
         noVerticalPadding={true}
@@ -74,7 +69,7 @@ export default function Index({ data: { site, blog } }) {
               margin-bottom: ${rhythm(1)};
               font-size: ${rhythm(1)};
             `}>Blog</h2>
-          {blog.edges.map(({ node: post }) => <PostCard key={post.id} post={post} type='small' />)}
+          {blog.edges.map(({node: post}) => <PostCard key={post.id} post={post} type='small'/>)}
           <Link
             to="/blog"
             aria-label="Visit blog page"

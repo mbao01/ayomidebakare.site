@@ -17,7 +17,7 @@ export const globalStyles = css`
   .button-secondary {
     border-radius: 4px;
     padding: 12px 12px;
-    background: ${theme.colors.primary_light};
+    background: ${theme.colors.secondary_light};
   }
   ${bpMaxSM} {
     p,

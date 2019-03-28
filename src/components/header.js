@@ -5,6 +5,52 @@ import theme from '../../config/theme'
 
 import Container from './container'
 import {GitHub, GitLab, Twitter} from './social';
+import {rhythm} from '../lib/typography';
+import lighten from 'polished/lib/color/lighten';
+
+const NavItems = ({items = []}) => (
+  <div
+    css={css`
+      display: flex;
+      justify-content: flex-start;
+      overflow: hidden;
+      margin-left: auto;
+      margin-right: 20px;
+    `}
+  >
+    {items.map(item => (
+      <Link
+        css={css`
+          display: flex;
+          border-radius: 3px;
+          color: ${theme.colors.white};
+          padding: ${rhythm(0.15)} ${rhythm(0.35)};
+          align-items: center;
+          :not(:last-of-type) {
+            margin-right: 10px;
+          }
+          :hover, &.active {
+            span {
+              color: ${theme.colors.white};
+            }
+          }
+          :hover {
+            background-color: ${lighten(0.1, theme.brand.primary)};
+          }
+          &.active {
+            background-color: ${lighten(0.05, theme.brand.primary)};
+          }
+          span {
+            font-size: 16px;
+            transition: ${theme.transition.ease};
+          }
+        `}
+        to={item.url} aria-label="go to homepage" activeClassName="active"
+      >
+        <span>{item.name}</span>
+      </Link>))}
+  </div>
+)
 
 const Header = ({dark, bgColor = 'none', siteTitle, headerColor = 'black', site}) => (
   <header
@@ -27,21 +73,23 @@ const Header = ({dark, bgColor = 'none', siteTitle, headerColor = 'black', site}
           a {
             color: ${headerColor ? headerColor : theme.colors.body_color};
           }
-          a:hover {
+          a:hover, a:focus {
             color: ${headerColor === theme.colors.white
           ? 'white'
           : theme.colors.link_color_hover};
           }
         `}
       >
-        <Link css={css`
-                display: flex;
-                align-items: center;
-                span {
-                  font-size: 120%;
-                }
-              `}
-              to="/" aria-label="go to homepage" activeClassName="active">
+        <Link
+          css={css`
+            display: flex;
+            align-items: center;
+            span {
+              font-size: 120%;
+            }
+          `}
+          to="/" aria-label="go to homepage" activeClassName="active"
+        >
           <img
             css={css`
               margin: 0 20px 0 0;
@@ -53,6 +101,23 @@ const Header = ({dark, bgColor = 'none', siteTitle, headerColor = 'black', site}
           />
           <span>{siteTitle}</span>
         </Link>
+        <NavItems
+          items={
+          [
+            {
+              name: 'Blog',
+              url: '/blog'
+            },
+            {
+              name: 'About',
+              url: '/about'
+            },
+            {
+              name: 'Hire me',
+              url: '/hire-me'
+            }
+          ]
+        }/>
         <div
           css={css`
             font-size: 16px;
