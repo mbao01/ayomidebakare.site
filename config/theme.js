@@ -19,7 +19,7 @@ const colors = {
   link_color: brand.primary,
   link_color_hover: `${darken(0.07, brand.primary)}`,
   red: '#E86C60',
-  green: '#29B573',
+  green: '#2ab556',
   blue: '#327CDC',
   yellow: '#FFB700',
   purple: '#8242F6',

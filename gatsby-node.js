@@ -8,7 +8,7 @@ const stripMarkdownPlugin = require('strip-markdown')
 const PAGINATION_OFFSET = 7
 
 const createPosts = (createPage, createRedirect, edges) => {
-  edges.forEach(({ node }, i) => {
+  edges.forEach(({node}, i) => {
     const prev = i === 0 ? null : edges[i - 1].node
     const next = i === edges.length - 1 ? null : edges[i + 1].node
     const pagePath = node.fields.slug
@@ -82,7 +82,7 @@ function stripMarkdown(markdownString) {
     .toString()
 }
 
-function createBlogPages ({blogPath, data, paginationTemplate, actions}) {
+function createBlogPages({blogPath, data, paginationTemplate, actions}) {
   if (_.isEmpty(data.edges)) {
     throw new Error('There are no posts!')
   }
@@ -102,8 +102,8 @@ function createBlogPages ({blogPath, data, paginationTemplate, actions}) {
   return null
 }
 
-exports.onCreateNode = ({ node, getNode, actions }) => {
-  const { createNodeField } = actions
+exports.onCreateNode = ({node, getNode, actions}) => {
+  const {createNodeField} = actions
 
   if (node.internal.type === `Mdx`) {
     const parent = getNode(node.parent)
@@ -111,10 +111,12 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       node.frontmatter.slug ||
       createFilePath({node, getNode, basePath: `pages`})
 
+    //::TODO:: Find a wasy to scope fields to particular directory or Mdx data
     if (node.fileAbsolutePath.includes('content/blog/')) {
       slug = `/blog/${node.frontmatter.slug || slugify(parent.name)}`
     }
 
+    // Create common fields
     createNodeField({
       name: 'id',
       node,
@@ -140,6 +142,28 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
     })
 
     createNodeField({
+      name: 'date',
+      node,
+      value: node.frontmatter.date ? node.frontmatter.date.split(' ')[0] : '',
+    })
+
+    createNodeField({
+      name: 'categories',
+      node,
+      value: node.frontmatter.categories || [],
+    })
+
+    createNodeField({
+      name: 'editLink',
+      node,
+      value: `https://github.com/mbao01/ayomidebakare.site-blog/edit/master${node.fileAbsolutePath.replace(
+        __dirname,
+        '',
+      )}`,
+    })
+
+    // Create fields from Blog
+    createNodeField({
       name: 'author',
       node,
       value: node.frontmatter.author || 'Ayomide Bakare',
@@ -164,12 +188,6 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
     })
 
     createNodeField({
-      name: 'date',
-      node,
-      value: node.frontmatter.date ? node.frontmatter.date.split(' ')[0] : '',
-    })
-
-    createNodeField({
       name: 'banner',
       node,
       value: node.frontmatter.banner,
@@ -179,12 +197,6 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       name: 'bannerCredit',
       node,
       value: node.frontmatter.bannerCredit,
-    })
-
-    createNodeField({
-      name: 'categories',
-      node,
-      value: node.frontmatter.categories || [],
     })
 
     createNodeField({
@@ -199,18 +211,28 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       value: node.frontmatter.redirects,
     })
 
+    // Create fields from Announcements
     createNodeField({
-      name: 'editLink',
+      name: 'expiryDate',
       node,
-      value: `https://github.com/mbao01/ayomidebakare.site-blog/edit/master${node.fileAbsolutePath.replace(
-        __dirname,
-        '',
-      )}`,
+      value: node.frontmatter.expiryDate ? node.frontmatter.expiryDate.split(' ')[0] : '',
+    })
+
+    createNodeField({
+      name: 'type',
+      node,
+      value: node.frontmatter.type,
+    })
+
+    createNodeField({
+      name: 'images',
+      node,
+      value: node.frontmatter.images,
     })
   }
 }
 
-exports.createPages = async ({ actions, graphql }) => {
+exports.createPages = async ({actions, graphql}) => {
   const {data, errors} = await graphql(`
     fragment PostDetails on Mdx {
       fileAbsolutePath
@@ -247,6 +269,38 @@ exports.createPages = async ({ actions, graphql }) => {
           }
         }
       }
+      announcements: allMdx(
+        filter: {
+          frontmatter: {published: {ne: false}}
+          fileAbsolutePath: {regex: "//content/announcements//"}
+        }
+        sort: {order: DESC, fields: [frontmatter___date]}
+      ) {
+        edges {
+          node {
+            fileAbsolutePath
+            id
+            parent {
+              ... on File {
+                name
+                sourceInstanceName
+              }
+            }
+            excerpt
+            fields {
+              date
+              expiryDate
+              title
+              type
+              published
+              unlisted
+            }
+            code {
+              scope
+            }
+          }
+        }
+      }
     }
   `)
 
@@ -264,7 +318,7 @@ exports.createPages = async ({ actions, graphql }) => {
   })
 };
 
-exports.onCreateWebpackConfig = ({ actions }) => {
+exports.onCreateWebpackConfig = ({actions}) => {
   actions.setWebpackConfig({
     resolve: {
       modules: [path.resolve(__dirname, 'src'), 'node_modules'],

@@ -17,7 +17,7 @@ const Intro = () => (
       }
       width: 100%;
       background: ${theme.brand.primary};
-      padding: 20px 0 0 0;
+      padding: 20px 0;
       display: flex;
       flex-flow: column;
     `}
@@ -42,7 +42,7 @@ export default function Index({data: {site, blog}}) {
       headerColor={theme.colors.white}
       headerBg={theme.brand.primary}
     >
-      <Intro/>
+      <Intro />
       <Container
         maxWidth={840}
         noVerticalPadding={true}

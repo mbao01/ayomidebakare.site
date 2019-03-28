@@ -43,11 +43,25 @@ module.exports = {
       },
     },
     {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        path: `${__dirname}/content/announcements`,
+        name: 'announcements',
+      },
+    },
+    {
       resolve: `gatsby-mdx`,
       options: {
         extensions: ['.mdx', '.md', '.markdown'],
         gatsbyRemarkPlugins: [
           {resolve: 'gatsby-remark-copy-linked-files'},
+          {
+            resolve: 'gatsby-remark-external-links',
+            options: {
+              target: '_self',
+              rel: 'nofollow'
+            }
+          },
           {
             resolve: 'gatsby-remark-images',
             options: {
@@ -111,7 +125,7 @@ module.exports = {
         `,
         feeds: [
           {
-            serialize: ({ query: { site, allMdx } }) => {
+            serialize: ({query: {site, allMdx}}) => {
               return allMdx.edges.map(edge => {
                 return Object.assign({}, edge.node.frontmatter, {
                   description: edge.node.excerpt,

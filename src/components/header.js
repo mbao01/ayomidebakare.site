@@ -18,8 +18,9 @@ const NavItems = ({items = []}) => (
       margin-right: 20px;
     `}
   >
-    {items.map(item => (
+    {items.map((item, i) => (
       <Link
+        key={i}
         css={css`
           display: flex;
           border-radius: 3px;
