@@ -12,6 +12,7 @@ import reset from '../lib/reset'
 import { fonts } from '../lib/typography'
 import config from '../../config/website'
 import Footer from './footer'
+import './styles.css'
 
 export const globalStyles = css`
   .button-secondary {

@@ -1,0 +1,20 @@
+@media screen and (max-width: 767px) {
+  .responsive-header {
+    position: relative;
+  }
+  .responsive-header {
+    padding-bottom: 70px;
+  }
+  .responsive-header > div {
+    display: flex !important;
+    position: absolute;
+    top: 50px;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .responsive-header > div > div {
+    margin: 3px !important;
+  }
+}
