@@ -49,7 +49,6 @@ export default ({ data: { site, allMdx, latestArticle } }) => {
 export const latestArticle = graphql`
   query {
     site {
-      ...site
       siteMetadata {
         title
       }

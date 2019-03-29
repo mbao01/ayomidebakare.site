@@ -15,7 +15,10 @@ export default ({ data: { site } }) => (
 export const pageQuery = graphql`
   query {
     site {
-      ...site
+      siteMetadata {
+        title
+        image
+      }
     }
   }
 `

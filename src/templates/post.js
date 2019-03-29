@@ -120,7 +120,6 @@ export default function Post({data: { site, post }, pageContext: { next, prev },
 export const pageQuery = graphql`
   query($id: String!) {
     site {
-      ...site
       siteMetadata {
         title
         image

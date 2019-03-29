@@ -1,15 +1,15 @@
-import React, { Fragment } from 'react'
+import React, {Fragment} from 'react'
 import Helmet from 'react-helmet'
-import { graphql } from 'gatsby'
-import { MDXProvider } from '@mdx-js/tag'
-import { Global, css } from '@emotion/core'
-import { ThemeProvider } from 'emotion-theming'
-import { bpMaxSM } from '../lib/breakpoints'
+import {graphql, StaticQuery} from 'gatsby'
+import {MDXProvider} from '@mdx-js/tag'
+import {Global, css} from '@emotion/core'
+import {ThemeProvider} from 'emotion-theming'
+import {bpMaxSM} from '../lib/breakpoints'
 import theme from '../../config/theme'
 import mdxComponents from './mdx'
 import Header from './header'
 import reset from '../lib/reset'
-import { fonts } from '../lib/typography'
+import {fonts} from '../lib/typography'
 import config from '../../config/website'
 import Footer from './footer'
 import './styles.css'
@@ -104,33 +104,35 @@ export const globalStyles = css`
   ${reset};
 `
 
-export default ({
-  site,
-  frontmatter = {},
-  children,
-  dark,
-  headerBg,
-  headerColor,
-  noFooter,
-  noSubscribeForm,
-}) => {
+function Layout(
+  {
+    data,
+    frontmatter = {},
+    children,
+    dark,
+    headerBg,
+    headerColor,
+    noFooter,
+    noSubscribeForm,
+  }) {
   const {
-    description: siteDescription,
-    keywords: siteKeywords,
-  } = site.siteMetadata
+    site: {
+      siteMetadata,
+      siteMetadata: {description: siteDescription, keywords: siteKeywords},
+    },
+  } = data
 
   const {
-    keywords: frontmatterKeywords,
-    description: frontmatterDescription,
+    keywords = siteKeywords,
+    description = siteDescription,
+    title = config.siteTitle,
   } = frontmatter
 
-  const keywords = (frontmatterKeywords || siteKeywords).join(', ')
-  const description = frontmatterDescription || siteDescription
 
   return (
     <ThemeProvider theme={theme}>
       <Fragment>
-        <Global styles={globalStyles} />
+        <Global styles={globalStyles}/>
         <div
           css={css`
             display: flex;
@@ -140,17 +142,17 @@ export default ({
           `}
         >
           <Helmet
-            title={config.siteTitle}
+            title={title || config.siteTitle}
             meta={[
-              { name: 'description', content: description },
-              { name: 'keywords', content: keywords },
+              {name: 'description', content: description},
+              {name: 'keywords', content: keywords},
             ]}
           >
-            <html lang="en" />
+            <html lang="en"/>
             <noscript>This site runs best with JavaScript enabled.</noscript>
           </Helmet>
           <Header
-            siteTitle={site.siteMetadata.title}
+            siteTitle={siteMetadata.title}
             dark={dark}
             bgColor={headerBg}
             headerColor={headerColor}
@@ -160,7 +162,7 @@ export default ({
           </MDXProvider>
           {!noFooter && (
             <Footer
-              author={site.siteMetadata.author.name}
+              author={siteMetadata.author.name}
               noSubscribeForm={noSubscribeForm}
             />
           )}
@@ -170,15 +172,24 @@ export default ({
   )
 }
 
-export const pageQuery = graphql`
-  fragment site on Site {
-    siteMetadata {
-      title
-      description
-      author {
-        name
-      }
-      keywords
-    }
-  }
-`
+export default function LayoutWithSiteData(props) {
+  return (
+    <StaticQuery
+      query={graphql`
+        query {
+          site {
+            siteMetadata {
+              title
+              description
+              author {
+                name
+              }
+              keywords
+            }
+          }
+        }
+      `}
+      render={data => <Layout data={data} {...props} />}
+    />
+  )
+}

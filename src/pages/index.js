@@ -77,7 +77,6 @@ export default function Index({data: {site, blog}}) {
 export const pageQuery = graphql`
   query {
     site {
-      ...site
       siteMetadata {
         title
         image
