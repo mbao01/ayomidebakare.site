@@ -1,9 +1,9 @@
 ---
 date: 2019-01-01
-expiryDate: 2019-03-30
+expiryDate: 2019-01-01
 title: 'Something sweet is cooking'
 type: 'Announcement'
-published: true
+published: false
 unlisted: true
 categories: ['test']
 images: './images'
