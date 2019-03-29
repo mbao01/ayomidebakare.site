@@ -1,5 +1,5 @@
 ---
-title: About Ayomide Bakare
+title: Hire me, I'm available
 ---
 
 # Hey! I'm Ayomide 👋
