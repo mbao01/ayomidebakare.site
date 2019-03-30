@@ -59,7 +59,7 @@ const PostBanner = styled.div`
   display: inline-block;
 `
 
-const PostCard = ({post: {id, excerpt, fields, frontmatter}, type = 'small'}) => (
+const PostCard = ({post: {excerpt, fields, frontmatter}, type = 'small'}) => (
   <div>
     {type === 'small' ?
       <SmallPostCard>
@@ -86,7 +86,7 @@ const PostCard = ({post: {id, excerpt, fields, frontmatter}, type = 'small'}) =>
           </div>
         </Link>
         <Share
-          type={`icon`}
+          type='icon'
           url={`${config.siteUrl}${fields.slug}`}
           title={frontmatter.title}
           twitterHandle={config.twitterHandle}

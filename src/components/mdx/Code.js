@@ -24,7 +24,7 @@ const Code = ({ codeString, language, ...props }) => {
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
           <pre className={className} style={style}>
             {tokens.map((line, i) => (
-              <div {...getLineProps({ line, key: i })}>
+              <div {...getLineProps({ line, key: i })} key={i}>
                 <span
                   css={css`
                     display: inline-block;
@@ -36,7 +36,7 @@ const Code = ({ codeString, language, ...props }) => {
                   {i + 1}
                 </span>
                 {line.map((token, key) => (
-                  <span {...getTokenProps({ token, key })} />
+                  <span {...getTokenProps({ token, key })} key={key}/>
                 ))}
               </div>
             ))}

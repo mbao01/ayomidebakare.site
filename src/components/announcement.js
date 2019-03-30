@@ -6,7 +6,6 @@ import theme from '../../config/theme'
 import MDXRenderer from 'gatsby-mdx/mdx-renderer';
 
 function renderAnnouncements(announcements) {
-  console.log(announcements)
   return (announcements && announcements.map(({node: {id, code, fields}}) =>
     <div
       key={id}

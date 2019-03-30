@@ -20,12 +20,12 @@ function showSlidesByClick(n) {
 }
 
 // Next Image
-function plusSlides(n) {
+export function plusSlides(n) {
   showSlidesByClick(slideIndex += n);
 }
 
 // Previous Image
-function currentSlide(n) {
+export function currentSlide(n) {
   showSlidesByClick(slideIndex = n);
 }
 

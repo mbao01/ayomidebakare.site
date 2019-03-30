@@ -17,14 +17,14 @@ const SubscribeSchema = Yup.object().shape({
   first_name: Yup.string(),
 })
 
-const PostSubmissionMessage = ({ response }) => {
+const PostSubmissionMessage = () => {
   return (
     <div>
       <Message
         illustration={PleaseConfirmIllustration}
-        title={`Great, one last thing...`}
-        body={`I just sent you an email with the confirmation link. 
-          **Please check your inbox!**`}
+        title='Great, one last thing...'
+        body='I just sent you an email with the confirmation link. 
+          **Please check your inbox!**'
       />
     </div>
   )
@@ -89,7 +89,7 @@ class SignUp extends React.Component {
           }}
           validationSchema={SubscribeSchema}
           onSubmit={values => this.handleSubmit(values)}
-          render={({ errors, touched, isSubmitting }) => (
+          render={({ isSubmitting }) => (
             <>
               {!successful && (
                 <Form

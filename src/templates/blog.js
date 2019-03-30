@@ -8,7 +8,7 @@ import Link from '../components/link'
 import theme from '../../config/theme';
 import PostCard from '../components/post/post-card';
 
-const Blog = ({ data: { site, blog }, pageContext: { pagination, categories },}) => {
+const Blog = ({ data: { site, blog }, pageContext: { pagination, },}) => {
   const { page, nextPagePath, previousPagePath } = pagination
 
   const posts = page

@@ -13,7 +13,7 @@ import { bpMaxSM } from '../lib/breakpoints'
 import {get} from 'lodash'
 import theme from '../../config/theme';
 
-export default function Post({data: { site, post }, pageContext: { next, prev },}) {
+export default function Post({data: { site, post }}) {
   const {
     editLink,
     title,
@@ -89,7 +89,7 @@ export default function Post({data: { site, post }, pageContext: { next, prev },
         <Share
           url={blogPostUrl}
           title={title}
-          type={'icon'}
+          type='icon'
           twitterHandle={config.twitterHandle}
         />
         <br />

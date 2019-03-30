@@ -13,7 +13,7 @@ import {bpMaxSM} from '../lib/breakpoints'
 import darken from 'polished/lib/color/darken';
 
 function toggleMenu() {
-  let x = document.getElementById('navigationMenu')
+  const x = document.getElementById('navigationMenu')
   if (x.className.includes(' responsive-header')) {
     x.className = x.className.replace(' responsive-header', '')
   } else {
@@ -93,7 +93,7 @@ const Header = ({dark, bgColor = 'none', siteTitle, headerColor = 'black', site}
           : theme.colors.link_color_hover};
           }
         `}
-        id={'navigationMenu'}
+        id='navigationMenu'
       >
         <Link
           css={css`
@@ -176,14 +176,14 @@ const Header = ({dark, bgColor = 'none', siteTitle, headerColor = 'black', site}
               padding: 2px;
             }
           `}
-          onClick={toggleMenu}>
+          onKeyUp={toggleMenu}>
           <FontAwesomeIcon
             css={css`
               :hover {
                 color: ${darken(0.08, headerColor)};
               }
             `}
-            size={'lg'}
+            size='lg'
             icon={faBars}
           />
         </span>

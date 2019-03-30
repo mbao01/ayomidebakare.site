@@ -23,7 +23,7 @@ const Intro = () => (
     `}
   >
     <Container
-      maxWidth={'80%'}
+      maxWidth='80%'
       css={css`
         display: flex;
         flex-direction: column;
