@@ -105,7 +105,7 @@ module.exports = {
         apiToken: config.mixpanelToken, // required
         // optional fields, default values
         debug: false, // if true activate debug mode on mixpanel library
-        enableOnDevMode: true, // if false mixpanel will be activated on NODE_ENV=production only
+        enableOnDevMode: false, // if false mixpanel will be activated on NODE_ENV=production only
         pageViews: 'all' // see below
       },
     },
