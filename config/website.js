@@ -15,6 +15,7 @@ module.exports = {
   ogSiteName: 'Ayomide Bakare', // Facebook Site Name
   ogLanguage: 'en_US',
   googleAnalyticsID: '',
+  mixpanelToken: '919b5f2ad85017be7b628907625d4b84',
 
   // Manifest and Progress color
   themeColor: '#5348FF',
