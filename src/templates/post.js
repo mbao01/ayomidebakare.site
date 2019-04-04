@@ -6,7 +6,7 @@ import SEO from '../components/seo'
 import { css } from '@emotion/core'
 import Container from '../components/container'
 import Layout from '../components/layout'
-import { fonts } from '../lib/typography'
+import {fonts, rhythm} from '../lib/typography'
 import Share from '../components/share'
 import config from '../../config/website'
 import { bpMaxSM } from '../lib/breakpoints'
@@ -19,6 +19,7 @@ export default function Post({data: { site, post }}) {
     title,
     slug,
     date,
+    description,
     banner,
   } = post.fields
 
@@ -81,6 +82,7 @@ export default function Post({data: { site, post }}) {
             </div>
           )}
           <br />
+          {description ? <div css={css`font-style: italic; text-align: center; margin-bottom: ${rhythm(2)};`}>{description}</div> : null}
           <MDXRenderer>{post.code.body}</MDXRenderer>
         </Container>
         {/* <SubscribeForm /> */}
@@ -131,12 +133,9 @@ export const pageQuery = graphql`
         editLink
         title
         date(formatString: "MMMM DD, YYYY")
+        description
         banner {
-          childImageSharp {
-            fluid {
-              src
-            }
-          }
+          ...bannerImage720
         }
         slug
         keywords

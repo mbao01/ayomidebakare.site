@@ -96,11 +96,7 @@ export const pageQuery = graphql`
             title
             date(formatString: "MMMM DD, YYYY")
             banner {
-              childImageSharp {
-                fluid(maxWidth: 600) {
-                  ...GatsbyImageSharpFluid_withWebp_tracedSVG
-                }
-              }
+              ...bannerImage640
             }
             keywords
           }
