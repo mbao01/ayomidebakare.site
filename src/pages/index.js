@@ -9,7 +9,7 @@ import theme from '../../config/theme'
 import PostCard from '../components/post/post-card';
 import Announcement from '../components/announcement';
 
-const Intro = () => (
+const Intro = ({title}) => (
   <section
     css={css`
       * {
@@ -26,23 +26,36 @@ const Intro = () => (
       maxWidth='80%'
       css={css`
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        justify-content: space-between;
       `}
     >
       <Announcement />
-      {/*<img src={site.siteMetadata.image} alt={site.siteMetadata.title} />*/}
+      <div css={css`
+        width: 50%;
+        h2 {
+          margin-top: -15px;
+          padding: 0 20px;
+        }
+      `}>
+        <h2>
+          {title}
+        </h2>
+      </div>
     </Container>
   </section>
 )
 
 export default function Index({data: {site, blog}}) {
+  const introTitle = `Hey, I'm ${site.siteMetadata.author.name}. Here's a curation of my experiences in software engineering. I hope you
+          learn something.`
   return (
     <Layout
       site={site}
       headerColor={theme.colors.white}
       headerBg={theme.brand.primary}
     >
-      <Intro />
+      <Intro title={introTitle}/>
       <Container
         maxWidth={840}
         noVerticalPadding={true}
@@ -80,6 +93,10 @@ export const pageQuery = graphql`
       siteMetadata {
         title
         image
+        author {
+          name
+          minibio        
+        }
       }
     }
     blog: allMdx(
