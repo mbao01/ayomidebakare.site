@@ -176,7 +176,7 @@ const Header = ({dark, bgColor = 'none', siteTitle, headerColor = 'black', site}
               padding: 2px;
             }
           `}
-          onKeyUp={toggleMenu}>
+          onClick={toggleMenu}>
           <FontAwesomeIcon
             css={css`
               :hover {
