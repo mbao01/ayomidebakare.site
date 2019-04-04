@@ -83,7 +83,7 @@ function stripMarkdown(markdownString) {
 }
 
 function createBlogPages({blogPath, data, paginationTemplate, actions}) {
-  if (_.isEmpty(data.edges)) {
+  if (!data || _.isEmpty(data.edges)) {
     throw new Error('There are no posts!')
   }
 
