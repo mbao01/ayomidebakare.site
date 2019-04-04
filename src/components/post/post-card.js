@@ -1,13 +1,13 @@
-import Link from '../link';
+import React from 'react'
+import Link from '../link'
 import {css} from '@emotion/core'
-import React from 'react';
-import styled from '@emotion/styled';
-import {rhythm} from '../../lib/typography';
-import theme from '../../../config/theme';
-import config from '../../../config/website';
-import Share from '../share';
-import {bpMaxSM} from '../../lib/breakpoints';
-import Img from 'gatsby-image';
+import styled from '@emotion/styled'
+import {rhythm} from '../../lib/typography'
+import theme from '../../../config/theme'
+import config from '../../../config/website'
+import Share from '../share'
+import {bpMaxSM} from '../../lib/breakpoints'
+import Img from 'gatsby-image'
 
 const SmallPostCard = styled.div`
   background-color: #fafafa;
