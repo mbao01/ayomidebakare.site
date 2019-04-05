@@ -154,22 +154,7 @@ const Header = ({dark, bgColor = 'none', siteTitle, headerColor = 'black', site}
         </Link>
 
         <div className={'abNavItemsGroup'}>
-          <NavItems items={
-            [
-              {
-                name: 'Blog',
-                url: '/blog'
-              },
-              {
-                name: 'About',
-                url: '/about'
-              },
-              {
-                name: 'Hire me',
-                url: '/hire-me'
-              }
-            ]
-          }/>
+          <NavItems items={site.siteMetadata.hotRoutes}/>
           <div className={'abNavSocial'}>
             <span>{site.siteMetadata.social.handle}</span>
             <Twitter color={headerColor}/>
@@ -202,6 +187,10 @@ export default props => (
           siteMetadata {
             title
             image
+            hotRoutes {
+              name
+              url
+            }
             social {
               handle
             }

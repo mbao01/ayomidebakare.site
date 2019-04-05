@@ -15,6 +15,16 @@ module.exports = {
     description: config.siteDescription,
     keywords: ['Video Blogger'],
     canonicalUrl: config.siteUrl,
+    hotRoutes: [{
+      name: 'Blog',
+      url: '/blog'
+    }, {
+      name: 'About',
+      url: '/about'
+    }, {
+      name: 'Hire me',
+      url: '/hire-me'
+    }],
     image: config.siteLogo,
     author: {
       name: config.author,
@@ -126,7 +136,7 @@ module.exports = {
         `,
         feeds: [
           {
-            serialize: ({ query: { site, allMdx } }) => {
+            serialize: ({query: {site, allMdx}}) => {
               return allMdx.edges.map(edge => {
                 return {
                   ...edge.node.frontmatter,
