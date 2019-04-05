@@ -8,6 +8,7 @@ import {rhythm} from '../lib/typography'
 import theme from '../../config/theme'
 import PostCard from '../components/post/post-card';
 import Announcement from '../components/announcement';
+import {bpMaxXS} from '../lib/breakpoints';
 
 const Intro = ({title}) => (
   <section
@@ -28,11 +29,17 @@ const Intro = ({title}) => (
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        ${bpMaxXS} {
+          flex-wrap: wrap;
+        }
       `}
     >
       <Announcement />
       <div css={css`
         width: 50%;
+        ${bpMaxXS} {
+          width: 100%;
+        }
         h2 {
           margin-top: -15px;
           padding: 0 20px;

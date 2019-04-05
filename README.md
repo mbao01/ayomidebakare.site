@@ -1,4 +1,6 @@
-# egghead.io creator MDX Blog Starter Project
+# Ayomide Bakare's Blog
+
+###### Special thanks to Egghead.io (all things web) and [Kent C. Dodds](https://kentcdodds.com)!
 
 This is based on Robin Wieruch's https://github.com/rwieruch/gatsby-mdx-blog-starter-project
 
