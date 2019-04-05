@@ -36,7 +36,7 @@ const abShare = ({color}) => css`
 
 const Share = ({color = theme.colors.gray_dark, type, url, title, twitterHandle}) => (
   <div css={abShare({color})}>
-    <div className={'abShareContainer'}/>
+    <div className='abShareContainer'/>
     <span>Share post</span>
     <TwitterShareButton url={url}
                         title={title}
