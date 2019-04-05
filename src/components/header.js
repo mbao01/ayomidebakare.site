@@ -71,7 +71,7 @@ const abHeader = ({dark, bgColor, headerColor}) => css`
       align-items: center;
 
       span {
-        font-size: 120%;
+        font-size: 110%;
       }
       
       img {
