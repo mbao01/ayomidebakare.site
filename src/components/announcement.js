@@ -1,58 +1,49 @@
 import React from 'react'
 import {StaticQuery, graphql} from 'gatsby'
-import {css} from '@emotion/core'
 import {rhythm} from '../lib/typography';
 import theme from '../../config/theme'
 import MDXRenderer from 'gatsby-mdx/mdx-renderer';
+import styled from '@emotion/styled';
 
-function renderAnnouncements(announcements) {
-  return (announcements && announcements.map(({node: {id, code, fields}}) =>
-    <div
-      key={id}
-      css={css`
-        position: relative;
-      `}
-    >
-      {fields.type && <small
-        css={css`
-              position: absolute;
-              z-index: 1;
-              background-color: ${fields.typeColor || theme.colors.green};
-              top: -15px;
-              font-size: 13px;
-              left: 20px;
-              max-height: 40px;
-              padding: 5px 10px;
-              border-radius: 3px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              box-shadow: 0 0 5px rgba(20, 20, 20, .1);
-            `}
-      >
-        {fields.type}
-      </small>}
-      <pre
-        css={css`
-              position: relative;
-              max-width: ${rhythm(15)};
-              min-height: 100px;
-              max-height: 200px;
-              padding: ${rhythm(1)} ${rhythm(1.5)};
-              background-color: ${theme.colors.white};
-              white-space: pre-wrap;
-              word-wrap: break-word;
-              a {
-                color: ${fields.typeColor || theme.colors.green};
-                text-decoration: underline;
-              }
-            `}>
-              <MDXRenderer>{code.body}</MDXRenderer>
-          </pre>
-    </div>
-  ))
-}
+const AnnouncementContainer = styled.div`
+  position: relative;
+  > small {
+    position: absolute;
+    z-index: 1;
+    top: -15px;
+    font-size: 13px;
+    left: 20px;
+    max-height: 40px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 5px rgba(20, 20, 20, .1);
+    background-color: ${({fields}) => fields.typeColor || theme.colors.green};
+  }
+  
+  > pre {
+    position: relative;
+    max-width: ${rhythm(15)};
+    min-height: 100px;
+    max-height: 200px;
+    padding: ${rhythm(1)} ${rhythm(1.5)};
+    background-color: ${theme.colors.white};
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    a {
+      color: ${({fields}) => fields.typeColor || theme.colors.green};
+      text-decoration: underline;
+    }
+  }  
+`
 
+/**
+ * Announcement Component
+ * @returns {*}
+ * @constructor
+ */
 const Announcement = () => {
   return (
     <StaticQuery
@@ -98,6 +89,21 @@ const Announcement = () => {
       )}
     />
   )
+}
+
+/** Helpers **/
+function renderAnnouncements(announcements) {
+  return (announcements && announcements.map(({node: {id, code, fields}}) =>
+    <AnnouncementContainer fields={fields} key={id}>
+      {
+        fields.type &&
+        <small> {fields.type} </small>
+      }
+      <pre>
+        <MDXRenderer>{code.body}</MDXRenderer>
+      </pre>
+    </AnnouncementContainer>
+  ))
 }
 
 export default Announcement
