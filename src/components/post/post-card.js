@@ -91,7 +91,6 @@ const PostCard = ({post: {excerpt, fields, frontmatter}, type = 'small'}) => (
           title={frontmatter.title}
           twitterHandle={config.twitterHandle}
         />
-        <span/>
       </SmallPostCard> :
       type === 'large' ?
         <LargePostCard>
