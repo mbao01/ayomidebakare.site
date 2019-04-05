@@ -21,9 +21,6 @@ module.exports = {
     }, {
       name: 'About',
       url: '/about'
-    }, {
-      name: 'Hire me',
-      url: '/hire-me'
     }],
     image: config.siteLogo,
     author: {
