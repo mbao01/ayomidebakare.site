@@ -132,7 +132,7 @@ const NavItems = ({items = []}) => (
     {
       items.map((item, i) => (
         <Link key={i}
-              className={'abNavLink'}
+              className='abNavLink'
               to={item.url} aria-label="go to homepage" activeClassName="active">
           <span>{item.name}</span>
         </Link>))
@@ -143,9 +143,9 @@ const NavItems = ({items = []}) => (
 const Header = ({dark, bgColor = 'none', siteTitle, headerColor = 'black', site}) => (
   <header css={abHeader({dark, bgColor, headerColor})}>
     <Container maxWidth={900} noVerticalPadding>
-      <nav className={'abNav'}
+      <nav className='abNav'
            id='navigationMenu'>
-        <Link className={'abNavBrand'}
+        <Link className='abNavBrand'
               to="/" aria-label="go to homepage"
               activeClassName="active">
           <img src={`/${site.siteMetadata.image}`}
@@ -153,16 +153,16 @@ const Header = ({dark, bgColor = 'none', siteTitle, headerColor = 'black', site}
           <span>{siteTitle}</span>
         </Link>
 
-        <div className={'abNavItemsGroup'}>
+        <div className='abNavItemsGroup'>
           <NavItems items={site.siteMetadata.hotRoutes}/>
-          <div className={'abNavSocial'}>
+          <div className='abNavSocial'>
             <span>{site.siteMetadata.social.handle}</span>
             <Twitter color={headerColor}/>
             <GitLab color={headerColor}/>
             <GitHub color={headerColor}/>
           </div>
         </div>
-        <span className={'abNavToggler'}
+        <span className='abNavToggler'
               onClick={toggleMenu}>
           <FontAwesomeIcon
             css={css`
