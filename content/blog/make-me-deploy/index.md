@@ -4,6 +4,8 @@ date: 2019-04-04
 title: 'First netlify, then the world!'
 author: 'Ayomide Bakare'
 description: 'netlify on the fly'
+categories: ['test']
+keywords: ['test']
 banner: './images/banner.png'
 published: true
 unlisted: true

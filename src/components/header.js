@@ -1,14 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {Link, StaticQuery, graphql} from 'gatsby'
 import {css} from '@emotion/core'
 import theme from '../../config/theme'
-
 import Container from './container'
 import {GitHub, GitLab, Twitter} from './social'
 import {rhythm} from '../lib/typography'
 import lighten from 'polished/lib/color/lighten'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faBars} from '@fortawesome/free-solid-svg-icons'
+import {faBars, faTimes} from '@fortawesome/free-solid-svg-icons'
 import {bpMaxSM} from '../lib/breakpoints'
 import darken from 'polished/lib/color/darken';
 
@@ -140,44 +139,48 @@ const NavItems = ({items = []}) => (
   </div>
 )
 
-const Header = ({dark, bgColor = 'none', siteTitle, headerColor = 'black', site}) => (
-  <header css={abHeader({dark, bgColor, headerColor})}>
-    <Container maxWidth={900} noVerticalPadding>
-      <nav className='abNav'
-           id='navigationMenu'>
-        <Link className='abNavBrand'
-              to="/" aria-label="go to homepage"
-              activeClassName="active">
-          <img src={`/${site.siteMetadata.image}`}
-               alt={site.siteMetadata.title}/>
-          <span>{siteTitle}</span>
-        </Link>
+const Header = ({dark, bgColor = 'none', siteTitle, headerColor = 'black', site}) => {
+  const [isToggled, setToggle] = useState(false)
 
-        <div className='abNavItemsGroup'>
-          <NavItems items={site.siteMetadata.hotRoutes}/>
-          <div className='abNavSocial'>
-            <span>{site.siteMetadata.social.handle}</span>
-            <Twitter color={headerColor}/>
-            <GitLab color={headerColor}/>
-            <GitHub color={headerColor}/>
+  return (
+    <header css={abHeader({dark, bgColor, headerColor})}>
+      <Container maxWidth={900} noVerticalPadding>
+        <nav className={isToggled ? 'abNav responsive-header' : 'abNav'}
+            id='navigationMenu'>
+          <Link className='abNavBrand'
+                to="/" aria-label="go to homepage"
+                activeClassName="active">
+            <img src={`/${site.siteMetadata.image}`}
+                alt={site.siteMetadata.title}/>
+            <span>{siteTitle}</span>
+          </Link>
+
+          <div className='abNavItemsGroup'>
+            <NavItems items={site.siteMetadata.hotRoutes}/>
+            <div className='abNavSocial'>
+              <span>{site.siteMetadata.social.handle}</span>
+              <Twitter color={headerColor}/>
+              <GitLab color={headerColor}/>
+              <GitHub color={headerColor}/>
+            </div>
           </div>
-        </div>
-        <span className='abNavToggler'
-              onClick={toggleMenu}>
-          <FontAwesomeIcon
-            css={css`
-              :hover {
-                color: ${darken(0.08, headerColor)};
-              }
-            `}
-            size='lg'
-            icon={faBars}
-          />
-        </span>
-      </nav>
-    </Container>
-  </header>
-)
+          <span className='abNavToggler'
+                onClick={() => setToggle(!isToggled)}>
+              <FontAwesomeIcon
+                css={css`
+                  :hover {
+                    color: ${darken(0.08, headerColor)};
+                  }
+                `}
+                size='lg'
+                icon={isToggled ? faTimes : faBars}
+              />
+          </span>
+        </nav>
+      </Container>
+    </header>
+  )
+}
 
 export default props => (
   <StaticQuery
@@ -201,13 +204,3 @@ export default props => (
     render={data => <Header site={data.site} bgColor={theme.brand.primary} {...props}/>}
   />
 )
-
-/** Helper **/
-function toggleMenu() {
-  const x = document.getElementById('navigationMenu')
-  if (x.className.includes(' responsive-header')) {
-    x.className = x.className.replace(' responsive-header', '')
-  } else {
-    x.className += ' responsive-header'
-  }
-}

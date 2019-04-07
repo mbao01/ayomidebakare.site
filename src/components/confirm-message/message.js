@@ -16,7 +16,7 @@ export default ({
 }) => (
   <Center
     css={css`
-      min-height: ${fullscreen ? '70vh' : 'auto'};
+      min-height: ${fullscreen ? '100vh' : 'auto'};
       ${bpMaxSM} {
         min-height: auto;
       }
@@ -60,7 +60,7 @@ to, 100% {
 const Center = styled.div`
   width: 100vw;
   max-width: 100% !important;
-  padding: 30px;
+  padding: 30px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;

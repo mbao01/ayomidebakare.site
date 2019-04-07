@@ -9,6 +9,7 @@ const brand = {
 const colors = {
   primary: '#3896E6',
   primary_light: `${lighten(0.15, brand.primary)}`,
+  primary_dark: `${darken(0.07, brand.primary)}`,
   secondary_light: `${lighten(0.05, brand.secondary)}`,
   gray: '#E3E3E3',
   gray_dark: '#939393',
@@ -18,7 +19,7 @@ const colors = {
   body_color: 'rgba(0,0,0,0.85)',
   link_color: brand.primary,
   link_color_hover: `${darken(0.07, brand.primary)}`,
-  red: '#E86C60',
+  red: '#E84C40',
   green: '#2ab556',
   blue: '#327CDC',
   yellow: '#FFB700',

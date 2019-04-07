@@ -85,6 +85,7 @@ export const pageQuery = graphql`
           fields {
             title
             slug
+            categories
             date
           }
           parent {
