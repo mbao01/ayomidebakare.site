@@ -113,7 +113,7 @@ function Layout(
     headerBg,
     headerColor,
     noFooter,
-    noSubscribeForm = true,
+    noSubscribeForm = false,
   }) {
   const {
     site: {
