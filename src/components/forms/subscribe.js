@@ -1,4 +1,4 @@
-import React, {useReducer, useEffect, useState} from 'react'
+import React, {useReducer, useEffect, useState, useContext} from 'react'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { css } from '@emotion/core'
@@ -6,6 +6,8 @@ import theme from '../../../config/theme'
 import { rhythm } from '../../lib/typography'
 import Message from '../confirm-message/message'
 import { PleaseConfirmIllustration } from '../confirm-message/illustrations'
+import PropTypes from 'prop-types'
+import { cold } from 'react-hot-loader'
 
 const SubscribeSchema = Yup.object().shape({
   email_address: Yup.string()
@@ -47,7 +49,7 @@ function fetchReducer(state, {type, response, error}) {
   }
 }
 
-function useFetch({url, body}) {
+function useFetch({url, body, uKey, mixpanel}) {
   const [state, dispatch] = useReducer(fetchReducer, {
     error: null,
     response: null,
@@ -69,22 +71,30 @@ function useFetch({url, body}) {
         .then(r => r.json())
         .then(
           response => {
-            // ::TODO:: Track subscription event here in Mixpanel
+            if (mixpanel) {
+              mixpanel.people.set_once(body)
+              mixpanel.identify(body.email_address)
+              mixpanel.track(uKey, {
+                ...body,
+                response
+              })
+            }
             return dispatch({type: 'success', response})
-          },
-          error => dispatch({type: 'error', error}),
-        )
+          }
+        ).catch(error => dispatch({type: 'error', error}))
     }
-  }, [url, bodyString])
+  }, [url, bodyString, body, uKey, mixpanel])
 
   return state
 }
 
-const Subscribe = ({header = 'Join the Newsletter'}) => {
+const Subscribe = ({uKey = 'newsletter', header = 'Join the Newsletter'}, {mixpanel}) => {
   const [values, setValues] = useState()
   const {pending, response, error} = useFetch({
     url: `https://app.convertkit.com/forms/903814/subscriptions`,
     body: values,
+    uKey,
+    mixpanel
   })
 
   const errorMessage = error ? 'Something went wrong!' : null
@@ -222,4 +232,8 @@ const Subscribe = ({header = 'Join the Newsletter'}) => {
   )
 }
 
-export default Subscribe
+Subscribe.contextTypes = {
+  mixpanel: PropTypes.object
+}
+
+export default cold(Subscribe)
