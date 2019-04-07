@@ -11,7 +11,8 @@ import Share from '../components/share'
 import config from '../../config/website'
 import { bpMaxSM } from '../lib/breakpoints'
 import {get} from 'lodash'
-import theme from '../../config/theme';
+import theme from '../../config/theme'
+import Badge from '../components/badge'
 
 export default function Post({data: { site, post }}) {
   const {
@@ -88,6 +89,26 @@ export default function Post({data: { site, post }}) {
         {/* <SubscribeForm /> */}
       </article>
       <Container noVerticalPadding>
+        <div
+          css={css`
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          `}>
+            <div
+              css={css`
+                padding: ${rhythm(0.2)} 0;
+                display: flex;
+                flex-wrap: wrap;
+              `}>
+                {
+                  post.fields.categories &&
+                  post.fields.categories.map((category, index) => (
+                    <Badge key={index} text={category} link={`/blog/category/${category}`}/>
+                  ))
+                }
+            </div>
+        </div>
         <Share
           url={blogPostUrl}
           title={title}
@@ -134,6 +155,7 @@ export const pageQuery = graphql`
         title
         date(formatString: "MMMM DD, YYYY")
         description
+        categories
         banner {
           ...bannerImage720
         }

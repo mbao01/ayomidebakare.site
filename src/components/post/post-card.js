@@ -89,19 +89,21 @@ const PostCard = ({post: {excerpt, fields, frontmatter}, type = 'small'}) => (
         <PostDescription>
           {excerpt}
         </PostDescription>
-        <Link
-          to={fields.slug}
-          aria-label={`View ${frontmatter.title}`}
-        >
-          <div
-            css={css`
-              display: flex;
-              justify-content: flex-end;
-              margin-bottom: ${rhythm(0.4)};
-            `}>
+        <div
+          css={css`
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          `}>
+          <PostCategories categories={fields.categories}/>
+
+          <Link
+            to={fields.slug}
+            aria-label={`View ${frontmatter.title}`}
+          >
             <small>Read</small>
-          </div>
-        </Link>
+          </Link>
+        </div>
         <Share
           type='icon'
           url={`${config.siteUrl}${fields.slug}`}
