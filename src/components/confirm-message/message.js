@@ -16,7 +16,7 @@ export default ({
 }) => (
   <Center
     css={css`
-      min-height: ${fullscreen ? '70vh' : 'auto'};
+      min-height: ${fullscreen ? '100vh' : 'auto'};
       ${bpMaxSM} {
         min-height: auto;
       }
