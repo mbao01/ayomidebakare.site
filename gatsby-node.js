@@ -36,7 +36,7 @@ const createPosts = (createPage, createRedirect, edges) => {
   })
 }
 
-const createPaginatedPages = (createPage, edges, pathPrefix, paginationTemplate, context) => {
+const createPaginatedPages = (createPage, edges, rootPathPrefix, pathPrefix, paginationTemplate, context) => {
   const pages = edges.reduce((acc, value, index) => {
     const pageIndex = Math.floor(index / PAGINATION_OFFSET)
 
@@ -49,9 +49,6 @@ const createPaginatedPages = (createPage, edges, pathPrefix, paginationTemplate,
     return acc
   }, [])
 
-  const rootPathPrefix = pathPrefix;
-  pathPrefix = `${pathPrefix}/page`
-
   pages.forEach((page, index) => {
     const previousPagePath = `${pathPrefix}/${index + 1}`
     const nextPagePath = index === 1 ? rootPathPrefix : `${pathPrefix}/${index - 1}`
@@ -63,8 +60,7 @@ const createPaginatedPages = (createPage, edges, pathPrefix, paginationTemplate,
         pagination: {
           page,
           nextPagePath: index === 0 ? null : nextPagePath,
-          previousPagePath:
-            index === pages.length - 1 ? null : previousPagePath,
+          previousPagePath: index === pages.length - 1 ? null : previousPagePath,
           pageCount: pages.length,
           pathPrefix,
         },
@@ -74,6 +70,47 @@ const createPaginatedPages = (createPage, edges, pathPrefix, paginationTemplate,
   })
 }
 
+const createCategoryPages = (createPage, edges, pathPrefix, paginationTemplate, context) => {
+  const categoryPages = edges.reduce((acc, value) => {
+    const categories = value.node.fields.categories || []
+
+    categories.forEach((category) => {
+      if (!acc[category]) {
+        acc[category] = []
+      }
+  
+      acc[category].push(value)
+    })
+
+    return acc
+  }, {})
+
+  pathPrefix = `${pathPrefix}/category`
+
+  const sortedCategories = Object.keys(categoryPages).sort()
+
+  sortedCategories.forEach((category, index) => {
+    const previousCategoryPath = `${pathPrefix}/${sortedCategories[index + 1]}`
+    const nextCategoryPath = index === 1 ? `${pathPrefix}/${category}` : `${pathPrefix}/${sortedCategories[index - 1]}`
+
+    createPaginatedPages(
+      createPage,
+      categoryPages[category],
+      `${pathPrefix}/${category}`,
+      `${pathPrefix}/${category}`,
+      paginationTemplate,
+      {
+        category: {
+          category,
+          nextCategoryPath: index === 0 ? null : nextCategoryPath,
+          previousCategoryPath: index === sortedCategories.length - 1 ? null : previousCategoryPath,
+          categoryPathPrefix: pathPrefix,
+        },
+        ...context,
+      }
+    )
+  })
+}
 
 function stripMarkdown(markdownString) {
   return remark()
@@ -89,8 +126,19 @@ function createBlogPages({blogPath, data, paginationTemplate, actions}) {
 
   const {edges} = data
   const {createRedirect, createPage} = actions
+
   createPosts(createPage, createRedirect, edges)
   createPaginatedPages(
+    actions.createPage,
+    edges,
+    blogPath,
+    `${blogPath}/page`,
+    paginationTemplate,
+    {
+      categories: [],
+    },
+  )
+  createCategoryPages(
     actions.createPage,
     edges,
     blogPath,
@@ -248,6 +296,7 @@ exports.createPages = async ({actions, graphql}) => {
         title
         slug
         description
+        categories
         date
         redirects
       }
