@@ -13,6 +13,9 @@ import { bpMaxSM } from '../lib/breakpoints'
 import {get} from 'lodash'
 import theme from '../../config/theme'
 import Badge from '../components/badge'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit, faBullhorn } from '@fortawesome/free-solid-svg-icons'
+import {faTwitter, faGithub} from '@fortawesome/free-brands-svg-icons';
 
 export default function Post({data: { site, post }}) {
   const {
@@ -128,11 +131,27 @@ export default function Post({data: { site, post }}) {
               blogPostUrl,
             )}`}
           >
-            Discuss on Twitter
+            <small title='Discuss on Twitter'>
+              <FontAwesomeIcon
+                icon={faBullhorn}/>
+              <span css={css`
+                margin: 0 ${rhythm(0.2)};
+              `}>on</span>
+              <FontAwesomeIcon
+                icon={faTwitter}/>
+            </small>
           </a>
           {` • `}
           <a target="_blank" rel="noopener noreferrer" href={editLink}>
-            Edit post on GitHub
+            <small title='Edit post on Github'>
+              <FontAwesomeIcon
+                icon={faEdit}/>
+              <span css={css`
+                margin: 0 ${rhythm(0.2)};
+              `}>on</span>
+              <FontAwesomeIcon
+                icon={faGithub}/>
+            </small>
           </a>
         </p>
       </Container>
