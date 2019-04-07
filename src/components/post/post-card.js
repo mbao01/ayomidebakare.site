@@ -8,6 +8,7 @@ import config from '../../../config/website'
 import Share from '../share'
 import {bpMaxSM} from '../../lib/breakpoints'
 import Img from 'gatsby-image'
+import Badge from '../badge'
 
 const SmallPostCard = styled.div`
   background-color: #fafafa;
@@ -58,6 +59,22 @@ const PostBanner = styled.div`
   margin-top: ${rhythm(0.4)};
   display: inline-block;
 `
+
+const PostCategories = ({categories}) => (
+  <div
+    css={css`
+      padding: ${rhythm(0.2)} 0;
+      display: flex;
+      flex-wrap: wrap;
+    `}>
+      {
+        categories &&
+        categories.map((category, index) => (
+          <Badge key={index} text={category} link={`/blog/category/${category}`}/>
+        ))
+      }
+  </div>
+)
 
 const PostCard = ({post: {excerpt, fields, frontmatter}, type = 'small'}) => (
   <div>
@@ -119,18 +136,21 @@ const PostCard = ({post: {excerpt, fields, frontmatter}, type = 'small'}) => (
           <PostDescription>
             {excerpt}
           </PostDescription>
-          <Link
-            to={fields.slug}
-            aria-label={`View ${frontmatter.title}`}
-          >
-            <div
-              css={css`
-                display: flex;
-                justify-content: flex-end;
-              `}>
+          <div
+            css={css`
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            `}>
+            <PostCategories categories={fields.categories}/>
+
+            <Link
+              to={fields.slug}
+              aria-label={`View ${frontmatter.title}`}
+            >
               <small>Read</small>
-            </div>
-          </Link>
+            </Link>
+          </div>
         </LargePostCard> : null
     }
   </div>
