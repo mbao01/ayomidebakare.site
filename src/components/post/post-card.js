@@ -78,40 +78,42 @@ const PostCategories = ({categories}) => (
 
 const PostCard = ({post: {excerpt, fields, frontmatter}, type = 'small'}) => (
   <div>
-    {type === 'small' ?
-      <SmallPostCard>
-        <Link
-          to={fields.slug}
-          aria-label={`View ${frontmatter.title}`}
-        >
-          <PostTitle>{frontmatter.title}</PostTitle>
-        </Link>
-        <PostDescription>
-          {excerpt}
-        </PostDescription>
-        <div
-          css={css`
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-          `}>
-          <PostCategories categories={fields.categories}/>
-
+    {
+      (type === 'small' &&
+        <SmallPostCard>
           <Link
             to={fields.slug}
             aria-label={`View ${frontmatter.title}`}
           >
-            <small>Read</small>
+            <PostTitle>{frontmatter.title}</PostTitle>
           </Link>
-        </div>
-        <Share
-          type='icon'
-          url={`${config.siteUrl}${fields.slug}`}
-          title={frontmatter.title}
-          twitterHandle={config.twitterHandle}
-        />
-      </SmallPostCard> :
-      type === 'large' ?
+          <PostDescription>
+            {excerpt}
+          </PostDescription>
+          <div
+            css={css`
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            `}>
+            <PostCategories categories={fields.categories}/>
+
+            <Link
+              to={fields.slug}
+              aria-label={`View ${frontmatter.title}`}
+            >
+              <small>Read</small>
+            </Link>
+          </div>
+          <Share
+            type='icon'
+            url={`${config.siteUrl}${fields.slug}`}
+            title={frontmatter.title}
+            twitterHandle={config.twitterHandle}
+          />
+        </SmallPostCard>)
+      ||
+      (type === 'large' &&
         <LargePostCard>
           {frontmatter.banner && (
             <PostBanner>
@@ -153,7 +155,7 @@ const PostCard = ({post: {excerpt, fields, frontmatter}, type = 'small'}) => (
               <small>Read</small>
             </Link>
           </div>
-        </LargePostCard> : null
+        </LargePostCard>)
     }
   </div>
 )
