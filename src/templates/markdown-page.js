@@ -16,7 +16,7 @@ function MarkdownPage({children, pageContext: {frontmatter}}) {
         headerColor={theme.colors.primary}
         headerBg={theme.brand.secondary}
       >
-        <Container>{children}</Container>
+        <Container maxWidth={700}>{children}</Container>
       </Layout>
     </>
   )
