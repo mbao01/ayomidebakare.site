@@ -1,25 +1,30 @@
 {
-    "extends": [
-      "kentcdodds",
-      "kentcdodds/react",
-      "kentcdodds/jsx-a11y",
-      "kentcdodds/jest"
-    ],
-    "rules": {
-      "import/no-unresolved": "off",
-      "react/prop-types": "off",
-      "react/display-name": "off",
-      "react/no-unescaped-entities": "off",
-      "react/jsx-pascal-case": "off",
-      "import/order": "off",
-      "babel/camelcase": "off",
-      "jsx-a11y/label-has-for": "off",
-      "jsx-a11y/click-events-have-key-events": "off",
-      "max-lines-per-function": "off",
-      "babel/quotes": "off",
-      "consistent-return": "off",
-      "valid-jsdoc": [0, {
-        "requireReturn": false
-      }]
-    }
-  }
+  "extends": [
+    "kentcdodds",
+    "kentcdodds/react",
+    "kentcdodds/jsx-a11y",
+    "kentcdodds/jest",
+    "prettier"
+  ],
+  "rules": {
+    "import/no-unresolved": "off",
+    "react/prop-types": "off",
+    "react/display-name": "off",
+    "react/no-unescaped-entities": "off",
+    "react/jsx-pascal-case": "off",
+    "import/order": "off",
+    "babel/camelcase": "off",
+    "jsx-a11y/label-has-for": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "max-lines-per-function": "off",
+    "babel/quotes": "off",
+    "consistent-return": "off",
+    "valid-jsdoc": [0, {
+      "requireReturn": false
+    }],
+    "prettier/prettier": "error"
+  },
+  "plugins": [
+    "prettier"
+  ]
+}
