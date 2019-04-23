@@ -12,7 +12,7 @@ services:
     networks:
       - ayomidebakare_network
     volumes:
-      - .:/ayomidebakare.site-blog
+      - .:/ayomidebakare.site
 
 networks:
   ayomidebakare_network:

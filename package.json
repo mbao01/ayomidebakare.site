@@ -1,9 +1,9 @@
 {
-  "name": "ayomidebakare.site-blog",
+  "name": "ayomidebakare.site",
   "description": "Ayomide's site",
   "version": "1.0.0",
   "author": "Bakare Ayomide Olalandu <bakkareayomideo@gmail.com> (https://ayomidebakare.site/blog)",
-  "repository": "https://github.com/mbao01/ayomidebakare.site-blog",
+  "repository": "https://github.com/mbao01/ayomidebakare.site",
   "dependencies": {
     "@emotion/core": "^10.0.5",
     "@emotion/styled": "^10.0.5",
