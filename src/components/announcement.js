@@ -1,9 +1,9 @@
 import React from 'react'
-import {StaticQuery, graphql} from 'gatsby'
-import {rhythm} from '../lib/typography';
+import { StaticQuery, graphql } from 'gatsby'
+import { rhythm } from '../lib/typography'
 import theme from '../../config/theme'
-import MDXRenderer from 'gatsby-mdx/mdx-renderer';
-import styled from '@emotion/styled';
+import MDXRenderer from 'gatsby-mdx/mdx-renderer'
+import styled from '@emotion/styled'
 
 const AnnouncementContainer = styled.div`
   position: relative;
@@ -19,10 +19,10 @@ const AnnouncementContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 5px rgba(20, 20, 20, .1);
-    background-color: ${({fields}) => fields.typeColor || theme.colors.green};
+    box-shadow: 0 0 5px rgba(20, 20, 20, 0.1);
+    background-color: ${({ fields }) => fields.typeColor || theme.colors.green};
   }
-  
+
   > pre {
     position: relative;
     max-width: ${rhythm(15)};
@@ -33,10 +33,10 @@ const AnnouncementContainer = styled.div`
     white-space: pre-wrap;
     word-wrap: break-word;
     a {
-      color: ${({fields}) => fields.typeColor || theme.colors.green};
+      color: ${({ fields }) => fields.typeColor || theme.colors.green};
       text-decoration: underline;
     }
-  }  
+  }
 `
 
 /**
@@ -51,10 +51,10 @@ const Announcement = () => {
         query {
           announcements: allMdx(
             filter: {
-              frontmatter: {published: {ne: false}}
-              fileAbsolutePath: {regex: "//content/announcements//"}
+              frontmatter: { published: { ne: false } }
+              fileAbsolutePath: { regex: "//content/announcements//" }
             }
-            sort: {order: DESC, fields: [frontmatter___date]}
+            sort: { order: DESC, fields: [frontmatter___date] }
           ) {
             edges {
               node {
@@ -82,28 +82,32 @@ const Announcement = () => {
           }
         }
       `}
-      render={({announcements}) => (
-        announcements && announcements.edges &&
-        renderAnnouncements(announcements.edges.filter(({node}) =>
-          new Date(node.fields.expiryDate) > Date.now()))
-      )}
+      render={({ announcements }) =>
+        announcements &&
+        announcements.edges &&
+        renderAnnouncements(
+          announcements.edges.filter(
+            ({ node }) => new Date(node.fields.expiryDate) > Date.now(),
+          ),
+        )
+      }
     />
   )
 }
 
 /** Helpers **/
 function renderAnnouncements(announcements) {
-  return (announcements && announcements.map(({node: {id, code, fields}}) =>
-    <AnnouncementContainer fields={fields} key={id}>
-      {
-        fields.type &&
-        <small> {fields.type} </small>
-      }
-      <pre>
-        <MDXRenderer>{code.body}</MDXRenderer>
-      </pre>
-    </AnnouncementContainer>
-  ))
+  return (
+    announcements &&
+    announcements.map(({ node: { id, code, fields } }) => (
+      <AnnouncementContainer fields={fields} key={id}>
+        {fields.type && <small> {fields.type} </small>}
+        <pre>
+          <MDXRenderer>{code.body}</MDXRenderer>
+        </pre>
+      </AnnouncementContainer>
+    ))
+  )
 }
 
 export default Announcement

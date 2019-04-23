@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 services:
   ayomidebakare_service:
     build: .
@@ -7,12 +7,12 @@ services:
     stdin_open: true
     tty: true
     ports:
-    - 5553:5553
-    - 5552:5552
+      - 5553:5553
+      - 5552:5552
     networks:
-    - ayomidebakare_network
+      - ayomidebakare_network
     volumes:
-    - .:/ayomidebakare.site-blog
+      - .:/ayomidebakare.site-blog
 
 networks:
   ayomidebakare_network:

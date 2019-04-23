@@ -3,9 +3,9 @@ import Container from '../components/container'
 import SEO from '../components/seo'
 import Layout from '../components/layout'
 import theme from '../../config/theme'
-import {graphql} from 'gatsby';
+import { graphql } from 'gatsby'
 
-function MarkdownPage({children, pageContext: {frontmatter}}) {
+function MarkdownPage({ children, pageContext: { frontmatter } }) {
   return (
     <>
       <SEO frontmatter={frontmatter} />
