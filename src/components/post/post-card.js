@@ -1,19 +1,19 @@
 import React from 'react'
 import Link from '../link'
-import {css} from '@emotion/core'
+import { css } from '@emotion/core'
 import styled from '@emotion/styled'
-import {rhythm} from '../../lib/typography'
+import { rhythm } from '../../lib/typography'
 import theme from '../../../config/theme'
 import config from '../../../config/website'
 import Share from '../share'
-import {bpMaxSM} from '../../lib/breakpoints'
+import { bpMaxSM } from '../../lib/breakpoints'
 import Img from 'gatsby-image'
 import Badge from '../badge'
 
 const SmallPostCard = styled.div`
   background-color: #fafafa;
   margin-bottom: ${rhythm(1)};
-  padding: ${rhythm(.4)} ${rhythm(1)};
+  padding: ${rhythm(0.4)} ${rhythm(1)};
 `
 
 const LargePostCard = styled.div`
@@ -60,101 +60,94 @@ const PostBanner = styled.div`
   display: inline-block;
 `
 
-const PostCategories = ({categories}) => (
+const PostCategories = ({ categories }) => (
   <div
     css={css`
       padding: ${rhythm(0.2)} 0;
       display: flex;
       flex-wrap: wrap;
-    `}>
-      {
-        categories &&
-        categories.map((category, index) => (
-          <Badge key={index} text={category} link={`/blog/category/${category}`}/>
-        ))
-      }
+    `}
+  >
+    {categories &&
+      categories.map((category, index) => (
+        <Badge
+          key={index}
+          text={category}
+          link={`/blog/category/${category}`}
+        />
+      ))}
   </div>
 )
 
-const PostCard = ({post: {excerpt, fields, frontmatter}, type = 'small'}) => (
+const PostCard = ({
+  post: { excerpt, fields, frontmatter },
+  type = 'small',
+}) => (
   <div>
-    {type === 'small' ?
+    {type === 'small' ? (
       <SmallPostCard>
-        <Link
-          to={fields.slug}
-          aria-label={`View ${frontmatter.title}`}
-        >
+        <Link to={fields.slug} aria-label={`View ${frontmatter.title}`}>
           <PostTitle>{frontmatter.title}</PostTitle>
         </Link>
-        <PostDescription>
-          {excerpt}
-        </PostDescription>
+        <PostDescription>{excerpt}</PostDescription>
         <div
           css={css`
             display: flex;
             justify-content: space-between;
             align-items: center;
-          `}>
-          <PostCategories categories={fields.categories}/>
+          `}
+        >
+          <PostCategories categories={fields.categories} />
 
-          <Link
-            to={fields.slug}
-            aria-label={`View ${frontmatter.title}`}
-          >
+          <Link to={fields.slug} aria-label={`View ${frontmatter.title}`}>
             <small>Read</small>
           </Link>
         </div>
         <Share
-          type='icon'
+          type="icon"
           url={`${config.siteUrl}${fields.slug}`}
           title={frontmatter.title}
           twitterHandle={config.twitterHandle}
         />
-      </SmallPostCard> :
-      type === 'large' ?
-        <LargePostCard>
-          {frontmatter.banner && (
-            <PostBanner>
-              <Link
-                aria-label={`View ${frontmatter.title} article`}
-                to={`${fields.slug}`}
-              >
-                <Img sizes={frontmatter.banner.childImageSharp.fluid}/>
-              </Link>
-              <div>
-                <small>{frontmatter.bannerCredit}</small>
-              </div>
-            </PostBanner>
-          )}
-          <Link
-            aria-label={`View ${frontmatter.title} article`}
-            to={`${fields.slug}`}
-          >
-            <PostTitle>
-              {frontmatter.title}
-            </PostTitle>
-          </Link>
-          {/* <small>{post.frontmatter.date}</small> */}
-          <PostDescription>
-            {excerpt}
-          </PostDescription>
-          <div
-            css={css`
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            `}>
-            <PostCategories categories={fields.categories}/>
-
+      </SmallPostCard>
+    ) : type === 'large' ? (
+      <LargePostCard>
+        {frontmatter.banner && (
+          <PostBanner>
             <Link
-              to={fields.slug}
-              aria-label={`View ${frontmatter.title}`}
+              aria-label={`View ${frontmatter.title} article`}
+              to={`${fields.slug}`}
             >
-              <small>Read</small>
+              <Img sizes={frontmatter.banner.childImageSharp.fluid} />
             </Link>
-          </div>
-        </LargePostCard> : null
-    }
+            <div>
+              <small>{frontmatter.bannerCredit}</small>
+            </div>
+          </PostBanner>
+        )}
+        <Link
+          aria-label={`View ${frontmatter.title} article`}
+          to={`${fields.slug}`}
+        >
+          <PostTitle>{frontmatter.title}</PostTitle>
+        </Link>
+        {/* <small>{post.frontmatter.date}</small> */}
+        <PostDescription>{excerpt}</PostDescription>
+        <div
+          css={css`
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          `}
+        >
+          <PostCategories categories={fields.categories} />
+
+          <Link to={fields.slug} aria-label={`View ${frontmatter.title}`}>
+            <small>Read</small>
+          </Link>
+        </div>
+      </LargePostCard>
+    ) : null}
   </div>
 )
 

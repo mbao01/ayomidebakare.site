@@ -2,9 +2,11 @@
   .responsive-header {
     position: relative;
   }
+
   .responsive-header {
     padding-bottom: 70px;
   }
+
   .responsive-header > div {
     display: flex !important;
     position: absolute;

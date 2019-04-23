@@ -70,7 +70,9 @@
     "babel-preset-gatsby": "^0.1.6",
     "eslint-config-prettier": "^4.1.0",
     "eslint-plugin-prettier": "^3.0.1",
-    "prettier": "1.14.3"
+    "husky": "1.3.1",
+    "prettier": "1.17.0",
+    "pretty-quick": "1.10.0"
   },
   "keywords": [
     "Ayomide",
@@ -83,6 +85,13 @@
     "develop": "gatsby develop -p 5553 -H 0.0.0.0",
     "start": "serve public/",
     "lint": "eslint .",
-    "now-build": "npm run build"
+    "now-build": "npm run build",
+    "prettier": "prettier --config .prettierrc --write \"**/*{.js,.jsx,.md,.mdx,.json,.scss}\"",
+    "prettier:check": "prettier --config .prettierrc --check \"**/*{.js,.jsx,.md,.mdx,.json,.scss}\""
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   }
 }

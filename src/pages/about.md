@@ -10,13 +10,12 @@ I started my career in software engineering late 2012 when I took on some [youtu
 
 Fast forward to 2018, 6 years after college (should be 5, thanks OAU) I graduated with a Bachelor's degree in Electronic and Electrical Engineering from OAU, I decided to become a founder full-time. I cofounded [InvenTech](https://inventech.ng), launched [Invent One](https://inventone.ng) and currently working on [ETrack](https://etrack.africa)
 
-So far I have worked for [Mettalloids Limited](https://mettalloids.com), [Konga Online Shopping Limited](https://konga.com), [InvenTech](https://inventech.ng) and other ["Freelance jobs"](_ "Non existing").
+So far I have worked for [Mettalloids Limited](https://mettalloids.com), [Konga Online Shopping Limited](https://konga.com), [InvenTech](https://inventech.ng) and other ["Freelance jobs"](_ 'Non existing').
 
 #### Appreciation
 
 My achievment is largely due to family, friends, colleagues and the opensource movement.
 My special appreciation goes to [Everything Open Source](https://opencollective.com/), [IEEE](https://ieee.org), [Google](https://google.com) (groups and programs - GDG, ALCwithGoogle, etc), [Udacity](https://udacity.com), [Coursera](https://coursera.org)
-
 
 And most important, to friends, colleagues and family that've in anyway made me possible, 💓 you!
 
@@ -24,8 +23,8 @@ And most important, to friends, colleagues and family that've in anyway made me 
 
 You can send an email
 
-📨 [`i@ayomidebakare.site`](mailto:i@ayomidebakare.site)
+📨 [`hi@ayomidebakare.site`](mailto:hi@ayomidebakare.site)
 
 📨 [`ayomidebakare@etrack.africa`](mailto:ayomidebakare@etrack.africa)
 
-or on Twitter [@mbao_01](https://twitter.com/mbao_01 "@mbao_01")
+or on Twitter [@mbao_01](https://twitter.com/mbao_01 '@mbao_01')

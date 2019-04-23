@@ -1,8 +1,8 @@
 import React from 'react'
-import {css} from '@emotion/core'
-import {UnsubscribeIllustration} from '../components/confirm-message/illustrations'
+import { css } from '@emotion/core'
+import { UnsubscribeIllustration } from '../components/confirm-message/illustrations'
 import Message from '../components/confirm-message/message'
-import { rhythm } from '../lib/typography';
+import { rhythm } from '../lib/typography'
 
 export default () => (
   <div
@@ -14,11 +14,12 @@ export default () => (
       p {
         max-width: 440px;
       }
-    `}>
+    `}
+  >
     <Message
       illustration={UnsubscribeIllustration}
-      body={'You just hit a route that doesn\'t exist... the sadness.'}
-      title='NOT FOUND'
+      body={"You just hit a route that doesn't exist... the sadness."}
+      title="NOT FOUND"
       fullscreen={true}
     />
   </div>
