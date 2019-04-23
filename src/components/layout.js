@@ -1,15 +1,15 @@
-import React, {Fragment} from 'react'
+import React, { Fragment } from 'react'
 import Helmet from 'react-helmet'
-import {graphql, StaticQuery} from 'gatsby'
-import {MDXProvider} from '@mdx-js/tag'
-import {Global, css} from '@emotion/core'
-import {ThemeProvider} from 'emotion-theming'
-import {bpMaxSM} from '../lib/breakpoints'
+import { graphql, StaticQuery } from 'gatsby'
+import { MDXProvider } from '@mdx-js/tag'
+import { Global, css } from '@emotion/core'
+import { ThemeProvider } from 'emotion-theming'
+import { bpMaxSM } from '../lib/breakpoints'
 import theme from '../../config/theme'
 import mdxComponents from './mdx'
 import Header from './header'
 import reset from '../lib/reset'
-import {fonts} from '../lib/typography'
+import { fonts } from '../lib/typography'
 import config from '../../config/website'
 import Footer from './footer'
 import './styles.css'
@@ -104,21 +104,20 @@ export const globalStyles = css`
   ${reset};
 `
 
-function Layout(
-  {
-    data,
-    frontmatter = {},
-    children,
-    dark,
-    headerBg,
-    headerColor,
-    noFooter,
-    noSubscribeForm = false,
-  }) {
+function Layout({
+  data,
+  frontmatter = {},
+  children,
+  dark,
+  headerBg,
+  headerColor,
+  noFooter,
+  noSubscribeForm = false,
+}) {
   const {
     site: {
       siteMetadata,
-      siteMetadata: {description: siteDescription, keywords: siteKeywords},
+      siteMetadata: { description: siteDescription, keywords: siteKeywords },
     },
   } = data
 
@@ -128,11 +127,10 @@ function Layout(
     title = config.siteTitle,
   } = frontmatter
 
-
   return (
     <ThemeProvider theme={theme}>
       <Fragment>
-        <Global styles={globalStyles}/>
+        <Global styles={globalStyles} />
         <div
           css={css`
             display: flex;
@@ -144,11 +142,11 @@ function Layout(
           <Helmet
             title={title || config.siteTitle}
             meta={[
-              {name: 'description', content: description},
-              {name: 'keywords', content: keywords},
+              { name: 'description', content: description },
+              { name: 'keywords', content: keywords },
             ]}
           >
-            <html lang="en"/>
+            <html lang="en" />
             <noscript>This site runs best with JavaScript enabled.</noscript>
           </Helmet>
           <Header

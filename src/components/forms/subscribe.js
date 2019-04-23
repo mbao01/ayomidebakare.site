@@ -1,4 +1,4 @@
-import React, {useReducer, useEffect, useState} from 'react'
+import React, { useReducer, useEffect, useState } from 'react'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { css } from '@emotion/core'
@@ -22,34 +22,35 @@ const PostSubmissionMessage = () => {
       css={css`
         max-width: 280px;
         color: ${theme.colors.white};
-      `}>
+      `}
+    >
       <Message
         illustration={PleaseConfirmIllustration}
-        title='Great, one last thing...'
-        body='I just sent you an email with the confirmation link. 
-          **Please check your inbox!**'
+        title="Great, one last thing..."
+        body="I just sent you an email with the confirmation link. 
+          **Please check your inbox!**"
       />
     </div>
   )
 }
 
-function fetchReducer(state, {type, response, error}) {
+function fetchReducer(state, { type, response, error }) {
   switch (type) {
     case 'fetching': {
-      return {error: null, response: null, pending: true}
+      return { error: null, response: null, pending: true }
     }
     case 'success': {
-      return {error: null, response, pending: false}
+      return { error: null, response, pending: false }
     }
     case 'error': {
-      return {error, response: null, pending: false}
+      return { error, response: null, pending: false }
     }
     default:
       throw new Error(`Unsupported type: ${type}`)
   }
 }
 
-function useFetch({url, body, uKey, mixpanel}) {
+function useFetch({ url, body, uKey, mixpanel }) {
   const [state, dispatch] = useReducer(fetchReducer, {
     error: null,
     response: null,
@@ -59,7 +60,7 @@ function useFetch({url, body, uKey, mixpanel}) {
 
   useEffect(() => {
     if (url && bodyString) {
-      dispatch({type: 'fetching'})
+      dispatch({ type: 'fetching' })
       fetch(url, {
         method: 'post',
         body: bodyString,
@@ -69,32 +70,34 @@ function useFetch({url, body, uKey, mixpanel}) {
         },
       })
         .then(r => r.json())
-        .then(
-          response => {
-            if (mixpanel) {
-              mixpanel.people.set_once(body)
-              mixpanel.identify(body.email_address)
-              mixpanel.track(uKey, {
-                ...body,
-                response
-              })
-            }
-            return dispatch({type: 'success', response})
+        .then(response => {
+          if (mixpanel) {
+            mixpanel.people.set_once(body)
+            mixpanel.identify(body.email_address)
+            mixpanel.track(uKey, {
+              ...body,
+              response,
+            })
           }
-        ).catch(error => dispatch({type: 'error', error}))
+          return dispatch({ type: 'success', response })
+        })
+        .catch(error => dispatch({ type: 'error', error }))
     }
   }, [url, bodyString, body, uKey, mixpanel])
 
   return state
 }
 
-const Subscribe = ({uKey = 'newsletter', header = 'Join the Newsletter'}, {mixpanel}) => {
+const Subscribe = (
+  { uKey = 'newsletter', header = 'Join the Newsletter' },
+  { mixpanel },
+) => {
   const [values, setValues] = useState()
-  const {pending, response, error} = useFetch({
+  const { pending, response, error } = useFetch({
     url: `https://app.convertkit.com/forms/903814/subscriptions`,
     body: values,
     uKey,
-    mixpanel
+    mixpanel,
   })
 
   const errorMessage = error ? 'Something went wrong!' : null
@@ -120,7 +123,7 @@ const Subscribe = ({uKey = 'newsletter', header = 'Join the Newsletter'}, {mixpa
         initialValues={{
           email_address: '',
           first_name: '',
-          created: Date.now()
+          created: Date.now(),
         }}
         validationSchema={SubscribeSchema}
         onSubmit={setValues}
@@ -203,11 +206,7 @@ const Subscribe = ({uKey = 'newsletter', header = 'Join the Newsletter'}, {mixpa
                     type="email"
                   />
                 </label>
-                <button
-                  data-element="submit"
-                  type="submit"
-                  disabled={pending}
-                >
+                <button data-element="submit" type="submit" disabled={pending}>
                   {!pending && 'Subscribe'}
                   {pending && 'Subscribing...'}
                 </button>
@@ -216,15 +215,21 @@ const Subscribe = ({uKey = 'newsletter', header = 'Join the Newsletter'}, {mixpa
             {submitted && !pending && (
               <PostSubmissionMessage response={response} />
             )}
-            {errorMessage && <div css={css`
-                color: ${theme.colors.red};
-                background-color: ${theme.colors.white};
-                padding: 0 ${rhythm(0.2)};
-                font-size: 80%;
-                text-align: center;
-                font-weight: bold;
-                border-radius: 2px;
-              `}>{errorMessage}</div>}
+            {errorMessage && (
+              <div
+                css={css`
+                  color: ${theme.colors.red};
+                  background-color: ${theme.colors.white};
+                  padding: 0 ${rhythm(0.2)};
+                  font-size: 80%;
+                  text-align: center;
+                  font-weight: bold;
+                  border-radius: 2px;
+                `}
+              >
+                {errorMessage}
+              </div>
+            )}
           </div>
         )}
       />
@@ -233,7 +238,7 @@ const Subscribe = ({uKey = 'newsletter', header = 'Join the Newsletter'}, {mixpa
 }
 
 Subscribe.contextTypes = {
-  mixpanel: PropTypes.object
+  mixpanel: PropTypes.object,
 }
 
 export default cold(Subscribe)

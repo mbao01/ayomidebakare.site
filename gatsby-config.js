@@ -15,13 +15,16 @@ module.exports = {
     description: config.siteDescription,
     keywords: ['Video Blogger'],
     canonicalUrl: config.siteUrl,
-    hotRoutes: [{
-      name: 'Blog',
-      url: '/blog'
-    }, {
-      name: 'About',
-      url: '/about'
-    }],
+    hotRoutes: [
+      {
+        name: 'Blog',
+        url: '/blog',
+      },
+      {
+        name: 'About',
+        url: '/about',
+      },
+    ],
     image: config.siteLogo,
     author: {
       name: config.author,
@@ -65,7 +68,7 @@ module.exports = {
         },
         extensions: ['.mdx', '.md', '.markdown'],
         gatsbyRemarkPlugins: [
-          {resolve: 'gatsby-remark-copy-linked-files'},
+          { resolve: 'gatsby-remark-copy-linked-files' },
           {
             resolve: 'gatsby-remark-images',
             options: {
@@ -113,7 +116,7 @@ module.exports = {
         // optional fields, default values
         debug: false, // if true activate debug mode on mixpanel library
         enableOnDevMode: false, // if false mixpanel will be activated on NODE_ENV=production only
-        pageViews: 'all' // see below
+        pageViews: 'all', // see below
       },
     },
     {
@@ -133,7 +136,7 @@ module.exports = {
         `,
         feeds: [
           {
-            serialize: ({query: {site, allMdx}}) => {
+            serialize: ({ query: { site, allMdx } }) => {
               return allMdx.edges.map(edge => {
                 return {
                   ...edge.node.frontmatter,
@@ -142,7 +145,7 @@ module.exports = {
                     date: edge.node.fields.date,
                     url: site.siteMetadata.siteUrl + edge.node.fields.slug,
                     guid: site.siteMetadata.siteUrl + edge.node.fields.slug,
-                  }
+                  },
                 }
               })
             },

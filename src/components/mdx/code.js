@@ -36,7 +36,7 @@ const Code = ({ codeString, language, ...props }) => {
                   {i + 1}
                 </span>
                 {line.map((token, key) => (
-                  <span {...getTokenProps({ token, key })} key={key}/>
+                  <span {...getTokenProps({ token, key })} key={key} />
                 ))}
               </div>
             ))}

@@ -15,9 +15,9 @@ export default ({ data: { site, latestArticle } }) => {
         <Message
           fullscreen
           illustration={PleaseConfirmIllustration}
-          title='Great, one last thing...'
-          body='We just sent you an email with the confirmation link. 
-          **Please check your inbox!**'
+          title="Great, one last thing..."
+          body="We just sent you an email with the confirmation link. 
+          **Please check your inbox!**"
         />
       </div>
       <div>
@@ -26,8 +26,8 @@ export default ({ data: { site, latestArticle } }) => {
             fullscreen
             key={post.id}
             illustration={ThankYouIllustration}
-            title='Success! Thank you!'
-            body='In case you haven’t seen already, here’s my latest article:'
+            title="Success! Thank you!"
+            body="In case you haven’t seen already, here’s my latest article:"
             articleTitle={post.frontmatter.title}
             articleSlug={post.frontmatter.slug}
           />
@@ -37,9 +37,9 @@ export default ({ data: { site, latestArticle } }) => {
         <Message
           fullscreen
           illustration={UnsubscribeIllustration}
-          title='You have been unsubscribed.'
-          body='As per your request, you have been unsubscribed from all our mailings.'
-          note='Changed your mind? [Click here to resubscribe](#)'
+          title="You have been unsubscribed."
+          body="As per your request, you have been unsubscribed from all our mailings."
+          note="Changed your mind? [Click here to resubscribe](#)"
         />
       </div>
     </Layout>

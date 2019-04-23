@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from './link'
-import {css} from '@emotion/core'
-import {rhythm} from '../lib/typography'
+import { css } from '@emotion/core'
+import { rhythm } from '../lib/typography'
 import theme from '../../config/theme'
 
 const abBadge = css`
@@ -14,24 +14,23 @@ const abBadge = css`
     background: ${theme.colors.primary};
     font-size: 12px;
 
-    :hover, :focus {
+    :hover,
+    :focus {
       color: ${theme.colors.white};
       background: ${theme.colors.link_color_hover};
     }
   }
 `
 
-const Badge = ({text, link}) => (
-  <small
-    css={abBadge}>
-    {link ?
-      <Link
-        aria-label={`View ${text}`}
-        to={link}
-      >
+const Badge = ({ text, link }) => (
+  <small css={abBadge}>
+    {link ? (
+      <Link aria-label={`View ${text}`} to={link}>
         {text}
-      </Link> : {text}
-    }
+      </Link>
+    ) : (
+      { text }
+    )}
   </small>
 )
 

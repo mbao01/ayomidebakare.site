@@ -1,14 +1,14 @@
 const path = require('path')
 const _ = require('lodash')
 const slugify = require('@sindresorhus/slugify')
-const {createFilePath} = require('gatsby-source-filesystem')
+const { createFilePath } = require('gatsby-source-filesystem')
 const remark = require('remark')
 const stripMarkdownPlugin = require('strip-markdown')
 
 const PAGINATION_OFFSET = 7
 
 const createPosts = (createPage, createRedirect, edges) => {
-  edges.forEach(({node}, i) => {
+  edges.forEach(({ node }, i) => {
     const prev = i === 0 ? null : edges[i - 1].node
     const next = i === edges.length - 1 ? null : edges[i + 1].node
     const pagePath = node.fields.slug
@@ -36,7 +36,14 @@ const createPosts = (createPage, createRedirect, edges) => {
   })
 }
 
-const createPaginatedPages = (createPage, edges, rootPathPrefix, pathPrefix, paginationTemplate, context) => {
+const createPaginatedPages = (
+  createPage,
+  edges,
+  rootPathPrefix,
+  pathPrefix,
+  paginationTemplate,
+  context,
+) => {
   const pages = edges.reduce((acc, value, index) => {
     const pageIndex = Math.floor(index / PAGINATION_OFFSET)
 
@@ -51,7 +58,8 @@ const createPaginatedPages = (createPage, edges, rootPathPrefix, pathPrefix, pag
 
   pages.forEach((page, index) => {
     const previousPagePath = `${pathPrefix}/${index + 1}`
-    const nextPagePath = index === 1 ? rootPathPrefix : `${pathPrefix}/${index - 1}`
+    const nextPagePath =
+      index === 1 ? rootPathPrefix : `${pathPrefix}/${index - 1}`
 
     createPage({
       path: index > 0 ? `${pathPrefix}/${index}` : `${rootPathPrefix}`,
@@ -60,7 +68,8 @@ const createPaginatedPages = (createPage, edges, rootPathPrefix, pathPrefix, pag
         pagination: {
           page,
           nextPagePath: index === 0 ? null : nextPagePath,
-          previousPagePath: index === pages.length - 1 ? null : previousPagePath,
+          previousPagePath:
+            index === pages.length - 1 ? null : previousPagePath,
           pageCount: pages.length,
           pathPrefix,
         },
@@ -70,15 +79,21 @@ const createPaginatedPages = (createPage, edges, rootPathPrefix, pathPrefix, pag
   })
 }
 
-const createCategoryPages = (createPage, edges, pathPrefix, paginationTemplate, context) => {
+const createCategoryPages = (
+  createPage,
+  edges,
+  pathPrefix,
+  paginationTemplate,
+  context,
+) => {
   const categoryPages = edges.reduce((acc, value) => {
     const categories = value.node.fields.categories || []
 
-    categories.forEach((category) => {
+    categories.forEach(category => {
       if (!acc[category]) {
         acc[category] = []
       }
-  
+
       acc[category].push(value)
     })
 
@@ -91,7 +106,10 @@ const createCategoryPages = (createPage, edges, pathPrefix, paginationTemplate, 
 
   sortedCategories.forEach((category, index) => {
     const previousCategoryPath = `${pathPrefix}/${sortedCategories[index + 1]}`
-    const nextCategoryPath = index === 1 ? `${pathPrefix}/${category}` : `${pathPrefix}/${sortedCategories[index - 1]}`
+    const nextCategoryPath =
+      index === 1
+        ? `${pathPrefix}/${category}`
+        : `${pathPrefix}/${sortedCategories[index - 1]}`
 
     createPaginatedPages(
       createPage,
@@ -103,11 +121,12 @@ const createCategoryPages = (createPage, edges, pathPrefix, paginationTemplate, 
         category: {
           category,
           nextCategoryPath: index === 0 ? null : nextCategoryPath,
-          previousCategoryPath: index === sortedCategories.length - 1 ? null : previousCategoryPath,
+          previousCategoryPath:
+            index === sortedCategories.length - 1 ? null : previousCategoryPath,
           categoryPathPrefix: pathPrefix,
         },
         ...context,
-      }
+      },
     )
   })
 }
@@ -119,13 +138,13 @@ function stripMarkdown(markdownString) {
     .toString()
 }
 
-function createBlogPages({blogPath, data, paginationTemplate, actions}) {
+function createBlogPages({ blogPath, data, paginationTemplate, actions }) {
   if (!data || _.isEmpty(data.edges)) {
     throw new Error('There are no posts!')
   }
 
-  const {edges} = data
-  const {createRedirect, createPage} = actions
+  const { edges } = data
+  const { createRedirect, createPage } = actions
 
   createPosts(createPage, createRedirect, edges)
   createPaginatedPages(
@@ -138,26 +157,20 @@ function createBlogPages({blogPath, data, paginationTemplate, actions}) {
       categories: [],
     },
   )
-  createCategoryPages(
-    actions.createPage,
-    edges,
-    blogPath,
-    paginationTemplate,
-    {
-      categories: [],
-    },
-  )
+  createCategoryPages(actions.createPage, edges, blogPath, paginationTemplate, {
+    categories: [],
+  })
   return null
 }
 
-exports.onCreateNode = ({node, getNode, actions}) => {
-  const {createNodeField} = actions
+exports.onCreateNode = ({ node, getNode, actions }) => {
+  const { createNodeField } = actions
 
   if (node.internal.type === `Mdx`) {
     const parent = getNode(node.parent)
     let slug =
       node.frontmatter.slug ||
-      createFilePath({node, getNode, basePath: `pages`})
+      createFilePath({ node, getNode, basePath: `pages` })
 
     //::TODO:: Find a wasy to scope fields to particular directory or Mdx data
     if (node.fileAbsolutePath.includes('content/blog/')) {
@@ -263,7 +276,9 @@ exports.onCreateNode = ({node, getNode, actions}) => {
     createNodeField({
       name: 'expiryDate',
       node,
-      value: node.frontmatter.expiryDate ? node.frontmatter.expiryDate.split(' ')[0] : '',
+      value: node.frontmatter.expiryDate
+        ? node.frontmatter.expiryDate.split(' ')[0]
+        : '',
     })
 
     createNodeField({
@@ -280,8 +295,8 @@ exports.onCreateNode = ({node, getNode, actions}) => {
   }
 }
 
-exports.createPages = async ({actions, graphql}) => {
-  const {data, errors} = await graphql(`
+exports.createPages = async ({ actions, graphql }) => {
+  const { data, errors } = await graphql(`
     fragment PostDetails on Mdx {
       fileAbsolutePath
       id
@@ -307,10 +322,10 @@ exports.createPages = async ({actions, graphql}) => {
     query {
       blog: allMdx(
         filter: {
-          frontmatter: {published: {ne: false}}
-          fileAbsolutePath: {regex: "//content/blog//"}
+          frontmatter: { published: { ne: false } }
+          fileAbsolutePath: { regex: "//content/blog//" }
         }
-        sort: {order: DESC, fields: [frontmatter___date]}
+        sort: { order: DESC, fields: [frontmatter___date] }
       ) {
         edges {
           node {
@@ -320,10 +335,10 @@ exports.createPages = async ({actions, graphql}) => {
       }
       announcements: allMdx(
         filter: {
-          frontmatter: {published: {ne: false}}
-          fileAbsolutePath: {regex: "//content/announcements//"}
+          frontmatter: { published: { ne: false } }
+          fileAbsolutePath: { regex: "//content/announcements//" }
         }
-        sort: {order: DESC, fields: [frontmatter___date]}
+        sort: { order: DESC, fields: [frontmatter___date] }
       ) {
         edges {
           node {
@@ -353,7 +368,7 @@ exports.createPages = async ({actions, graphql}) => {
     }
   `)
 
-  const {blog} = data
+  const { blog } = data
 
   if (errors) {
     return Promise.reject(errors)
@@ -363,11 +378,11 @@ exports.createPages = async ({actions, graphql}) => {
     blogPath: '/blog',
     data: blog,
     paginationTemplate: path.resolve(`src/templates/blog.js`),
-    actions
+    actions,
   })
-};
+}
 
-exports.onCreateWebpackConfig = ({actions}) => {
+exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
     resolve: {
       modules: [path.resolve(__dirname, 'src'), 'node_modules'],

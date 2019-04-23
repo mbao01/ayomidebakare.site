@@ -1,11 +1,11 @@
-let slides;
-let slideIndex = 1;
+let slides
+let slideIndex = 1
 
 function showSlidesByClick(n) {
-  n = n || slideIndex++;
+  n = n || slideIndex++
 
   if (slides) {
-    let i;
+    let i
     if (n > slides.length) {
       slideIndex = 1
     }
@@ -13,26 +13,26 @@ function showSlidesByClick(n) {
       slideIndex = slides.length
     }
     for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = 'none';
+      slides[i].style.display = 'none'
     }
-    slides[slideIndex - 1].style.display = 'block';
+    slides[slideIndex - 1].style.display = 'block'
   }
 }
 
 // Next Image
 export function plusSlides(n) {
-  showSlidesByClick(slideIndex += n);
+  showSlidesByClick((slideIndex += n))
 }
 
 // Previous Image
 export function currentSlide(n) {
-  showSlidesByClick(slideIndex = n);
+  showSlidesByClick((slideIndex = n))
 }
 
-export default (groupId) => {
+export default groupId => {
   if (groupId && typeof groupId === 'string') {
-    slides = (document.getElementById(groupId) || {}).children;
+    slides = (document.getElementById(groupId) || {}).children
 
-    setTimeout(showSlidesByClick, 3000); // Change image every 2 seconds
+    setTimeout(showSlidesByClick, 3000) // Change image every 2 seconds
   }
 }
