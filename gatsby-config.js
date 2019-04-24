@@ -47,6 +47,12 @@ module.exports = {
   },
   plugins: [
     {
+      resolve: `gatsby-plugin-env-variables`,
+      options: {
+        whitelist: ['MAILCHIMP_LIST_ID', 'MAILCHIMP_API_KEY'],
+      },
+    },
+    {
       resolve: 'gatsby-source-filesystem',
       options: {
         path: `${__dirname}/content/blog`,

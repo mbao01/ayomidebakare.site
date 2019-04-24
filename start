@@ -2,7 +2,7 @@
 IMAGE_NAME=ayomidebakare
 CONTAINER_NAME=ayomidebakare_main
 NETWORK_NAME=ayomidebakare_network
-PROJECT_LOC=/ayomidebakare.site-blog
+PROJECT_LOC=/ayomidebakare.site
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 DOC_ROOT="$SCRIPT_DIR"
 WEB_PORT=5553
@@ -49,10 +49,10 @@ function buildImage() {
         echo ">>>>>> Starting image ${IMAGE_NAME} build"
         # To build the project for the first time or when you add dependencies
         {
-            echo "Checking if 'inventone_network' exists ..."
+            echo "Checking if 'ayomidebakare_network' exists ..."
             docker network ls | grep "${NETWORK_NAME}"
         } || {
-            echo "Network does not exist, creating 'inventone_network' now ..."
+            echo "Network does not exist, creating 'ayomidebakare_network' now ..."
             docker network create ${NETWORK_NAME}
         }
         docker build -t ${IMAGE_NAME} ${DOC_ROOT}

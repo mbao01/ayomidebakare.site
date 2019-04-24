@@ -1,9 +1,9 @@
 {
-  "name": "ayomidebakare.site-blog",
+  "name": "ayomidebakare.site",
   "description": "Ayomide's site",
   "version": "1.0.0",
   "author": "Bakare Ayomide Olalandu <bakkareayomideo@gmail.com> (https://ayomidebakare.site/blog)",
-  "repository": "https://github.com/mbao01/ayomidebakare.site-blog",
+  "repository": "https://github.com/mbao01/ayomidebakare.site",
   "dependencies": {
     "@emotion/core": "^10.0.5",
     "@emotion/styled": "^10.0.5",
@@ -70,6 +70,7 @@
     "babel-preset-gatsby": "^0.1.6",
     "eslint-config-prettier": "^4.1.0",
     "eslint-plugin-prettier": "^3.0.1",
+    "gatsby-plugin-env-variables": "1.0.1",
     "husky": "1.3.1",
     "prettier": "1.17.0",
     "pretty-quick": "1.10.0"
