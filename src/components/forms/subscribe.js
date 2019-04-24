@@ -50,13 +50,13 @@ function fetchReducer(state, { type, response, error }) {
   }
 }
 
-function useFetch({ url, body, uKey, mixpanel }) {
+function useFetch({ url, body }) {
   const [state, dispatch] = useReducer(fetchReducer, {
     error: null,
     response: null,
     pending: false,
   })
-  const bodyString = JSON.stringify(body)
+  const bodyString = !!body && JSON.stringify(body)
 
   useEffect(() => {
     if (url && bodyString) {
@@ -67,23 +67,17 @@ function useFetch({ url, body, uKey, mixpanel }) {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          Authorization: `apikey ${process.env.MAILCHIMP_API_KEY}`,
+          mode: 'no-cors',
         },
       })
         .then(r => r.json())
         .then(response => {
-          if (mixpanel) {
-            mixpanel.people.set_once(body)
-            mixpanel.identify(body.email_address)
-            mixpanel.track(uKey, {
-              ...body,
-              response,
-            })
-          }
           return dispatch({ type: 'success', response })
         })
         .catch(error => dispatch({ type: 'error', error }))
     }
-  }, [url, bodyString, body, uKey, mixpanel])
+  }, [bodyString, url])
 
   return state
 }
@@ -93,17 +87,38 @@ const Subscribe = (
   { mixpanel },
 ) => {
   const [values, setValues] = useState()
+
+  const { email_address, first_name } = values || {}
+
+  const body =
+    email_address && first_name
+      ? {
+          email_address,
+          merge_fields: {
+            FIRST_NAME: first_name,
+          },
+        }
+      : null
+
   const { pending, response, error } = useFetch({
-    url: `https://app.convertkit.com/forms/903814/subscriptions`,
-    body: values,
+    url: process.env.MAILCHIMP_LIST_ID,
+    body,
     uKey,
-    mixpanel,
   })
 
   const errorMessage = error ? 'Something went wrong!' : null
   const submitted = Boolean(response)
 
   const successful = response && response.status === 'success'
+
+  if (submitted && mixpanel) {
+    mixpanel.people.set_once(body)
+    mixpanel.identify(body.email_address)
+    mixpanel.track(uKey, {
+      ...body,
+      response,
+    })
+  }
 
   return (
     <div>
