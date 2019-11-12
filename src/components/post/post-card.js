@@ -3,10 +3,8 @@ import Link from '../link'
 import { css } from '@emotion/core'
 import styled from '@emotion/styled'
 import { rhythm } from '../../lib/typography'
-import theme from '../../../config/theme'
-import config from '../../../config/website'
+import config from '../../config/website'
 import Share from '../share'
-import { bpMaxSM } from '../../lib/breakpoints'
 import Img from 'gatsby-image'
 import Badge from '../badge'
 
@@ -19,13 +17,13 @@ const SmallPostCard = styled.div`
 const LargePostCard = styled.div`
   :not(:first-of-type) {
     margin-top: 20px;
-    ${bpMaxSM} {
+    ${({ theme }) => theme.media.maxSM} {
       margin-top: 20px;
     }
   }
   :first-of-type {
     margin-top: 20px;
-    ${bpMaxSM} {
+    ${({ theme }) => theme.media.maxSM} {
       margin-top: 20px;
     }
   }
@@ -33,7 +31,7 @@ const LargePostCard = styled.div`
   }
   background: white;
   padding: 40px;
-  ${bpMaxSM} {
+  ${({ theme }) => theme.media.maxSM} {
     padding: 20px;
   }
   display: flex;
@@ -42,10 +40,10 @@ const LargePostCard = styled.div`
 
 const PostTitle = styled.h2`
   margin: ${rhythm(1)} 0 ${rhythm(0.4)} 0;
-  transition: ${theme.transition.ease};
+  transition: ${({ theme }) => theme.transition.ease};
   :hover {
-    color: ${theme.brand.primary};
-    transition: ${theme.transition.ease};
+    color: ${({ theme }) => theme.colors.primary.base};
+    transition: ${({ theme }) => theme.transition.ease};
   }
 `
 

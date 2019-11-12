@@ -5,7 +5,6 @@ import Container from '../components/container'
 import SEO from '../components/seo'
 import Layout from '../components/layout'
 import Link from '../components/link'
-import theme from '../../config/theme'
 import PostCard from '../components/post/post-card'
 
 const Blog = ({ data: { site, blog }, pageContext: { pagination } }) => {
@@ -22,14 +21,9 @@ const Blog = ({ data: { site, blog }, pageContext: { pagination } }) => {
     .filter(post => post !== undefined)
 
   return (
-    <Layout
-      site={site}
-      headerColor={theme.colors.primary}
-      headerBg={theme.brand.secondary}
-    >
+    <Layout site={site}>
       <SEO />
       <Container
-        noVerticalPadding
         css={css`
           a,
           p {

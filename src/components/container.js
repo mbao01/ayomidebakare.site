@@ -1,35 +1,19 @@
 import React from 'react'
-import { css } from '@emotion/core'
-import { bpMaxSM } from 'lib/breakpoints'
+import styled from '@emotion/styled'
 
-const Container = props => {
-  const {
-    maxWidth = 600,
-    noHorizontalPadding = false,
-    noVerticalPadding = false,
-    ...restProps
-  } = props
-  return (
-    <div
-      css={css`
-        width: 100%;
-        margin: 0 auto;
-        max-width: calc(
-          ${typeof maxWidth === 'number' ? `${maxWidth}px` : maxWidth} +
-            ${noHorizontalPadding ? 0 : 80}px
-        );
-        padding: ${noVerticalPadding ? 0 : '40'}px
-          ${noHorizontalPadding ? 0 : '40'}px;
-        ${bpMaxSM} {
-          padding: ${noVerticalPadding ? 0 : '20'}px
-            ${noHorizontalPadding ? 0 : '20'}px;
-        }
-      `}
-      {...restProps}
-    >
-      {props.children}
-    </div>
-  )
-}
+const Container = styled.div`
+  width: 100%;
+  margin: 0 auto;
+  max-width: calc(
+    ${({ maxWidth = 600, horizontalPadding }) =>
+      `${maxWidth + (horizontalPadding ? 0 : 80)}px`}
+  );
+  padding: ${({ verticalPadding, horizontalPadding }) =>
+    `${verticalPadding ? '40px' : 0} ${horizontalPadding ? '40px' : 0}`};
+  ${({ theme }) => theme.media.maxSM} {
+    padding: ${({ verticalPadding, horizontalPadding }) =>
+      `${verticalPadding ? '20px' : 0} ${horizontalPadding ? '20px' : 0}`};
+  }
+`
 
-export default Container
+export default props => <Container {...props}>{props.children}</Container>

@@ -1,7 +1,6 @@
 import React from 'react'
 import { StaticQuery, graphql } from 'gatsby'
 import { rhythm } from '../lib/typography'
-import theme from '../../config/theme'
 import MDXRenderer from 'gatsby-mdx/mdx-renderer'
 import styled from '@emotion/styled'
 
@@ -20,7 +19,8 @@ const AnnouncementContainer = styled.div`
     align-items: center;
     justify-content: center;
     box-shadow: 0 0 5px rgba(20, 20, 20, 0.1);
-    background-color: ${({ fields }) => fields.typeColor || theme.colors.green};
+    background-color: ${({ fields, theme }) =>
+      fields.typeColor || theme.colors.green.base};
   }
 
   > pre {
@@ -29,11 +29,12 @@ const AnnouncementContainer = styled.div`
     min-height: 100px;
     max-height: 200px;
     padding: ${rhythm(1)} ${rhythm(1.5)};
-    background-color: ${theme.colors.white};
+    background-color: ${({ theme }) => theme.colors.white.base};
     white-space: pre-wrap;
     word-wrap: break-word;
     a {
-      color: ${({ fields }) => fields.typeColor || theme.colors.green};
+      color: ${({ fields, theme }) =>
+        fields.typeColor || theme.colors.green.base};
       text-decoration: underline;
     }
   }

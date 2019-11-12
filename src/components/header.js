@@ -1,17 +1,20 @@
 import React, { useState } from 'react'
 import { Link, StaticQuery, graphql } from 'gatsby'
 import { css } from '@emotion/core'
-import theme from '../../config/theme'
 import Container from './container'
 import { GitHub, GitLab, Twitter } from './social'
 import { rhythm } from '../lib/typography'
 import lighten from 'polished/lib/color/lighten'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
-import { bpMaxSM } from '../lib/breakpoints'
-import darken from 'polished/lib/color/darken'
+import {
+  faBars,
+  faTimes,
+  faMoon,
+  faSun,
+} from '@fortawesome/free-solid-svg-icons'
+import ThemeContext from '../context/theme'
 
-const abNavItem = css`
+const abNavItem = theme => css`
   display: flex;
   justify-content: flex-start;
   overflow: hidden;
@@ -21,7 +24,7 @@ const abNavItem = css`
   .abNavLink {
     display: flex;
     border-radius: 3px;
-    color: ${theme.colors.white};
+    color: ${theme.colors.white.base};
     padding: ${rhythm(0.15)} ${rhythm(0.35)};
     align-items: center;
     :not(:last-of-type) {
@@ -30,14 +33,14 @@ const abNavItem = css`
     :hover,
     &.active {
       span {
-        color: ${theme.colors.white};
+        color: ${theme.colors.white.base};
       }
     }
     :hover {
-      background-color: ${lighten(0.1, theme.brand.primary)};
+      background-color: ${lighten(0.1, theme.colors.primary.base)};
     }
     &.active {
-      background-color: ${lighten(0.05, theme.brand.primary)};
+      background-color: ${lighten(0.05, theme.colors.primary.base)};
     }
     span {
       font-size: 16px;
@@ -46,27 +49,27 @@ const abNavItem = css`
   }
 `
 
-const abHeader = ({ dark, bgColor, headerColor }) => css`
+const abHeader = theme => css`
   width: 100%;
   flex-shrink: 0;
   background: none;
   padding: 15px 0;
-  background: ${dark ? '#090909' : `${bgColor}` || 'none'};
+  background: ${theme.bgColor};
 
   .abNav {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: ${headerColor};
+    color: ${theme.headerColor};
     a {
-      color: ${headerColor ? headerColor : theme.colors.body_color};
+      color: ${theme.headerColor ? theme.headerColor : theme.bodyColor};
     }
     a:hover,
     a:focus {
-      color: ${headerColor === theme.colors.white
+      color: ${theme.headerColor === theme.colors.white.base
         ? 'white'
-        : theme.colors.link_color_hover};
+        : theme.linkHoverColor};
     }
 
     .abNavBrand {
@@ -87,7 +90,7 @@ const abHeader = ({ dark, bgColor, headerColor }) => css`
     .abNavItemsGroup {
       display: flex;
 
-      ${bpMaxSM} {
+      ${theme.media.maxSM} {
         display: none;
       }
     }
@@ -99,7 +102,7 @@ const abHeader = ({ dark, bgColor, headerColor }) => css`
       align-items: center;
 
       a {
-        color: ${dark ? '#fbfbfb' : 'rgba(0,0,0,0.85)'};
+        color: ${theme.dark ? '#fbfbfb' : 'rgba(0,0,0,0.85)'};
         text-decoration: none;
 
         & {
@@ -120,7 +123,7 @@ const abHeader = ({ dark, bgColor, headerColor }) => css`
     .abNavToggler {
       display: none;
 
-      ${bpMaxSM} {
+      ${theme.media.maxSM} {
         display: block;
         cursor: pointer;
         padding: 2px;
@@ -145,58 +148,69 @@ const NavItems = ({ items = [] }) => (
   </div>
 )
 
-const Header = ({
-  dark,
-  bgColor = 'none',
-  siteTitle,
-  headerColor = 'black',
-  site,
-}) => {
+const Header = ({ siteTitle, headerColor = 'black', site }) => {
   const [isToggled, setToggle] = useState(false)
 
   return (
-    <header css={abHeader({ dark, bgColor, headerColor })}>
-      <Container maxWidth={900} noVerticalPadding>
-        <nav
-          className={isToggled ? 'abNav responsive-header' : 'abNav'}
-          id="navigationMenu"
-        >
-          <Link
-            className="abNavBrand"
-            to="/"
-            aria-label="go to homepage"
-            activeClassName="active"
-          >
-            <img
-              src={`/${site.siteMetadata.image}`}
-              alt={site.siteMetadata.title}
-            />
-            <span>{siteTitle}</span>
-          </Link>
-
-          <div className="abNavItemsGroup">
-            <NavItems items={site.siteMetadata.hotRoutes} />
-            <div className="abNavSocial">
-              <span>{site.siteMetadata.social.handle}</span>
-              <Twitter color={headerColor} />
-              <GitLab color={headerColor} />
-              <GitHub color={headerColor} />
-            </div>
-          </div>
-          <span className="abNavToggler" onClick={() => setToggle(!isToggled)}>
-            <FontAwesomeIcon
-              css={css`
-                :hover {
-                  color: ${darken(0.08, headerColor)};
-                }
-              `}
-              size="lg"
-              icon={isToggled ? faTimes : faBars}
-            />
-          </span>
-        </nav>
-      </Container>
-    </header>
+    <ThemeContext.Consumer>
+      {({ dark, toggleDark }) => (
+        <header css={abHeader}>
+          <Container maxWidth={900}>
+            <nav
+              className={isToggled ? 'abNav responsive-header' : 'abNav'}
+              id="navigationMenu"
+            >
+              <Link
+                className="abNavBrand"
+                to="/"
+                aria-label="go to homepage"
+                activeClassName="active"
+              >
+                <img
+                  src={`/${site.siteMetadata.image}`}
+                  alt={site.siteMetadata.title}
+                />
+                <span>{siteTitle}</span>
+              </Link>
+              <div className="abNavItemsGroup">
+                <NavItems items={site.siteMetadata.hotRoutes} />
+                <div className="abNavSocial">
+                  <span>{site.siteMetadata.social.handle}</span>
+                  <Twitter color={headerColor} />
+                  <GitLab color={headerColor} />
+                  <GitHub color={headerColor} />
+                </div>
+              </div>
+              <span
+                className="abNavToggler"
+                onClick={() => setToggle(!isToggled)}
+              >
+                <FontAwesomeIcon
+                  css={css`
+                    :hover {
+                    }
+                  `}
+                  size="lg"
+                  icon={isToggled ? faTimes : faBars}
+                />
+              </span>
+              <span className="dark-switcher" onClick={toggleDark}>
+                <FontAwesomeIcon
+                  css={css`
+                    cursor: pointer;
+                    :hover {
+                      color: '#000';
+                    }
+                  `}
+                  size="md"
+                  icon={dark ? faSun : faMoon}
+                />
+              </span>
+            </nav>
+          </Container>
+        </header>
+      )}
+    </ThemeContext.Consumer>
   )
 }
 
@@ -219,8 +233,6 @@ export default props => (
         }
       }
     `}
-    render={data => (
-      <Header site={data.site} bgColor={theme.brand.primary} {...props} />
-    )}
+    render={data => <Header site={data.site} {...props} />}
   />
 )

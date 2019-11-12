@@ -1,4 +1,4 @@
-const config = require('./config/website')
+const config = require('./src/config/website')
 
 const pathPrefix = config.pathPrefix === '/' ? '' : config.pathPrefix
 

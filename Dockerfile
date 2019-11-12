@@ -8,7 +8,7 @@ WORKDIR /ayomidebakare.site
 COPY . /ayomidebakare.site
 
 # Globally install dependencies we may need manually to run from the cli
-RUN npm i -g gatsby-cli@2.4.17
+RUN npm i -g gatsby-cli@2.8.9
 
 # Install dependencies
 RUN npm i

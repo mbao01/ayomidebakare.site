@@ -5,19 +5,17 @@ import Layout from '../components/layout'
 import Link from '../components/link'
 import Container from '../components/container'
 import { rhythm } from '../lib/typography'
-import theme from '../../config/theme'
 import PostCard from '../components/post/post-card'
 import Announcement from '../components/announcement'
-import { bpMaxXS } from '../lib/breakpoints'
 
 const Intro = ({ title }) => (
   <section
-    css={css`
+    css={theme => css`
       * {
-        color: ${theme.colors.white};
+        color: ${theme.colors.white.base};
       }
       width: 100%;
-      background: ${theme.brand.primary};
+      background: ${theme.colors.primary.base};
       padding: 20px 0;
       display: flex;
       flex-flow: column;
@@ -25,20 +23,20 @@ const Intro = ({ title }) => (
   >
     <Container
       maxWidth="80%"
-      css={css`
+      css={theme => css`
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        ${bpMaxXS} {
+        ${theme.media.maxXS} {
           flex-wrap: wrap;
         }
       `}
     >
       <Announcement />
       <div
-        css={css`
+        css={theme => css`
           width: 50%;
-          ${bpMaxXS} {
+          ${theme.media.maxXS} {
             width: 100%;
           }
           h2 {
@@ -58,16 +56,12 @@ export default function Index({ data: { site, blog } }) {
     site.siteMetadata.author.name
   }. Here's a curation of my experiences in software engineering. I hope you
           learn something.`
+
   return (
-    <Layout
-      site={site}
-      headerColor={theme.colors.white}
-      headerBg={theme.brand.primary}
-    >
+    <Layout site={site}>
       <Intro title={introTitle} />
       <Container
         maxWidth={840}
-        noVerticalPadding={true}
         css={css`
           padding-bottom: 0;
         `}
