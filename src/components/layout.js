@@ -108,6 +108,8 @@ export const styles = theme => css`
     color: ${theme.linkColor};
     transition: ${theme.transition.ease};
     text-decoration: none;
+    cursor: pointer;
+
     &:hover,
     &:focus {
       color: ${theme.linkHoverColor};
@@ -263,12 +265,7 @@ export default function LayoutWithSiteData({
                 </Helmet>
 
                 {!noHeader && (
-                  <Header
-                    siteTitle={data.site.siteMetadata.title}
-                    dark={dark}
-                    bgColor={theme.colors.primary.base}
-                    headerColor={theme.colors.white.base}
-                  />
+                  <Header bgColor={theme.bgColor} textColor={theme.bodyColor} />
                 )}
 
                 <MDXProvider components={mdxComponents}>{children}</MDXProvider>

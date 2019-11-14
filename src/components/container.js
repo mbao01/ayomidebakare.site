@@ -9,10 +9,10 @@ const Container = styled.div`
       `${maxWidth + (horizontalPadding ? 0 : 80)}px`}
   );
   padding: ${({ verticalPadding, horizontalPadding }) =>
-    `${verticalPadding ? '40px' : 0} ${horizontalPadding ? '40px' : 0}`};
+    `${verticalPadding ? 40 : 0}px ${horizontalPadding ? 40 : 0}px`};
   ${({ theme }) => theme.media.maxSM} {
     padding: ${({ verticalPadding, horizontalPadding }) =>
-      `${verticalPadding ? '20px' : 0} ${horizontalPadding ? '20px' : 0}`};
+      `${verticalPadding ? 20 : 0}px ${horizontalPadding ? 20 : 0}px`};
   }
 `
 
