@@ -6,29 +6,24 @@ import SEO from '../components/seo'
 import { css } from '@emotion/core'
 import Container from '../components/container'
 import Layout from '../components/layout'
-import { fonts, rhythm } from '../lib/typography'
+import { rhythm } from '../lib/typography'
 import Share from '../components/share'
-import config from '../../config/website'
-import { bpMaxSM } from '../lib/breakpoints'
+import config from '../config/website'
 import { get } from 'lodash'
-import theme from '../../config/theme'
 import Badge from '../components/badge'
+import { useTheme } from 'emotion-theming'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faBullhorn } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faGithub } from '@fortawesome/free-brands-svg-icons'
 
 export default function Post({ data: { site, post } }) {
   const { editLink, title, slug, date, description, banner } = post.fields
-
   const blogPostUrl = `${config.siteUrl}${slug}`
 
+  const theme = useTheme()
+
   return (
-    <Layout
-      site={site}
-      headerColor={theme.colors.primary}
-      headerBg={theme.brand.secondary}
-      frontmatter={post.fields}
-    >
+    <Layout site={site} frontmatter={post.fields}>
       <SEO
         frontmatter={post.fields}
         metaImage={get(post, 'fields.banner.childImageSharp.fluid.src')}
@@ -59,7 +54,6 @@ export default function Post({ data: { site, post } }) {
                 text-align: center;
                 font-size: 15px;
                 opacity: 0.6;
-                font-family: ${fonts.regular}, sans-serif;
                 font-weight: normal;
                 margin: 0 5px;
               }
@@ -71,7 +65,7 @@ export default function Post({ data: { site, post } }) {
             <div
               css={css`
                 padding: 30px;
-                ${bpMaxSM} {
+                ${theme.media.maxSM} {
                   padding: 0;
                 }
               `}
@@ -98,7 +92,7 @@ export default function Post({ data: { site, post } }) {
         </Container>
         {/* <SubscribeForm /> */}
       </article>
-      <Container noVerticalPadding>
+      <Container>
         <div
           css={css`
             display: flex;
@@ -131,7 +125,7 @@ export default function Post({ data: { site, post } }) {
         />
         <br />
       </Container>
-      <Container noVerticalPadding>
+      <Container>
         <p>
           <a
             target="_blank"

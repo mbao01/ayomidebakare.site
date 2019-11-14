@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 IMAGE_NAME=ayomidebakare
 CONTAINER_NAME=ayomidebakare_main
-NETWORK_NAME=ayomidebakare_network
 PROJECT_LOC=/ayomidebakare.site
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-DOC_ROOT="$SCRIPT_DIR"
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DOC_ROOT="$( dirname "${DIR}")"
 WEB_PORT=5553
 
 # Helper Methods
@@ -48,13 +47,6 @@ function buildImage() {
     if [[ $? == 1 ]] ; then
         echo ">>>>>> Starting image ${IMAGE_NAME} build"
         # To build the project for the first time or when you add dependencies
-        {
-            echo "Checking if 'ayomidebakare_network' exists ..."
-            docker network ls | grep "${NETWORK_NAME}"
-        } || {
-            echo "Network does not exist, creating 'ayomidebakare_network' now ..."
-            docker network create ${NETWORK_NAME}
-        }
         docker build -t ${IMAGE_NAME} ${DOC_ROOT}
         echo "Image ${IMAGE_NAME} build COMPLETE <<<<<<"
     fi
@@ -80,9 +72,9 @@ function runContainerInBackground() {
         --name ${CONTAINER_NAME} \
         -p ${WEB_PORT}:${WEB_PORT} \
         -v ${DOC_ROOT}:${PROJECT_LOC} \
-        -e NODE_ENV=production \
+        --env-file ${DIR}/.env \
         ${IMAGE_NAME} \
-        sh -c "npm i -g forever && npm i && npm run docs && npm run prod:server"
+        sh -c "npm i -g gatsby-cli@2.8.9 && npm i && npm run build && npm run serve"
 
     echo 'Running in background <<<<<<'
 }
@@ -129,7 +121,7 @@ elif [[ $1 == "-r" ]] ; then
 
             cd ${DOC_ROOT}
 
-            source ${SCRIPT_DIR}/start.sh -d
+            source ${DIR}/start.sh -d
 
             echo "Container started in background! <<<<<<"
         fi
@@ -184,9 +176,9 @@ elif [[ $1 == "-i" ]] ; then
         --name ${CONTAINER_NAME} \
         -p ${WEB_PORT}:${WEB_PORT} \
         -v ${DOC_ROOT}:${PROJECT_LOC} \
-        -e NODE_ENV=production \
+        --env-file ${DIR}/.env \
         ${IMAGE_NAME} \
-        sh -c "npm i && npm run build && npm run docs && bash"
+        sh -c "npm i && npm run build && bash"
 
     echo "Exited Container <<<<<<"
 

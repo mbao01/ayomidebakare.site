@@ -1,86 +1,86 @@
-import React, { Fragment } from 'react'
+import React from 'react'
+import { graphql, useStaticQuery } from 'gatsby'
 import Helmet from 'react-helmet'
-import { graphql, StaticQuery } from 'gatsby'
 import { MDXProvider } from '@mdx-js/tag'
 import { Global, css } from '@emotion/core'
-import { ThemeProvider } from 'emotion-theming'
-import { bpMaxSM } from '../lib/breakpoints'
-import theme from '../../config/theme'
+import styled from '@emotion/styled'
 import mdxComponents from './mdx'
-import Header from './header'
-import reset from '../lib/reset'
-import { fonts } from '../lib/typography'
-import config from '../../config/website'
+import { rhythm } from '../lib/typography'
+import { ThemeProvider } from 'emotion-theming'
+import ThemeContext from '../context/theme'
 import Footer from './footer'
+import Header from './header'
 import './styles.css'
 
-export const globalStyles = css`
-  .button-secondary {
-    border-radius: 4px;
-    padding: 12px 12px;
-    background: ${theme.colors.secondary_light};
-  }
-  ${bpMaxSM} {
+export const styles = theme => css`
+  ${theme.media.maxSM} {
     p,
     em,
     strong {
-      font-size: 90%;
+      font-size: ${rhythm(1 / 2)};
     }
     h1 {
-      font-size: 30px;
+      font-size: rhythm(1);
     }
     h2 {
-      font-size: 24px;
+      font-size: rhythm(3 / 4);
     }
+  }
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
+  html,
+  body {
+    font-style: normal;
+  }
+  html {
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+    overflow-y: auto !important;
+    -ms-overflow-style: scrollbar;
+    -webkit-tap-highlight-color: ${theme.colors.black.base};
+  }
+  body {
+    color: ${theme.bodyColor};
+    background-color: ${theme.bgColor};
+  }
+  ::selection {
+    color: ${theme.colors.white.base};
+    background-color: ${theme.linkColor};
   }
   hr {
-    margin: 50px 0;
-    border: none;
-    border-top: 1px solid ${theme.colors.gray};
     background: none;
-  }
-  em {
-    font-family: ${fonts.regularItalic};
-  }
-  strong {
-    em {
-      font-family: ${fonts.semiboldItalic};
-    }
+    border: none;
+    border-top: 1px solid ${theme.bodyColor};
+    margin: ${rhythm(1)} 0;
   }
   input {
     border-radius: 4px;
-    border: 1px solid ${theme.colors.gray};
+    border: 1px solid ${theme.colors.grey.light};
     padding: 5px 10px;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
-    font-family: ${fonts.regular};
-    margin-top: 5px;
+    margin-top: ${rhythm(1 / 2)};
     ::placeholder {
       opacity: 0.4;
     }
   }
-  .gatsby-resp-image-image {
-    background: none !important;
-    box-shadow: 0;
-  }
   button {
+    background-color: ${theme.colors.primary.base};
+    border: 1px solid ${theme.colors.primary.dark};
     border-radius: 4px;
-    background-color: ${theme.brand.primary};
-    border: none;
-    color: ${theme.colors.white};
-    padding: 5px 10px;
+    color: ${theme.colors.white.base};
     cursor: pointer;
-    border: 1px solid ${theme.brand.primary};
+    padding: 5px 10px;
     transition: ${theme.transition.ease};
     :hover {
-      background: ${theme.colors.link_color_hover};
-      border: 1px solid ${theme.colors.link_color_hover};
-      transition: ${theme.transition.ease};
+      background: ${theme.colors.primary.dark};
     }
   }
   pre {
-    background-color: #061526 !important;
+    background-color: ${theme.colors.indigo.dark} !important;
     border-radius: 4px;
-    font-size: 16px;
     padding: 10px;
     overflow-x: auto;
     white-space: nowrap;
@@ -91,103 +91,191 @@ export const globalStyles = css`
       border-radius: 0 0 5px 5px;
     }
     ::-webkit-scrollbar-track {
-      background: #061526;
+      background: ${theme.colors.indigo.light};
       border-radius: 0 0 4px 4px;
-      border: 1px solid rgba(0, 0, 0, 0.2);
+      border: 1px solid ${theme.colors.indigo.dark};
     }
     /* Handle */
     ::-webkit-scrollbar-thumb {
-      background: #888;
+      background: ${theme.colors.grey.base};
       border-radius: 5px;
     }
   }
-  ${reset};
+  form {
+    margin: 0;
+  }
+  a {
+    color: ${theme.linkColor};
+    transition: ${theme.transition.ease};
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+      color: ${theme.linkHoverColor};
+    }
+  }
+  a:not([href]):not([tabindex]) {
+    color: inherit;
+    text-decoration: none;
+    &:hover,
+    &:focus {
+      color: inherit;
+      text-decoration: none;
+    }
+    &:focus {
+      outline: 0;
+    }
+  }
+  blockquote {
+    border-left: 5px solid ${theme.linkColor};
+    padding-left: 1rem !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    font-style: italic;
+    p {
+      line-height: 1.3 !important;
+    }
+  }
+  [tabindex='-1']:focus {
+    outline: none !important;
+  }
+  table {
+    border-collapse: collapse;
+    background-color: ${theme.bgColor};
+  }
+  caption {
+    padding-top: ${rhythm(1)};
+    padding-bottom: ${rhythm(1)};
+    color: ${theme.colors.indigo.light};
+    text-align: center;
+    caption-side: bottom;
+  }
+  label {
+    display: inline-block;
+    margin-bottom: ${rhythm(1 / 2)};
+  }
+  button:focus {
+    outline: 1px dotted;
+    outline: 5px auto -webkit-focus-ring-color;
+  }
+  input,
+  button,
+  select,
+  textarea {
+    line-height: inherit;
+  }
+  input[type='date'],
+  input[type='time'],
+  input[type='datetime-local'],
+  input[type='month'] {
+    -webkit-appearance: listbox;
+  }
+  textarea {
+    resize: vertical;
+  }
+  fieldset {
+    min-width: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+  legend {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin-bottom: ${rhythm(1 / 2)};
+    font-size: ${rhythm(1)};
+    line-height: inherit;
+  }
+  input[type='search'] {
+    -webkit-appearance: none;
+  }
+  output {
+    display: inline-block;
+  }
+  svg:not(:root) {
+    overflow: hidden;
+    vertical-align: middle;
+  }
+  [hidden] {
+    display: none !important;
+  }
 `
 
-function Layout({
-  data,
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+`
+
+export default function LayoutWithSiteData({
   frontmatter = {},
   children,
   dark,
-  headerBg,
-  headerColor,
   noFooter,
-  noSubscribeForm = false,
+  noHeader,
+  noSubscribeForm,
 }) {
-  const {
-    site: {
-      siteMetadata,
-      siteMetadata: { description: siteDescription, keywords: siteKeywords },
-    },
-  } = data
-
-  const {
-    keywords = siteKeywords,
-    description = siteDescription,
-    title = config.siteTitle,
-  } = frontmatter
-
-  return (
-    <ThemeProvider theme={theme}>
-      <Fragment>
-        <Global styles={globalStyles} />
-        <div
-          css={css`
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            min-height: 100vh;
-          `}
-        >
-          <Helmet
-            title={title || config.siteTitle}
-            meta={[
-              { name: 'description', content: description },
-              { name: 'keywords', content: keywords },
-            ]}
-          >
-            <html lang="en" />
-            <noscript>This site runs best with JavaScript enabled.</noscript>
-          </Helmet>
-          <Header
-            siteTitle={siteMetadata.title}
-            dark={dark}
-            bgColor={headerBg}
-            headerColor={headerColor}
-          />
-          <MDXProvider components={mdxComponents}>
-            <Fragment>{children}</Fragment>
-          </MDXProvider>
-          {!noFooter && (
-            <Footer
-              author={siteMetadata.author.name}
-              noSubscribeForm={noSubscribeForm}
-            />
-          )}
-        </div>
-      </Fragment>
-    </ThemeProvider>
-  )
-}
-
-export default function LayoutWithSiteData(props) {
-  return (
-    <StaticQuery
-      query={graphql`
-        query {
-          site {
-            siteMetadata {
-              title
-              description
-              author {
-                name
-              }
-              keywords
-            }
+  const data = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          title
+          description
+          author {
+            name
           }
+          keywords
         }
-      `}
-      render={data => <Layout data={data} {...props} />}
-    />
+      }
+    }
+  `)
+
+  return (
+    <ThemeContext.Consumer>
+      {({ theme }) => {
+        return (
+          <ThemeProvider theme={theme}>
+            <>
+              <Global styles={styles} />
+
+              <Wrapper>
+                <Helmet
+                  title={frontmatter.title || data.site.siteMetadata.title}
+                  meta={[
+                    {
+                      name: 'description',
+                      content:
+                        frontmatter.description ||
+                        data.site.siteMetadata.description,
+                    },
+                    {
+                      name: 'keywords',
+                      content:
+                        frontmatter.keywords || data.site.siteMetadata.keywords,
+                    },
+                  ]}
+                >
+                  <html lang="en" />
+                  <noscript>
+                    This site runs best with JavaScript enabled.
+                  </noscript>
+                </Helmet>
+
+                {!noHeader && (
+                  <Header bgColor={theme.bgColor} textColor={theme.bodyColor} />
+                )}
+
+                <MDXProvider components={mdxComponents}>{children}</MDXProvider>
+
+                {!noFooter && <Footer noSubscribeForm={noSubscribeForm} />}
+              </Wrapper>
+            </>
+          </ThemeProvider>
+        )
+      }}
+    </ThemeContext.Consumer>
   )
 }

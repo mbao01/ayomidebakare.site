@@ -2,7 +2,6 @@ import React, { useReducer, useEffect, useState } from 'react'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { css } from '@emotion/core'
-import theme from '../../../config/theme'
 import { rhythm } from '../../lib/typography'
 import Message from '../confirm-message/message'
 import { PleaseConfirmIllustration } from '../confirm-message/illustrations'
@@ -19,9 +18,9 @@ const SubscribeSchema = Yup.object().shape({
 const PostSubmissionMessage = () => {
   return (
     <div
-      css={css`
+      css={theme => css`
         max-width: 280px;
-        color: ${theme.colors.white};
+        color: ${theme.colors.white.base};
       `}
     >
       <Message
@@ -146,7 +145,7 @@ const Subscribe = (
           <div>
             {!successful && (
               <Form
-                css={css`
+                css={theme => css`
                   display: flex;
                   flex-direction: column;
                   align-items: center;
@@ -156,14 +155,14 @@ const Subscribe = (
                   }
                   button {
                     margin-bottom: ${rhythm(0.4)};
-                    color: ${theme.colors.white};
-                    background-color: ${theme.colors.green};
+                    color: ${theme.colors.white.base};
+                    background-color: ${theme.colors.green.base};
                     border: none;
                   }
                   .field-error {
                     display: block;
-                    color: ${theme.colors.red};
-                    background-color: ${theme.colors.white};
+                    color: ${theme.colors.red.base};
+                    background-color: ${theme.colors.white.base};
                     padding: 0 ${rhythm(0.2)};
                     font-size: 70%;
                     font-weight: bold;
@@ -172,7 +171,7 @@ const Subscribe = (
                   input {
                     width: 100%;
                     font-size: 14px;
-                    color: ${theme.colors.primary_dark};
+                    color: ${theme.colors.primary.dark};
                     border-radius: 3px;
                   }
                 `}
@@ -232,9 +231,9 @@ const Subscribe = (
             )}
             {errorMessage && (
               <div
-                css={css`
-                  color: ${theme.colors.red};
-                  background-color: ${theme.colors.white};
+                css={theme => css`
+                  color: ${theme.colors.red.base};
+                  background-color: ${theme.colors.white.base};
                   padding: 0 ${rhythm(0.2)};
                   font-size: 80%;
                   text-align: center;

@@ -1,23 +1,22 @@
 import React from 'react'
 import { css } from '@emotion/core'
-import theme from '../../config/theme'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 
 import { TwitterShareButton, FacebookShareButton } from 'react-share'
 
-const abShare = ({ color }) => css`
+const abShare = theme => css`
   display: flex;
   align-items: center;
   justify-content: flex-start;
   div {
     cursor: pointer;
-    color: ${color};
+    color: ${theme.colors.primary.base};
     :not(:last-of-type) {
       margin-right: 20px;
     }
     :hover {
-      color: ${theme.brand.primary};
+      color: ${theme.colors.primary.base};
     }
   }
   span {
@@ -30,18 +29,12 @@ const abShare = ({ color }) => css`
 
   .abShareContainer {
     flex-grow: 1;
-    border-top: 1px solid ${theme.colors.gray};
+    border-top: 1px solid ${theme.colors.grey.base};
   }
 `
 
-const Share = ({
-  color = theme.colors.gray_dark,
-  type,
-  url,
-  title,
-  twitterHandle,
-}) => (
-  <div css={abShare({ color })}>
+const Share = ({ type, url, title, twitterHandle }) => (
+  <div css={abShare}>
     <div className="abShareContainer" />
     <span>Share post</span>
     <TwitterShareButton

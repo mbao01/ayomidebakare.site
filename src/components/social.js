@@ -1,8 +1,8 @@
 import React from 'react'
 import Link from './link'
-import theme from '../../config/theme'
+import theme from '../config/theme'
 import { css } from '@emotion/core'
-import config from '../../config/website'
+import config from '../config/website'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faTwitter,
@@ -21,7 +21,7 @@ const abSocialLink = ({ color }) => css`
 `
 
 export const Twitter = ({
-  color = `${theme.colors.body_color}`,
+  color = `${theme.bodyColor}`,
   url = `${config.twitter}`,
 }) => (
   <Link to={url} css={abSocialLink({ color })} aria-label="Visit my Twitter">
@@ -30,7 +30,7 @@ export const Twitter = ({
 )
 
 export const LinkedIn = ({
-  color = `${theme.colors.body_color}`,
+  color = `${theme.bodyColor}`,
   url = `${config.linkedin}`,
 }) => (
   <Link to={url} css={abSocialLink({ color })} aria-label="Visit my LinkedIn">
@@ -39,7 +39,7 @@ export const LinkedIn = ({
 )
 
 export const GitHub = ({
-  color = `${theme.colors.body_color}`,
+  color = `${theme.bodyColor}`,
   url = `${config.github}`,
 }) => (
   <Link to={url} css={abSocialLink({ color })} aria-label="Visit my GitHub">
@@ -48,7 +48,7 @@ export const GitHub = ({
 )
 
 export const GitLab = ({
-  color = `${theme.colors.body_color}`,
+  color = `${theme.bodyColor}`,
   url = `${config.gitlab}`,
 }) => (
   <Link to={url} css={abSocialLink({ color })} aria-label="Visit my GitLab">

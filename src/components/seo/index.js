@@ -4,7 +4,7 @@ import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
 import PropTypes from 'prop-types'
 import SchemaOrg from './schema-org'
-import config from '../../../config/website'
+import config from '../../config/website'
 
 const SEO = ({ postData, frontmatter = {}, postImage, isBlogPost }) => (
   <StaticQuery

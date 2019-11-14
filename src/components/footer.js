@@ -1,65 +1,81 @@
 import React from 'react'
 import { css } from '@emotion/core'
-import SubscribeForm from './forms/subscribe'
-import { Twitter, GitHub, GitLab } from './social'
-import Container from './container'
+import { graphql, useStaticQuery } from 'gatsby'
+import { useTheme } from 'emotion-theming'
 import { rhythm } from '../lib/typography'
-import theme from '../../config/theme'
+import { Twitter, GitHub, GitLab } from './social'
+import SubscribeForm from './forms/subscribe'
+import Container from './container'
 
-const Footer = ({ author, noSubscribeForm }) => (
-  <footer>
-    <Container>
-      <div
-        css={css`
-          display: flex;
-          justify-content: space-around;
-          flex-wrap: wrap;
-        `}
-      >
-        {!noSubscribeForm && (
-          <div
-            css={css`
-              background-color: ${theme.colors.primary};
-              padding: ${rhythm(0.5)};
-              border-radius: 6px;
-              h4,
-              h3 {
-                color: ${theme.colors.white};
-              }
-            `}
-          >
-            <SubscribeForm />
-          </div>
-        )}
+export default function Footer({ noSubscribeForm }) {
+  const theme = useTheme()
+  const data = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          author {
+            name
+          }
+        }
+      }
+    }
+  `)
+
+  return (
+    <footer>
+      <Container>
         <div
           css={css`
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin: ${rhythm(1)} 0;
-            padding: ${rhythm(0.5)};
+            justify-content: space-around;
+            flex-wrap: wrap;
           `}
         >
+          {!noSubscribeForm && (
+            <div
+              css={css`
+                background-color: ${theme.colors.primary.base};
+                padding: ${rhythm(0.5)};
+                border-radius: 6px;
+                h4,
+                h3 {
+                  color: ${theme.colors.white.base};
+                }
+              `}
+            >
+              <SubscribeForm />
+            </div>
+          )}
           <div
             css={css`
-              font-size: 90%;
-              opacity: 0.7;
-              margin-bottom: ${rhythm(0.4)};
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              margin: ${rhythm(1)} 0;
+              padding: ${rhythm(0.5)};
             `}
           >
-            {author && `${author} \u00A9 ${new Date().getFullYear()}`}
-          </div>
+            <div
+              css={css`
+                font-size: 90%;
+                opacity: 0.7;
+                margin-bottom: ${rhythm(0.4)};
+              `}
+            >
+              {`${
+                data.site.siteMetadata.author.name
+              } \u00A9 ${new Date().getFullYear()}`}
+            </div>
 
-          <div>
-            <Twitter color={theme.colors.primary} />
-            <GitLab color={theme.colors.primary} />
-            <GitHub color={theme.colors.primary} />
+            <div>
+              <Twitter color={theme.colors.primary.base} />
+              <GitLab color={theme.colors.primary.base} />
+              <GitHub color={theme.colors.primary.base} />
+            </div>
           </div>
         </div>
-      </div>
-    </Container>
-  </footer>
-)
-
-export default Footer
+      </Container>
+    </footer>
+  )
+}
