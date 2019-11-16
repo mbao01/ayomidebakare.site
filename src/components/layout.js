@@ -241,7 +241,7 @@ export default function LayoutWithSiteData({
 
   return (
     <ThemeContext.Consumer>
-      {({ theme }) => {
+      {({ dark, theme, toggleDark }) => {
         return (
           <ThemeProvider theme={theme}>
             <>
@@ -271,7 +271,11 @@ export default function LayoutWithSiteData({
                 </Helmet>
 
                 {!noHeader && (
-                  <Header bgColor={theme.bgColor} textColor={theme.bodyColor} />
+                  <Header
+                    dark={dark}
+                    toggleDark={toggleDark}
+                    textColor={theme.bodyColor}
+                  />
                 )}
 
                 <MDXProvider components={mdxComponents}>{children}</MDXProvider>

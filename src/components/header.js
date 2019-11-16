@@ -6,14 +6,13 @@ import { GitHub, Twitter } from './social'
 import { rhythm } from '../lib/typography'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
-import ThemeContext from '../context/theme'
 
 const abHeader = theme => css`
   width: 100%;
   flex-shrink: 0;
   background: none;
   padding: 10px 20px;
-  background: ${theme.bgColor};
+  background: transparent;
 
   nav {
     width: 100%;
@@ -105,59 +104,53 @@ export default props => {
   `)
 
   return (
-    <ThemeContext.Consumer>
-      {({ dark, toggleDark }) => (
-        <header css={abHeader}>
-          <Container maxWidth={900}>
-            <nav className="abNav">
+    <header css={abHeader}>
+      <Container maxWidth={900}>
+        <nav className="abNav">
+          <div
+            className="abNavBrand"
+            onMouseEnter={handleHover}
+            onMouseLeave={handleHover}
+          >
+            <Link
+              to="/"
+              aria-label="go to homepage"
+              activeClassName="active"
+              css={css`
+                display: flex;
+                align-items: center;
+              `}
+            >
+              <img
+                src={`/${data.site.siteMetadata.image}`}
+                alt={data.site.siteMetadata.title}
+              />
+            </Link>
+
+            {hover && (
               <div
-                className="abNavBrand"
-                onMouseEnter={handleHover}
-                onMouseLeave={handleHover}
+                css={theme => css`
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: space-between;
+                  transition: ${theme.transition.ease};
+                `}
               >
-                <Link
-                  to="/"
-                  aria-label="go to homepage"
-                  activeClassName="active"
-                  css={css`
-                    display: flex;
-                    align-items: center;
-                  `}
-                >
-                  <img
-                    src={`/${data.site.siteMetadata.image}`}
-                    alt={data.site.siteMetadata.title}
-                  />
-                </Link>
-
-                {hover && (
-                  <div
-                    css={theme => css`
-                      display: flex;
-                      flex-direction: column;
-                      justify-content: space-between;
-                      transition: ${theme.transition.ease};
-                    `}
-                  >
-                    <div className="abNavTitle">
-                      {data.site.siteMetadata.title}
-                    </div>
-                    <div className="abNavSocial">
-                      <span>{data.site.siteMetadata.social.handle}</span>
-                      <Twitter color={props.textColor} />
-                      <GitHub color={props.textColor} />
-                    </div>
-                  </div>
-                )}
+                <div className="abNavTitle">{data.site.siteMetadata.title}</div>
+                <div className="abNavSocial">
+                  <span>{data.site.siteMetadata.social.handle}</span>
+                  <Twitter color={props.textColor} />
+                  <GitHub color={props.textColor} />
+                </div>
               </div>
+            )}
+          </div>
 
-              <div className="abToggler" onClick={toggleDark}>
-                <FontAwesomeIcon icon={dark ? faSun : faMoon} />
-              </div>
-            </nav>
-          </Container>
-        </header>
-      )}
-    </ThemeContext.Consumer>
+          <div className="abToggler" onClick={props.toggleDark}>
+            <FontAwesomeIcon icon={props.dark ? faSun : faMoon} />
+          </div>
+        </nav>
+      </Container>
+    </header>
   )
 }

@@ -35,7 +35,7 @@ const Blog = ({ data: { site, blog }, pageContext: { pagination } }) => {
             height: ${rhythm(1)};
           `}
         >
-          {!nextPagePath && (
+          {nextPagePath && (
             <small
               css={css`
                 float: left;
@@ -46,7 +46,7 @@ const Blog = ({ data: { site, blog }, pageContext: { pagination } }) => {
               </Link>
             </small>
           )}
-          {!previousPagePath && (
+          {previousPagePath && (
             <small
               css={css`
                 float: right;
