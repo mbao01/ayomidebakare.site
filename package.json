@@ -64,8 +64,7 @@
     "serve": "10.1.2",
     "strip-markdown": "3.1.1",
     "typography": "0.16.19",
-    "typography-theme-github": "0.16.19",
-    "typography-theme-quora": "0.0.1",
+    "typography-theme-quora": "0.0.2",
     "yup": "0.26.10"
   },
   "devDependencies": {

@@ -24,55 +24,33 @@ export default function Footer({ noSubscribeForm }) {
   return (
     <footer>
       <Container>
+        {!noSubscribeForm && <SubscribeForm />}
         <div
           css={css`
             display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: ${rhythm(1 / 2)} 0;
+            padding: ${rhythm(1 / 2)};
           `}
         >
-          {!noSubscribeForm && (
-            <div
-              css={css`
-                background-color: ${theme.colors.primary.base};
-                padding: ${rhythm(0.5)};
-                border-radius: 6px;
-                h4,
-                h3 {
-                  color: ${theme.colors.white.base};
-                }
-              `}
-            >
-              <SubscribeForm />
-            </div>
-          )}
-          <div
+          <span
             css={css`
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              justify-content: center;
-              margin: ${rhythm(1)} 0;
-              padding: ${rhythm(0.5)};
+              font-size: ${theme.baseFontSize};
+              margin-bottom: ${rhythm(1 / 2)};
+              opacity: 0.7;
             `}
           >
-            <div
-              css={css`
-                font-size: 90%;
-                opacity: 0.7;
-                margin-bottom: ${rhythm(0.4)};
-              `}
-            >
-              {`${
-                data.site.siteMetadata.author.name
-              } \u00A9 ${new Date().getFullYear()}`}
-            </div>
+            {`${
+              data.site.siteMetadata.author.name
+            } \u00A9 ${new Date().getFullYear()}`}
+          </span>
 
-            <div>
-              <Twitter color={theme.colors.primary.base} />
-              <GitLab color={theme.colors.primary.base} />
-              <GitHub color={theme.colors.primary.base} />
-            </div>
+          <div>
+            <Twitter color={theme.colors.primary.base} />
+            <GitLab color={theme.colors.primary.base} />
+            <GitHub color={theme.colors.primary.base} />
           </div>
         </div>
       </Container>

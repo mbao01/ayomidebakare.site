@@ -14,9 +14,9 @@ export default ({
   articleSlug,
 }) => (
   <Center
-    css={css`
+    css={theme => css`
       min-height: ${fullscreen ? '100vh' : 'auto'};
-      ${({ theme }) => theme.media.maxSM} {
+      ${theme.media.maxSM} {
         min-height: auto;
       }
     `}

@@ -44,8 +44,8 @@ const colors = {
     light: `${lighten(0.05, '#e3ce44')}`,
   },
   indigo: {
-    base: '#0c1c2e',
-    dark: '#061526',
+    base: '#163457',
+    dark: '#111d2e',
     light: `${lighten(0.05, '#0c1c2e')}`,
   },
 }
@@ -86,20 +86,22 @@ const theme = {
     ...general,
     breakpoints,
     colors,
-    linkColor: colors.secondary.base,
+    linkColor: colors.primary.dark,
     linkHoverColor: colors.secondary.dark,
     bgColor: colors.indigo.light,
-    bodyColor: colors.white.base,
+    bodyColor: colors.grey.light,
+    textColor: colors.white.base,
   },
   light: {
     ...options,
     ...general,
     breakpoints,
     colors,
-    linkColor: colors.blue.base,
-    linkHoverColor: colors.blue.dark,
+    linkColor: colors.secondary.dark,
+    linkHoverColor: colors.primary.dark,
     bgColor: colors.white.base,
-    bodyColor: colors.black.base,
+    bodyColor: colors.grey.light,
+    textColor: colors.indigo.light,
   },
 }
 

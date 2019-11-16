@@ -7,6 +7,7 @@ import Message from '../confirm-message/message'
 import { PleaseConfirmIllustration } from '../confirm-message/illustrations'
 import PropTypes from 'prop-types'
 import { cold } from 'react-hot-loader'
+import Input from './input'
 
 const SubscribeSchema = Yup.object().shape({
   email_address: Yup.string()
@@ -49,34 +50,39 @@ function fetchReducer(state, { type, response, error }) {
   }
 }
 
-function useFetch({ url, body }) {
+function useFetch({ url, data }) {
   const [state, dispatch] = useReducer(fetchReducer, {
     error: null,
     response: null,
     pending: false,
   })
-  const bodyString = !!body && JSON.stringify(body)
+  const dataString = !!data && JSON.stringify(data)
 
   useEffect(() => {
-    if (url && bodyString) {
+    console.log('Url: ', url)
+    console.log('Data: ', dataString)
+
+    if (url && dataString) {
       dispatch({ type: 'fetching' })
       fetch(url, {
         method: 'post',
-        body: bodyString,
+        body: dataString,
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          Authorization: `apikey ${process.env.MAILCHIMP_API_KEY}`,
+          Authorization: `Basic ${btoa(
+            `any:${process.env.MAILCHIMP_API_KEY}`,
+          )}`,
           mode: 'no-cors',
         },
       })
-        .then(r => r.json())
-        .then(response => {
-          return dispatch({ type: 'success', response })
+        .then(r => {
+          console.log('Response: ', r)
+          return dispatch({ type: 'success', response: r && r.json() })
         })
         .catch(error => dispatch({ type: 'error', error }))
     }
-  }, [bodyString, url])
+  }, [dataString, url])
 
   return state
 }
@@ -89,7 +95,7 @@ const Subscribe = (
 
   const { email_address, first_name } = values || {}
 
-  const body =
+  const data =
     email_address && first_name
       ? {
           email_address,
@@ -101,7 +107,7 @@ const Subscribe = (
 
   const { pending, response, error } = useFetch({
     url: process.env.MAILCHIMP_LIST_ID,
-    body,
+    data,
     uKey,
   })
 
@@ -111,16 +117,20 @@ const Subscribe = (
   const successful = response && response.status === 'success'
 
   if (submitted && mixpanel) {
-    mixpanel.people.set_once(body)
-    mixpanel.identify(body.email_address)
+    mixpanel.people.set_once(data)
+    mixpanel.identify(data.email_address)
     mixpanel.track(uKey, {
-      ...body,
+      ...data,
       response,
     })
   }
 
   return (
-    <div>
+    <div
+      css={css`
+        padding: ${rhythm(1 / 2)};
+      `}
+    >
       {!successful && (
         <h4
           css={css`
@@ -142,85 +152,36 @@ const Subscribe = (
         validationSchema={SubscribeSchema}
         onSubmit={setValues}
         render={() => (
-          <div>
+          <>
             {!successful && (
               <Form
-                css={theme => css`
+                css={css`
                   display: flex;
-                  flex-direction: column;
+                  justify-content: center;
                   align-items: center;
-                  font-size: 16px;
-                  label {
-                    margin-bottom: ${rhythm(0.4)};
-                  }
-                  button {
-                    margin-bottom: ${rhythm(0.4)};
-                    color: ${theme.colors.white.base};
-                    background-color: ${theme.colors.green.base};
-                    border: none;
-                  }
-                  .field-error {
-                    display: block;
-                    color: ${theme.colors.red.base};
-                    background-color: ${theme.colors.white.base};
-                    padding: 0 ${rhythm(0.2)};
-                    font-size: 70%;
-                    font-weight: bold;
-                    border-radius: 2px;
-                  }
-                  input {
-                    width: 100%;
-                    font-size: 14px;
-                    color: ${theme.colors.primary.dark};
-                    border-radius: 3px;
-                  }
+                  flex-wrap: wrap;
                 `}
               >
-                <label htmlFor="first_name">
-                  <div
-                    css={css`
-                      display: flex;
-                      justify-content: space-between;
-                      align-items: flex-end;
-                    `}
-                  >
-                    <ErrorMessage
-                      name="first_name"
-                      component="span"
-                      className="field-error"
-                    />
-                  </div>
-                  <Field
-                    aria-label="your first name"
-                    aria-required="false"
-                    name="first_name"
-                    placeholder="First Name e.g Jane"
-                    type="text"
-                  />
-                </label>
-                <label htmlFor="email">
-                  <div
-                    css={css`
-                      display: flex;
-                      justify-content: space-between;
-                      align-items: flex-end;
-                    `}
-                  >
-                    <ErrorMessage
-                      name="email_address"
-                      component="span"
-                      className="field-error"
-                    />
-                  </div>
-                  <Field
-                    aria-label="your email address"
-                    aria-required="true"
-                    name="email_address"
-                    placeholder="Email e.g jane@acme.com"
-                    type="email"
-                  />
-                </label>
-                <button data-element="submit" type="submit" disabled={pending}>
+                <Input
+                  name="first_name"
+                  placeholder="First Name e.g Michael"
+                  label="your first name"
+                />
+                <Input
+                  name="email_address"
+                  type="email"
+                  placeholder="Email e.g jane@acme.com"
+                  label="your email address"
+                />
+                <button
+                  css={css`
+                    font-size: ${rhythm(2 / 3)};
+                    margin: ${rhythm(1 / 4)} ${rhythm(1 / 2)};
+                  `}
+                  data-element="submit"
+                  type="submit"
+                  disabled={pending}
+                >
                   {!pending && 'Subscribe'}
                   {pending && 'Subscribing...'}
                 </button>
@@ -231,20 +192,26 @@ const Subscribe = (
             )}
             {errorMessage && (
               <div
-                css={theme => css`
-                  color: ${theme.colors.red.base};
-                  background-color: ${theme.colors.white.base};
-                  padding: 0 ${rhythm(0.2)};
-                  font-size: 80%;
+                css={css`
+                  margin: ${rhythm(1 / 2)};
                   text-align: center;
-                  font-weight: bold;
-                  border-radius: 2px;
                 `}
               >
-                {errorMessage}
+                <span
+                  css={theme => css`
+                    background-color: ${theme.colors.white.base};
+                    border-radius: 4px;
+                    color: ${theme.colors.red.base};
+                    font-size: ${rhythm(2 / 3)};
+                    padding: ${rhythm(1 / 20)} ${rhythm(1)};
+                    text-align: center;
+                  `}
+                >
+                  {errorMessage}
+                </span>
               </div>
             )}
-          </div>
+          </>
         )}
       />
     </div>

@@ -43,7 +43,7 @@ export const styles = theme => css`
     -webkit-tap-highlight-color: ${theme.colors.black.base};
   }
   body {
-    color: ${theme.bodyColor};
+    color: ${theme.textColor};
     background-color: ${theme.bgColor};
   }
   ::selection {
@@ -57,11 +57,12 @@ export const styles = theme => css`
     margin: ${rhythm(1)} 0;
   }
   input {
-    border-radius: 4px;
     border: 1px solid ${theme.colors.grey.light};
-    padding: 5px 10px;
+    border-radius: 4px;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+    height: 32px;
     margin-top: ${rhythm(1 / 2)};
+    padding: 5px 10px;
     ::placeholder {
       opacity: 0.4;
     }
@@ -72,6 +73,7 @@ export const styles = theme => css`
     border-radius: 4px;
     color: ${theme.colors.white.base};
     cursor: pointer;
+    height: 32px;
     padding: 5px 10px;
     transition: ${theme.transition.ease};
     :hover {
@@ -213,7 +215,6 @@ const Wrapper = styled.div`
 export default function LayoutWithSiteData({
   frontmatter = {},
   children,
-  dark,
   noFooter,
   noHeader,
   noSubscribeForm,

@@ -1,7 +1,7 @@
 import Typography from 'typography'
-import githubTheme from 'typography-theme-github'
+import quoraTheme from 'typography-theme-quora'
 
-const typography = new Typography(githubTheme)
+const typography = new Typography(quoraTheme)
 
 // Hot reload typography in development.
 if (process.env.NODE_ENV !== 'production') {
