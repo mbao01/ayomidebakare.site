@@ -44,7 +44,7 @@ const Intro = ({ title }) => (
 export default function Index({ data: { site, blog } }) {
   const introTitle = `Hey, I'm ${
     site.siteMetadata.author.name
-  }. Here's a curation of my experiences in software engineering. I hope you
+  }. Here's a curation of my experiences in life. I hope you
           learn something.`
 
   return (
