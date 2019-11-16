@@ -1,6 +1,5 @@
 import React from 'react'
 import { css, keyframes } from '@emotion/core'
-import { fonts } from '../../lib/typography'
 import { useTheme } from 'emotion-theming'
 // PleaseConfirmIllustration
 const PaperRollOut = keyframes`
@@ -146,13 +145,7 @@ export const PleaseConfirmIllustration = () => {
             fill="#E86C60"
             fillRule="nonzero"
           />
-          <text
-            fill="#FFF"
-            fontFamily={fonts.bold}
-            fontSize="10"
-            fontWeight="600"
-            letterSpacing="1"
-          >
+          <text fill="#FFF" fontSize="10" fontWeight="600" letterSpacing="1">
             <tspan x="77.63" y="12.308">
               1
             </tspan>
@@ -375,12 +368,7 @@ export const ThankYouIllustration = () => {
               opacity="0.5"
               rx="3"
             />
-            <text
-              fill="#FFF"
-              fontFamily={fonts.regular}
-              fontSize="14.3"
-              fontWeight="500"
-            >
+            <text fill="#FFF" fontSize="14.3" fontWeight="500">
               <tspan x="13.713" y="39">
                 WELCOME
               </tspan>

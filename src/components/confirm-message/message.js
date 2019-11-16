@@ -14,11 +14,8 @@ export default ({
   articleSlug,
 }) => (
   <Center
-    css={theme => css`
+    css={css`
       min-height: ${fullscreen ? '100vh' : 'auto'};
-      ${theme.media.maxSM} {
-        min-height: auto;
-      }
     `}
   >
     <div>{illustration}</div>
