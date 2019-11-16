@@ -12,7 +12,7 @@ const PostCard = styled.div`
   background-color: ${({ theme }) => (theme.isDark ? '#f8f8f8' : '#fafafa')};
   border-radius: 4px;
   color: ${({ theme }) => (theme.isDark ? theme.bgColor : theme.textColor)};
-  margin-bottom: ${rhythm(1)};
+  margin-bottom: ${rhythm(2)};
 `
 
 const SmallPostCard = styled.div`

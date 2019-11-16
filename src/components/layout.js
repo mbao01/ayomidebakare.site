@@ -50,6 +50,10 @@ export const styles = theme => css`
     color: ${theme.colors.white.base};
     background-color: ${theme.linkColor};
   }
+  h1,
+  h2 {
+    margin: ${rhythm(1)} 0;
+  }
   hr {
     background: none;
     border: none;
@@ -120,6 +124,7 @@ export const styles = theme => css`
   a:not([href]):not([tabindex]) {
     color: inherit;
     text-decoration: none;
+
     &:hover,
     &:focus {
       color: inherit;

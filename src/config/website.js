@@ -15,12 +15,10 @@ module.exports = {
   userTwitter: '@mbao_01', // Twitter Username
   ogSiteName: 'Ayomide Bakare', // Facebook Site Name
   ogLanguage: 'en_US',
-  googleAnalyticsID: '',
-  mixpanelToken: '919b5f2ad85017be7b628907625d4b84',
 
   // Manifest and Progress color
-  themeColor: '#5348FF',
-  backgroundColor: '#2b2e3c',
+  themeColor: '#388ce6',
+  backgroundColor: '#388ce6',
 
   // Social component
   handle: '@mbao01',

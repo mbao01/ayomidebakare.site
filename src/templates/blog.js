@@ -6,6 +6,7 @@ import SEO from '../components/seo'
 import Layout from '../components/layout'
 import Link from '../components/link'
 import PostCard from '../components/post/post-card'
+import { rhythm } from '../lib/typography'
 
 const Blog = ({ data: { site, blog }, pageContext: { pagination } }) => {
   const { page, nextPagePath, previousPagePath } = pagination
@@ -23,41 +24,43 @@ const Blog = ({ data: { site, blog }, pageContext: { pagination } }) => {
   return (
     <Layout site={site}>
       <SEO />
-      <Container
-        css={css`
-          a,
-          p {
-          }
-          h2 {
-            a {
-              color: inherit;
-            }
-          }
-          small {
-            display: block;
-          }
-        `}
-      >
+      <Container>
         {posts.map(({ node: post }) => (
           <PostCard key={post.id} post={post} type="large" />
         ))}
-        <br />
-        <br />
-        <div>
-          {nextPagePath && (
-            <Link to={nextPagePath} aria-label="View next page">
-              Next Page →
-            </Link>
+
+        <div
+          css={css`
+            clear: both;
+            height: ${rhythm(1)};
+          `}
+        >
+          {!nextPagePath && (
+            <small
+              css={css`
+                float: left;
+              `}
+            >
+              <Link to={nextPagePath} aria-label="View next page">
+                Next Page →
+              </Link>
+            </small>
           )}
-          {previousPagePath && (
-            <Link to={previousPagePath} aria-label="View previous page">
-              ← Previous Page
-            </Link>
+          {!previousPagePath && (
+            <small
+              css={css`
+                float: right;
+              `}
+            >
+              <Link to={previousPagePath} aria-label="View previous page">
+                ← Previous Page
+              </Link>
+            </small>
           )}
         </div>
         <hr
           css={css`
-            margin: 50px 0;
+            margin: 0 0 ${rhythm(2)} 0;
           `}
         />
       </Container>

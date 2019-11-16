@@ -11,7 +11,6 @@ import Share from '../components/share'
 import config from '../config/website'
 import { get } from 'lodash'
 import Badge from '../components/badge'
-import { useTheme } from 'emotion-theming'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faBullhorn } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faGithub } from '@fortawesome/free-brands-svg-icons'
@@ -19,8 +18,6 @@ import { faTwitter, faGithub } from '@fortawesome/free-brands-svg-icons'
 export default function Post({ data: { site, post } }) {
   const { editLink, title, slug, date, description, banner } = post.fields
   const blogPostUrl = `${config.siteUrl}${slug}`
-
-  const theme = useTheme()
 
   return (
     <Layout site={site} frontmatter={post.fields}>
@@ -63,7 +60,7 @@ export default function Post({ data: { site, post } }) {
           </div>
           {banner && (
             <div
-              css={css`
+              css={theme => css`
                 padding: 30px;
                 ${theme.media.maxSM} {
                   padding: 0;

@@ -16,9 +16,7 @@ export default ({
         horizontalPadding ? 40 : 0
       }px`};
       ${theme.media.maxSM} {
-        padding: ${`${verticalPadding ? 20 : 0}px ${
-          horizontalPadding ? 20 : 0
-        }px`};
+        padding: 20px;
       }
     `}
   >
