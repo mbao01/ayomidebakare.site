@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect, useState } from 'react'
-import { Formik, Field, Form, ErrorMessage } from 'formik'
+import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { css } from '@emotion/core'
 import { rhythm } from '../../lib/typography'
@@ -59,9 +59,6 @@ function useFetch({ url, data }) {
   const dataString = !!data && JSON.stringify(data)
 
   useEffect(() => {
-    console.log('Url: ', url)
-    console.log('Data: ', dataString)
-
     if (url && dataString) {
       dispatch({ type: 'fetching' })
       fetch(url, {
@@ -77,7 +74,6 @@ function useFetch({ url, data }) {
         },
       })
         .then(r => {
-          console.log('Response: ', r)
           return dispatch({ type: 'success', response: r && r.json() })
         })
         .catch(error => dispatch({ type: 'error', error }))
@@ -164,13 +160,13 @@ const Subscribe = (
               >
                 <Input
                   name="first_name"
-                  placeholder="First Name e.g Michael"
+                  placeholder="First Name e.g Clem"
                   label="your first name"
                 />
                 <Input
                   name="email_address"
                   type="email"
-                  placeholder="Email e.g jane@acme.com"
+                  placeholder="Email e.g ck@clem.ng"
                   label="your email address"
                 />
                 <button

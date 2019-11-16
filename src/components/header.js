@@ -152,7 +152,7 @@ export default props => {
               </div>
 
               <div className="abToggler" onClick={toggleDark}>
-                <FontAwesomeIcon size="md" icon={dark ? faSun : faMoon} />
+                <FontAwesomeIcon icon={dark ? faSun : faMoon} />
               </div>
             </nav>
           </Container>

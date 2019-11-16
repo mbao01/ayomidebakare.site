@@ -1,6 +1,5 @@
 import React from 'react'
 import Link from './link'
-import theme from '../config/theme'
 import { css } from '@emotion/core'
 import config from '../config/website'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -10,48 +9,42 @@ import {
   faGithub,
   faGitlab,
 } from '@fortawesome/free-brands-svg-icons'
-import { darken } from 'polished'
+import { useTheme } from 'emotion-theming'
 
-const abSocialLink = ({ color }) => css`
-  margin-left: 10px;
+const SocialIcon = ({ url, icon, label = '' }) => {
+  const theme = useTheme()
 
-  svg:hover {
-    color: ${darken(0.08, color)};
-  }
-`
+  return (
+    <Link
+      to={url}
+      css={css`
+        margin-left: 10px;
 
-export const Twitter = ({
-  color = `${theme.bodyColor}`,
-  url = `${config.twitter}`,
-}) => (
-  <Link to={url} css={abSocialLink({ color })} aria-label="Visit my Twitter">
-    <FontAwesomeIcon color={color} icon={faTwitter} />
-  </Link>
+        svg:hover {
+          color: ${theme.colors.primary.dark};
+        }
+      `}
+      aria-label={label}
+    >
+      <FontAwesomeIcon color={theme.colors.primary.base} icon={icon} />
+    </Link>
+  )
+}
+
+const Twitter = () => (
+  <SocialIcon url={config.twitter} icon={faTwitter} label="Tweet at me" />
 )
 
-export const LinkedIn = ({
-  color = `${theme.bodyColor}`,
-  url = `${config.linkedin}`,
-}) => (
-  <Link to={url} css={abSocialLink({ color })} aria-label="Visit my LinkedIn">
-    <FontAwesomeIcon color={color} icon={faLinkedin} />
-  </Link>
+const LinkedIn = () => (
+  <SocialIcon url={config.linkedin} icon={faLinkedin} label="Link with me" />
 )
 
-export const GitHub = ({
-  color = `${theme.bodyColor}`,
-  url = `${config.github}`,
-}) => (
-  <Link to={url} css={abSocialLink({ color })} aria-label="Visit my GitHub">
-    <FontAwesomeIcon color={color} icon={faGithub} />
-  </Link>
+const GitHub = () => (
+  <SocialIcon url={config.github} icon={faGithub} label="Visit my github" />
 )
 
-export const GitLab = ({
-  color = `${theme.bodyColor}`,
-  url = `${config.gitlab}`,
-}) => (
-  <Link to={url} css={abSocialLink({ color })} aria-label="Visit my GitLab">
-    <FontAwesomeIcon color={color} icon={faGitlab} />
-  </Link>
+const GitLab = () => (
+  <SocialIcon url={config.gitlab} icon={faGitlab} label="Visit my gitlab" />
 )
+
+export { Twitter, GitHub, GitLab, LinkedIn }

@@ -1,19 +1,27 @@
 import React from 'react'
-import styled from '@emotion/styled'
+import { css } from '@emotion/core'
 
-const Container = styled.div`
-  width: 100%;
-  margin: 0 auto;
-  max-width: calc(
-    ${({ maxWidth = 600, horizontalPadding }) =>
-      `${maxWidth + (horizontalPadding ? 0 : 80)}px`}
-  );
-  padding: ${({ verticalPadding, horizontalPadding }) =>
-    `${verticalPadding ? 40 : 0}px ${horizontalPadding ? 40 : 0}px`};
-  ${({ theme }) => theme.media.maxSM} {
-    padding: ${({ verticalPadding, horizontalPadding }) =>
-      `${verticalPadding ? 20 : 0}px ${horizontalPadding ? 20 : 0}px`};
-  }
-`
-
-export default props => <Container {...props}>{props.children}</Container>
+export default ({
+  children,
+  maxWidth = 600,
+  horizontalPadding,
+  verticalPadding,
+}) => (
+  <div
+    css={theme => css`
+      width: 100%;
+      margin: 0 auto;
+      max-width: calc(${`${maxWidth + (horizontalPadding ? 0 : 80)}px`});
+      padding: ${`${verticalPadding ? 40 : 0}px ${
+        horizontalPadding ? 40 : 0
+      }px`};
+      ${theme.media.maxSM} {
+        padding: ${`${verticalPadding ? 20 : 0}px ${
+          horizontalPadding ? 20 : 0
+        }px`};
+      }
+    `}
+  >
+    {children}
+  </div>
+)

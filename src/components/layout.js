@@ -17,7 +17,7 @@ export const styles = theme => css`
     p,
     em,
     strong {
-      font-size: ${rhythm(1 / 2)};
+      font-size: ${rhythm(2 / 3)};
     }
     h1 {
       font-size: rhythm(1);
