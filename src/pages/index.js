@@ -12,42 +12,32 @@ const Intro = ({ title }) => (
   <section
     css={theme => css`
       * {
-        color: ${theme.colors.white.base};
+        color: ${theme.textColor};
       }
       width: 100%;
-      background: ${theme.colors.primary.base};
-      padding: 20px 0;
+      padding: ${rhythm(1)} 0;
       display: flex;
-      flex-flow: column;
+      flex-direction: row;
+      justify-content: space-between;
+      ${theme.media.maxXS} {
+        flex-wrap: wrap;
+      }
     `}
   >
-    <Container
-      maxWidth="80%"
+    <Announcement />
+    <div
       css={theme => css`
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
+        width: 50%;
         ${theme.media.maxXS} {
-          flex-wrap: wrap;
+          width: 100%;
+        }
+        h2 {
+          padding: 0 20px;
         }
       `}
     >
-      <Announcement />
-      <div
-        css={theme => css`
-          width: 50%;
-          ${theme.media.maxXS} {
-            width: 100%;
-          }
-          h2 {
-            margin-top: -15px;
-            padding: 0 20px;
-          }
-        `}
-      >
-        <h2>{title}</h2>
-      </div>
-    </Container>
+      <h2>{title}</h2>
+    </div>
   </section>
 )
 
@@ -59,7 +49,9 @@ export default function Index({ data: { site, blog } }) {
 
   return (
     <Layout site={site}>
-      <Intro title={introTitle} />
+      <Container maxWidth="80%">
+        <Intro title={introTitle} />
+      </Container>
       <Container
         maxWidth={720}
         css={css`

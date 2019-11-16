@@ -20,10 +20,10 @@ export const styles = theme => css`
       font-size: ${rhythm(2 / 3)};
     }
     h1 {
-      font-size: rhythm(1);
+      font-size: ${rhythm(4 / 3)};
     }
     h2 {
-      font-size: rhythm(3 / 4);
+      font-size: ${rhythm(1)};
     }
   }
   *,

@@ -11,12 +11,16 @@ export default ({
     css={theme => css`
       width: 100%;
       margin: 0 auto;
-      max-width: calc(${`${maxWidth + (horizontalPadding ? 0 : 80)}px`});
+      max-width: calc(
+        ${`${typeof maxWidth == 'number' ? `${maxWidth}px` : maxWidth} + ${
+          horizontalPadding ? 0 : '80px'
+        }`}
+      );
       padding: ${`${verticalPadding ? 40 : 0}px ${
         horizontalPadding ? 40 : 0
       }px`};
       ${theme.media.maxSM} {
-        padding: 20px;
+        padding: 0 20px;
       }
     `}
   >
