@@ -151,11 +151,15 @@ const Subscribe = (
           <>
             {!successful && (
               <Form
-                css={css`
+                css={theme => css`
                   display: flex;
                   justify-content: center;
                   align-items: center;
                   flex-wrap: wrap;
+
+                  ${theme.media.maxXS} {
+                    flex-flow: column;
+                  }
                 `}
               >
                 <Input
