@@ -60,7 +60,7 @@ const Blog = ({ data: { site, blog }, pageContext: { pagination } }) => {
         </div>
         <hr
           css={css`
-            margin: 0 0 ${rhythm(2)} 0;
+            margin: 0;
           `}
         />
       </Container>

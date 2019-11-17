@@ -6,16 +6,14 @@ import { graphql } from 'gatsby'
 
 function MarkdownPage({ children, pageContext: { frontmatter } }) {
   return (
-    <>
+    <Layout
+      pageTitle={frontmatter.title}
+      noFooter={frontmatter.noFooter}
+      frontmatter={frontmatter}
+    >
       <SEO frontmatter={frontmatter} />
-      <Layout
-        pageTitle={frontmatter.title}
-        noFooter={frontmatter.noFooter}
-        frontmatter={frontmatter}
-      >
-        <Container maxWidth={700}>{children}</Container>
-      </Layout>
-    </>
+      <Container maxWidth={700}>{children}</Container>
+    </Layout>
   )
 }
 

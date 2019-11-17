@@ -22,7 +22,11 @@ export default function Footer({ noSubscribeForm }) {
   `)
 
   return (
-    <footer>
+    <footer
+      css={css`
+        margin-top: ${rhythm(2)};
+      `}
+    >
       <Container>
         {!noSubscribeForm && <SubscribeForm />}
         <div

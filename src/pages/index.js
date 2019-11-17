@@ -73,11 +73,7 @@ export default function Index({ data: { site, blog } }) {
             <PostCard key={post.id} post={post} type="small" />
           ))}
 
-        <div
-          css={css`
-            margin-bottom: ${rhythm(2)};
-          `}
-        >
+        <div>
           <small>
             <Link
               to="/blog"

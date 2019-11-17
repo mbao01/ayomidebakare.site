@@ -56,7 +56,7 @@ const PostBanner = styled.div`
   display: inline-block;
 `
 
-const PostCategories = ({ categories }) => (
+export const PostCategories = ({ categories }) => (
   <div
     css={css`
       padding: ${rhythm(2 / 5)} 0;
