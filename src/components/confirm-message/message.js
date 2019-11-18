@@ -3,6 +3,7 @@ import { css, keyframes } from '@emotion/core'
 import styled from '@emotion/styled'
 import Markdown from 'react-markdown'
 import Link from '../link'
+import { rhythm } from '../../lib/typography'
 
 export default ({
   illustration,
@@ -16,6 +17,7 @@ export default ({
   <Center
     css={css`
       min-height: ${fullscreen ? '100vh' : 'auto'};
+      margin: ${rhythm(3)} 0;
     `}
   >
     <div>{illustration}</div>

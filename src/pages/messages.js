@@ -13,7 +13,6 @@ export default ({ data: { site, latestArticle } }) => {
     <Layout site={site} noSubscribeForm>
       <div>
         <Message
-          fullscreen
           illustration={PleaseConfirmIllustration}
           title="Great, one last thing..."
           body="We just sent you an email with the confirmation link. 
@@ -23,7 +22,6 @@ export default ({ data: { site, latestArticle } }) => {
       <div>
         {latestArticle.edges.map(({ node: post }) => (
           <Message
-            fullscreen
             key={post.id}
             illustration={ThankYouIllustration}
             title="Success! Thank you!"
@@ -35,7 +33,6 @@ export default ({ data: { site, latestArticle } }) => {
       </div>
       <div>
         <Message
-          fullscreen
           illustration={UnsubscribeIllustration}
           title="You have been unsubscribed."
           body="As per your request, you have been unsubscribed from all our mailings."
