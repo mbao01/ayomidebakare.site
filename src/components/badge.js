@@ -9,14 +9,15 @@ const Badge = ({ text, link }) => {
       css={theme => css`
         text-transform: capitalize;
         margin-right: ${rhythm(1 / 5)};
+        margin-bottom: ${rhythm(2 / 5)};
 
         span,
         a {
           background-color: ${theme.linkColor};
-          border-radius: 4px;
+          border-radius: 10px;
           color: ${theme.colors.white.base};
           font-size: ${rhythm(1 / 2)};
-          padding: ${rhythm(1 / 10)} ${rhythm(1 / 4)};
+          padding: ${rhythm(1 / 10)} ${rhythm(2 / 5)};
           text-decoration: none;
         }
 

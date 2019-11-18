@@ -28,7 +28,7 @@ const abHeader = theme => css`
     a:hover,
     a:focus {
       color: ${theme.headerColor === theme.colors.white.base
-        ? 'white'
+        ? theme.colors.white.base
         : theme.linkHoverColor};
     }
     .abNavBrand {
@@ -71,7 +71,7 @@ const abHeader = theme => css`
       :hover,
       :focus {
         color: ${theme.headerColor === theme.colors.white.base
-          ? 'white'
+          ? theme.colors.white.base
           : theme.linkHoverColor};
       }
     }
