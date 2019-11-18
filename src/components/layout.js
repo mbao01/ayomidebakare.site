@@ -283,13 +283,7 @@ class Layout extends React.Component {
                     </noscript>
                   </Helmet>
 
-                  {!noHeader && (
-                    <Header
-                      dark={dark}
-                      toggleDark={toggleDark}
-                      textColor={theme.bodyColor}
-                    />
-                  )}
+                  {!noHeader && <Header dark={dark} toggleDark={toggleDark} />}
 
                   <MDXProvider components={mdxComponents}>
                     {children}

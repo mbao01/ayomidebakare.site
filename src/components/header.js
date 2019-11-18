@@ -78,7 +78,7 @@ const abHeader = theme => css`
   }
 `
 
-export default props => {
+export default ({ dark, toggleDark }) => {
   const [hover, setHover] = useState(false)
 
   const handleHover = () => {
@@ -139,15 +139,15 @@ export default props => {
                 <div className="abNavTitle">{data.site.siteMetadata.title}</div>
                 <div className="abNavSocial">
                   <span>{data.site.siteMetadata.social.handle}</span>
-                  <Twitter color={props.textColor} />
-                  <GitHub color={props.textColor} />
+                  <Twitter />
+                  <GitHub />
                 </div>
               </div>
             )}
           </div>
 
-          <div className="abToggler" onClick={props.toggleDark}>
-            <FontAwesomeIcon icon={props.dark ? faSun : faMoon} />
+          <div className="abToggler" onClick={toggleDark}>
+            <FontAwesomeIcon icon={dark ? faSun : faMoon} />
           </div>
         </nav>
       </Container>
