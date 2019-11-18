@@ -1,5 +1,5 @@
 import React from 'react'
-import { graphql, useStaticQuery } from 'gatsby'
+import { graphql, StaticQuery } from 'gatsby'
 import Helmet from 'react-helmet'
 import { MDXProvider } from '@mdx-js/tag'
 import { Global, css } from '@emotion/core'
@@ -217,75 +217,99 @@ const Wrapper = styled.div`
   min-height: 100vh;
 `
 
-export default function LayoutWithSiteData({
-  frontmatter = {},
-  children,
-  noFooter,
-  noHeader,
-  noSubscribeForm,
-}) {
-  const data = useStaticQuery(graphql`
-    query {
-      site {
-        siteMetadata {
-          title
-          description
-          author {
-            name
-          }
-          keywords
-        }
-      }
-    }
-  `)
+class Layout extends React.Component {
+  state = { loaded: false }
 
-  return (
-    <ThemeContext.Consumer>
-      {({ dark, theme, toggleDark }) => {
-        return (
-          <ThemeProvider theme={theme}>
-            <>
-              <Global styles={styles} />
+  componentDidMount() {
+    // eslint-disable-next-line react/no-did-mount-set-state
+    this.setState({ loaded: true })
+  }
 
-              <Wrapper>
-                <Helmet
-                  title={frontmatter.title || data.site.siteMetadata.title}
-                  meta={[
-                    {
-                      name: 'description',
-                      content:
-                        frontmatter.description ||
-                        data.site.siteMetadata.description,
-                    },
-                    {
-                      name: 'keywords',
-                      content:
-                        frontmatter.keywords || data.site.siteMetadata.keywords,
-                    },
-                  ]}
-                >
-                  <html lang="en" />
-                  <noscript>
-                    This site runs best with JavaScript enabled.
-                  </noscript>
-                </Helmet>
+  render() {
+    const {
+      frontmatter = {},
+      children,
+      noFooter,
+      noHeader,
+      noSubscribeForm,
+      dark,
+      theme,
+      toggleDark,
+    } = this.props
 
-                {!noHeader && (
-                  <Header
-                    dark={dark}
-                    toggleDark={toggleDark}
-                    textColor={theme.bodyColor}
-                  />
-                )}
+    return (
+      this.state.loaded && (
+        <ThemeProvider theme={theme}>
+          <StaticQuery
+            query={graphql`
+              query {
+                site {
+                  siteMetadata {
+                    title
+                    description
+                    author {
+                      name
+                    }
+                    keywords
+                  }
+                }
+              }
+            `}
+            render={data => (
+              <>
+                <Global styles={styles} />
 
-                <MDXProvider components={mdxComponents}>{children}</MDXProvider>
+                <Wrapper>
+                  <Helmet
+                    title={frontmatter.title || data.site.siteMetadata.title}
+                    meta={[
+                      {
+                        name: 'description',
+                        content:
+                          frontmatter.description ||
+                          data.site.siteMetadata.description,
+                      },
+                      {
+                        name: 'keywords',
+                        content:
+                          frontmatter.keywords ||
+                          data.site.siteMetadata.keywords,
+                      },
+                    ]}
+                  >
+                    <html lang="en" />
+                    <noscript>
+                      This site runs best with JavaScript enabled.
+                    </noscript>
+                  </Helmet>
 
-                {!noFooter && <Footer noSubscribeForm={noSubscribeForm} />}
-              </Wrapper>
-            </>
-          </ThemeProvider>
-        )
-      }}
-    </ThemeContext.Consumer>
-  )
+                  {!noHeader && (
+                    <Header
+                      dark={dark}
+                      toggleDark={toggleDark}
+                      textColor={theme.bodyColor}
+                    />
+                  )}
+
+                  <MDXProvider components={mdxComponents}>
+                    {children}
+                  </MDXProvider>
+
+                  {!noFooter && <Footer noSubscribeForm={noSubscribeForm} />}
+                </Wrapper>
+              </>
+            )}
+          />
+        </ThemeProvider>
+      )
+    )
+  }
 }
+
+export default props => (
+  <ThemeContext.Consumer>
+    {({ dark, theme, toggleDark }) => (
+      <Layout {...props} theme={theme} dark={dark} toggleDark={toggleDark} />
+    )}
+  </ThemeContext.Consumer>
+)
