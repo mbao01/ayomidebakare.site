@@ -28,11 +28,14 @@ const Intro = ({ title }) => (
     <div
       css={theme => css`
         width: 50%;
+
         ${theme.media.maxXS} {
           width: 100%;
         }
+
         h2 {
-          padding: 0 20px;
+          padding: 0 ${rhythm(1)};
+          line-height: 1.3;
         }
       `}
     >
@@ -44,8 +47,7 @@ const Intro = ({ title }) => (
 export default function Index({ data: { site, blog } }) {
   const introTitle = `Hey, I'm ${
     site.siteMetadata.author.name
-  }. Here's a curation of my experiences in life. I hope you
-          learn something.`
+  }. Here's a curation of my experiences in life. I hope you learn something.`
 
   return (
     <Layout site={site}>

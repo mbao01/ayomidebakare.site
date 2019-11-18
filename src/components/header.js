@@ -39,8 +39,8 @@ const abHeader = theme => css`
         font-size: ${rhythm(7 / 13)};
       }
       img {
-        margin: 0 20px 0 0;
-        max-width: 50px;
+        margin: 0 ${rhythm(1)} 0 0;
+        max-width: ${rhythm(5 / 2)};
         border-radius: 100%;
       }
     }
