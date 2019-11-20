@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { css } from '@emotion/core'
@@ -8,6 +8,7 @@ import { PleaseConfirmIllustration } from '../confirm-message/illustrations'
 import PropTypes from 'prop-types'
 import { cold } from 'react-hot-loader'
 import Input from './input'
+import { useFetch } from '../../utilities/hooks'
 
 const SubscribeSchema = Yup.object().shape({
   email_address: Yup.string()
@@ -34,55 +35,6 @@ const PostSubmissionMessage = () => {
   )
 }
 
-function fetchReducer(state, { type, response, error }) {
-  switch (type) {
-    case 'fetching': {
-      return { error: null, response: null, pending: true }
-    }
-    case 'success': {
-      return { error: null, response, pending: false }
-    }
-    case 'error': {
-      return { error, response: null, pending: false }
-    }
-    default:
-      throw new Error(`Unsupported type: ${type}`)
-  }
-}
-
-function useFetch({ url, data }) {
-  const [state, dispatch] = useReducer(fetchReducer, {
-    error: null,
-    response: null,
-    pending: false,
-  })
-  const dataString = !!data && JSON.stringify(data)
-
-  useEffect(() => {
-    if (url && dataString) {
-      dispatch({ type: 'fetching' })
-      fetch(url, {
-        method: 'post',
-        body: dataString,
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `Basic ${btoa(
-            `any:${process.env.MAILCHIMP_API_KEY}`,
-          )}`,
-          mode: 'no-cors',
-        },
-      })
-        .then(r => {
-          return dispatch({ type: 'success', response: r && r.json() })
-        })
-        .catch(error => dispatch({ type: 'error', error }))
-    }
-  }, [dataString, url])
-
-  return state
-}
-
 const Subscribe = (
   { uKey = 'newsletter', header = 'Join the Newsletter' },
   { mixpanel },
@@ -102,9 +54,11 @@ const Subscribe = (
       : null
 
   const { pending, response, error } = useFetch({
-    url: process.env.MAILCHIMP_LIST_ID,
+    url: 'http://x.com',
     data,
-    uKey,
+    headers: {
+      authorization: `Basic ${btoa(`any:${process.env.MAILCHIMP_API_KEY}`)}`,
+    },
   })
 
   const errorMessage = error ? 'Something went wrong!' : null

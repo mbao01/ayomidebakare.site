@@ -72,16 +72,17 @@ export const styles = theme => css`
     }
   }
   button {
-    background-color: ${theme.colors.primary.base};
-    border: 1px solid ${theme.colors.primary.dark};
+    background-color: ${theme.linkColor};
+    border: 1px solid ${theme.linkHoverColor};
     border-radius: 4px;
     color: ${theme.colors.white.base};
     cursor: pointer;
     height: 32px;
     padding: 5px 10px;
     transition: ${theme.transition.ease};
+
     :hover {
-      background: ${theme.colors.primary.dark};
+      background: ${theme.linkHoverColor};
     }
   }
   pre {

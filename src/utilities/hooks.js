@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useReducer, useEffect, useRef } from 'react'
 
 function useInterval(callback, delay) {
   const savedCallback = useRef()
@@ -20,4 +20,57 @@ function useInterval(callback, delay) {
   }, [delay])
 }
 
-export { useInterval }
+function fetchReducer(state, { type, response, error }) {
+  switch (type) {
+    case 'fetching': {
+      return { error: null, response: null, pending: true }
+    }
+    case 'success': {
+      return { error: null, response, pending: false }
+    }
+    case 'error': {
+      return { error, response: null, pending: false }
+    }
+    default:
+      throw new Error(`Unsupported type: ${type}`)
+  }
+}
+
+function useFetch({ url, method = 'post', headers = {}, data }) {
+  const [state, dispatch] = useReducer(fetchReducer, {
+    error: null,
+    response: null,
+    pending: false,
+  })
+
+  const dataString = !!data && JSON.stringify(data)
+
+  useEffect(
+    () => {
+      if (url && dataString) {
+        dispatch({ type: 'fetching' })
+
+        fetch(url, {
+          method,
+          body: dataString,
+          headers: {
+            accept: 'application/json',
+            'content-type': 'application/json',
+            mode: 'no-cors',
+            ...headers,
+          },
+        })
+          .then(r => {
+            return dispatch({ type: 'success', response: r && r.json() })
+          })
+          .catch(error => dispatch({ type: 'error', error }))
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [dataString],
+  )
+
+  return state
+}
+
+export { useInterval, useFetch }
