@@ -8,51 +8,24 @@ import { rhythm } from '../lib/typography'
 import PostCard from '../components/post/post-card'
 import Announcement from '../components/announcement'
 
-const Intro = ({ title }) => (
-  <section
-    css={theme => css`
-      * {
-        color: ${theme.textColor};
-      }
-      width: 100%;
-      padding: ${rhythm(1)} 0;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      ${theme.media.maxXS} {
-        flex-wrap: wrap;
-      }
-    `}
-  >
-    <Announcement />
-    <div
-      css={theme => css`
-        width: 50%;
-
-        ${theme.media.maxXS} {
-          width: 100%;
-        }
-
-        h2 {
-          padding: 0 ${rhythm(1)};
-          line-height: 1.3;
-        }
-      `}
-    >
-      <h2>{title}</h2>
-    </div>
-  </section>
-)
-
 export default function Index({ data: { site, blog } }) {
-  const introTitle = `Hey, I'm ${
-    site.siteMetadata.author.name
-  }. Here's a curation of my experiences in life. I hope you learn something.`
-
   return (
     <Layout site={site}>
       <Container maxWidth="80%">
-        <Intro title={introTitle} />
+        <div
+          css={theme => css`
+            * {
+              color: ${theme.colors.white.base};
+            }
+            width: 100%;
+            padding-top: ${rhythm(1)};
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+          `}
+        >
+          <Announcement />
+        </div>
       </Container>
       <Container
         maxWidth={720}

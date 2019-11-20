@@ -19,14 +19,14 @@ const Share = ({ type, url, title, twitterHandle }) => (
 
       div {
         cursor: pointer;
-        color: ${theme.colors.primary.base};
+        color: ${theme.linkColor};
         display: flex;
         :not(:last-of-type) {
           margin-right: ${rhythm(1 / 2)};
         }
 
         :hover {
-          color: ${theme.colors.primary.base};
+          color: ${theme.linkHoverColor};
         }
       }
 
@@ -44,14 +44,22 @@ const Share = ({ type, url, title, twitterHandle }) => (
       title={title}
       via={twitterHandle.split('@').join('')}
     >
-      {type === 'icon' ? <FontAwesomeIcon icon={faTwitter} /> : `Twitter`}
+      {type === 'icon' ? (
+        <FontAwesomeIcon color="#00acee" icon={faTwitter} />
+      ) : (
+        `Twitter`
+      )}
     </TwitterShareButton>
     <FacebookShareButton
       url={url}
       quote={title}
       via={twitterHandle.split('@').join('')}
     >
-      {type === 'icon' ? <FontAwesomeIcon icon={faFacebook} /> : `Facebook`}
+      {type === 'icon' ? (
+        <FontAwesomeIcon color="#3b5998" icon={faFacebook} />
+      ) : (
+        `Facebook`
+      )}
     </FacebookShareButton>
   </div>
 )
@@ -83,7 +91,7 @@ const SocialEngagement = ({ blogPostUrl, editLink }) => {
             >
               Discuss on
             </span>
-            <FontAwesomeIcon icon={faTwitter} />
+            <FontAwesomeIcon color="#00acee" icon={faTwitter} />
           </Link>
         )}
         {blogPostUrl && editLink && (
@@ -109,7 +117,7 @@ const SocialEngagement = ({ blogPostUrl, editLink }) => {
             >
               Edit on
             </span>
-            <FontAwesomeIcon icon={faGithub} />
+            <FontAwesomeIcon color="#6e5494" icon={faGithub} />
           </Link>
         )}
       </small>

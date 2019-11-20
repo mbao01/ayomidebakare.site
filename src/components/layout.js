@@ -92,7 +92,7 @@ export const styles = theme => css`
     white-space: nowrap;
     /* Track */
     ::-webkit-scrollbar {
-      width: 100%;
+      width: 4px;
       height: 5px;
       border-radius: 0 0 5px 5px;
     }
