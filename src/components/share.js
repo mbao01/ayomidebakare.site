@@ -25,7 +25,7 @@ const Share = ({ type, url, title, twitterHandle }) => (
           margin-right: ${rhythm(1 / 2)};
         }
 
-        :hover {
+        svg:hover {
           color: ${theme.linkHoverColor};
         }
       }

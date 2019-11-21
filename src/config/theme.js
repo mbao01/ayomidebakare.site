@@ -76,7 +76,7 @@ const general = {
     vertical: rhythm(3),
   },
   transition: {
-    ease: 'all 200ms ease',
+    ease: 'all 300ms ease',
   },
 }
 

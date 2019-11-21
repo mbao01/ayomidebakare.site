@@ -34,6 +34,7 @@ export const styles = theme => css`
   html,
   body {
     font-style: normal;
+    transition: ${theme.transition.ease};
   }
   html {
     text-rendering: optimizeLegibility;
@@ -113,9 +114,9 @@ export const styles = theme => css`
   }
   a {
     color: ${theme.linkColor};
-    transition: ${theme.transition.ease};
     text-decoration: none;
     cursor: pointer;
+    transition: ${theme.transition.ease};
 
     &:hover,
     &:focus {
@@ -134,6 +135,9 @@ export const styles = theme => css`
     &:focus {
       outline: 0;
     }
+  }
+  svg {
+    transition: ${theme.transition.ease};
   }
   blockquote {
     border-left: 5px solid ${theme.linkColor};
