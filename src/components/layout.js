@@ -10,7 +10,6 @@ import { ThemeProvider } from 'emotion-theming'
 import ThemeContext from '../context/theme'
 import Footer from './footer'
 import Header from './header'
-import './styles.css'
 
 export const styles = theme => css`
   ${theme.media.maxSM} {
@@ -136,9 +135,6 @@ export const styles = theme => css`
       outline: 0;
     }
   }
-  svg {
-    transition: ${theme.transition.ease};
-  }
   blockquote {
     border-left: 5px solid ${theme.linkColor};
     padding-left: 1rem !important;
@@ -205,6 +201,9 @@ export const styles = theme => css`
   }
   output {
     display: inline-block;
+  }
+  svg {
+    transition: ${theme.transition.ease};
   }
   svg:not(:root) {
     overflow: hidden;

@@ -126,7 +126,7 @@ const Subscribe = (
                 />
                 <button
                   css={css`
-                    font-size: ${rhythm(2 / 3)};
+                    font-size: ${rhythm(4 / 7)};
                     margin: ${rhythm(1 / 4)} ${rhythm(1 / 2)};
                   `}
                   data-element="submit"
