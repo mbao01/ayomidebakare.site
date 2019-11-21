@@ -1,11 +1,11 @@
 import styled from '@emotion/styled'
+import { rhythm } from '../../lib/typography'
 
 export default styled.h1`
-  font-size: 24px;
+  font-size: ${rhythm(1)};
   font-weight: 400;
   line-height: 1.1;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  padding-top: 30px;
-  padding-bottom: 10px;
+  margin: ${rhythm(1)} 0;
+  padding-top: ${rhythm(4 / 3)};
+  padding-bottom: ${rhythm(1 / 2)};
 `

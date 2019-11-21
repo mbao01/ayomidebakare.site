@@ -3,67 +3,63 @@ import Link from '../link'
 import { css } from '@emotion/core'
 import styled from '@emotion/styled'
 import { rhythm } from '../../lib/typography'
-import theme from '../../../config/theme'
-import config from '../../../config/website'
+import config from '../../config/website'
 import Share from '../share'
-import { bpMaxSM } from '../../lib/breakpoints'
 import Img from 'gatsby-image'
 import Badge from '../badge'
 
+const PostCard = styled.div`
+  background-color: ${({ theme }) => (theme.isDark ? '#f8f8f8' : '#fafafa')};
+  border-radius: 4px;
+  color: ${({ theme }) => (theme.isDark ? theme.bgColor : theme.textColor)};
+  margin-bottom: ${rhythm(2)};
+`
+
 const SmallPostCard = styled.div`
-  background-color: #fafafa;
-  margin-bottom: ${rhythm(1)};
-  padding: ${rhythm(0.4)} ${rhythm(1)};
+  padding: ${rhythm(1 / 2)} ${rhythm(1)};
 `
 
 const LargePostCard = styled.div`
-  :not(:first-of-type) {
-    margin-top: 20px;
-    ${bpMaxSM} {
-      margin-top: 20px;
-    }
-  }
-  :first-of-type {
-    margin-top: 20px;
-    ${bpMaxSM} {
-      margin-top: 20px;
-    }
-  }
-  .gatsby-image-wrapper {
-  }
-  background: white;
-  padding: 40px;
-  ${bpMaxSM} {
-    padding: 20px;
-  }
   display: flex;
   flex-direction: column;
+  padding: ${rhythm(3 / 2)};
+
+  ${({ theme }) => theme.media.maxSM} {
+    padding: ${rhythm(1)};
+  }
+  :not(:first-of-type) {
+    margin-top: ${rhythm(1)};
+  }
+  :first-of-type {
+    margin-top: ${rhythm(1)};
+  }
 `
 
 const PostTitle = styled.h2`
-  margin: ${rhythm(1)} 0 ${rhythm(0.4)} 0;
-  transition: ${theme.transition.ease};
-  :hover {
-    color: ${theme.brand.primary};
-    transition: ${theme.transition.ease};
+  margin: ${rhythm(2 / 5)} 0;
+  transition: ${({ theme }) => theme.transition.ease};
+
+  a:hover {
+    transition: ${({ theme }) => theme.transition.ease};
+    text-decoration: none;
   }
 `
 
 const PostDescription = styled.p`
-  margin-top: ${rhythm(0.4)};
+  margin-top: ${rhythm(2 / 5)};
   display: inline-block;
   text-align: justify;
 `
 
 const PostBanner = styled.div`
-  margin-top: ${rhythm(0.4)};
+  margin: ${rhythm(2 / 5)} 0;
   display: inline-block;
 `
 
-const PostCategories = ({ categories }) => (
+export const PostCategories = ({ categories }) => (
   <div
     css={css`
-      padding: ${rhythm(0.2)} 0;
+      padding: ${rhythm(2 / 5)} 0;
       display: flex;
       flex-wrap: wrap;
     `}
@@ -79,22 +75,26 @@ const PostCategories = ({ categories }) => (
   </div>
 )
 
-const PostCard = ({
-  post: { excerpt, fields, frontmatter },
-  type = 'small',
-}) => (
-  <div>
+export default ({ post: { excerpt, fields, frontmatter }, type = 'small' }) => (
+  <PostCard>
     {type === 'small' ? (
       <SmallPostCard>
-        <Link to={fields.slug} aria-label={`View ${frontmatter.title}`}>
-          <PostTitle>{frontmatter.title}</PostTitle>
-        </Link>
+        <PostTitle>
+          <Link to={fields.slug} aria-label={`View ${frontmatter.title}`}>
+            {frontmatter.title}
+          </Link>
+        </PostTitle>
+
+        <small>{frontmatter.date}</small>
+
         <PostDescription>{excerpt}</PostDescription>
+
         <div
           css={css`
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin: ${rhythm(1 / 2)} 0;
           `}
         >
           <PostCategories categories={fields.categories} />
@@ -103,6 +103,7 @@ const PostCard = ({
             <small>Read</small>
           </Link>
         </div>
+
         <Share
           type="icon"
           url={`${config.siteUrl}${fields.slug}`}
@@ -125,19 +126,24 @@ const PostCard = ({
             </div>
           </PostBanner>
         )}
-        <Link
-          aria-label={`View ${frontmatter.title} article`}
-          to={`${fields.slug}`}
-        >
-          <PostTitle>{frontmatter.title}</PostTitle>
-        </Link>
-        {/* <small>{post.frontmatter.date}</small> */}
+        <PostTitle>
+          <Link
+            aria-label={`View ${frontmatter.title} article`}
+            to={`${fields.slug}`}
+          >
+            {frontmatter.title}
+          </Link>
+        </PostTitle>
+
+        <small>{frontmatter.date}</small>
+
         <PostDescription>{excerpt}</PostDescription>
         <div
           css={css`
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin: ${rhythm(1 / 2)} 0;
           `}
         >
           <PostCategories categories={fields.categories} />
@@ -148,7 +154,5 @@ const PostCard = ({
         </div>
       </LargePostCard>
     ) : null}
-  </div>
+  </PostCard>
 )
-
-export default PostCard

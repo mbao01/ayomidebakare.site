@@ -10,11 +10,11 @@ services:
       - 5553:5553
       - 5552:5552
     networks:
-      - ayomidebakare_network
+      - main_network
     volumes:
       - .:/ayomidebakare.site
+      - /ayomidebakare.site/node_modules
 
 networks:
-  ayomidebakare_network:
-    external:
-      name: ayomidebakare_network
+  main_network:
+    driver: bridge

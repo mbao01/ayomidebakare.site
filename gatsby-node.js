@@ -100,30 +100,32 @@ const createCategoryPages = (
     return acc
   }, {})
 
-  pathPrefix = `${pathPrefix}/category`
+  const categoryPathPrefix = `${pathPrefix}/category`
 
   const sortedCategories = Object.keys(categoryPages).sort()
 
   sortedCategories.forEach((category, index) => {
-    const previousCategoryPath = `${pathPrefix}/${sortedCategories[index + 1]}`
+    const previousCategoryPath =
+      index === sortedCategories.length - 1
+        ? null
+        : `${categoryPathPrefix}/${sortedCategories[index + 1]}`
     const nextCategoryPath =
-      index === 1
-        ? `${pathPrefix}/${category}`
-        : `${pathPrefix}/${sortedCategories[index - 1]}`
+      index === 0
+        ? null
+        : `${categoryPathPrefix}/${sortedCategories[index - 1]}`
 
     createPaginatedPages(
       createPage,
       categoryPages[category],
-      `${pathPrefix}/${category}`,
-      `${pathPrefix}/${category}`,
+      `${categoryPathPrefix}/${category}`,
+      `${categoryPathPrefix}/${category}`,
       paginationTemplate,
       {
         category: {
           category,
-          nextCategoryPath: index === 0 ? null : nextCategoryPath,
-          previousCategoryPath:
-            index === sortedCategories.length - 1 ? null : previousCategoryPath,
-          categoryPathPrefix: pathPrefix,
+          nextCategoryPath,
+          previousCategoryPath,
+          categoryPathPrefix,
         },
         ...context,
       },
@@ -147,6 +149,7 @@ function createBlogPages({ blogPath, data, paginationTemplate, actions }) {
   const { createRedirect, createPage } = actions
 
   createPosts(createPage, createRedirect, edges)
+
   createPaginatedPages(
     actions.createPage,
     edges,
@@ -157,9 +160,11 @@ function createBlogPages({ blogPath, data, paginationTemplate, actions }) {
       categories: [],
     },
   )
+
   createCategoryPages(actions.createPage, edges, blogPath, paginationTemplate, {
     categories: [],
   })
+
   return null
 }
 

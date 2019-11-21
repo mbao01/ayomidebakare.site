@@ -3,10 +3,11 @@ slug: make-me-deploy
 date: 2019-04-04
 title: 'First netlify, then the world!'
 author: 'Ayomide Bakare'
-description: 'netlify on the fly'
+description: 'this post has all of the right fields'
 categories: ['test']
 keywords: ['test']
 banner: './images/banner.png'
+bannerCredit: 'Wikipedia, 2019'
 published: true
 unlisted: true
 hasFooter: false

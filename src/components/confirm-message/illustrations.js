@@ -1,7 +1,5 @@
 import React from 'react'
 import { css, keyframes } from '@emotion/core'
-import { fonts } from '../../lib/typography'
-import theme from '../../../config/theme'
 
 // PleaseConfirmIllustration
 const PaperRollOut = keyframes`
@@ -74,7 +72,7 @@ const NotificationFadeIn = keyframes`
 }
 `
 // SVG
-export const PleaseConfirmIllustration = (
+const PleaseConfirmIllustration = (
   <div
     css={css`
       .paper {
@@ -141,16 +139,10 @@ export const PleaseConfirmIllustration = (
           cx="80"
           cy="9.5"
           r="9.5"
-          fill="#E86C60"
+          fill="#e0483d"
           fillRule="nonzero"
         />
-        <text
-          fill="#FFF"
-          fontFamily={fonts.bold}
-          fontSize="10"
-          fontWeight="600"
-          letterSpacing="1"
-        >
+        <text fill="#FFF" fontSize="10" fontWeight="600" letterSpacing="1">
           <tspan x="77.63" y="12.308">
             1
           </tspan>
@@ -161,7 +153,7 @@ export const PleaseConfirmIllustration = (
           height="16"
           x="26.385"
           y="35.077"
-          fill={theme.brand.primary}
+          fill="#388ce6"
           fillRule="nonzero"
           rx="4.308"
           className="button"
@@ -279,7 +271,7 @@ to, 100% {
 }
 `
 // SVG
-export const ThankYouIllustration = (
+const ThankYouIllustration = (
   <div
     css={css`
       .sign {
@@ -345,7 +337,7 @@ export const ThankYouIllustration = (
           />
           <path
             className="grass"
-            fill={theme.colors.green}
+            fill="#6fd987"
             css={css`
               transform: translate(-35px, 0);
             `}
@@ -356,7 +348,7 @@ export const ThankYouIllustration = (
             width="100"
             height="48"
             y="9"
-            fill={theme.brand.primary}
+            fill="#388ce6"
             rx="5"
           />
           <rect
@@ -369,12 +361,7 @@ export const ThankYouIllustration = (
             opacity="0.5"
             rx="3"
           />
-          <text
-            fill="#FFF"
-            fontFamily={fonts.regular}
-            fontSize="14.3"
-            fontWeight="500"
-          >
+          <text fill="#FFF" fontSize="14.3" fontWeight="500">
             <tspan x="13.713" y="39">
               WELCOME
             </tspan>
@@ -451,7 +438,7 @@ to, 100% {
 }
 `
 // SVG
-export const UnsubscribeIllustration = (
+const UnsubscribeIllustration = (
   <div
     css={css`
       .pieces {
@@ -565,3 +552,9 @@ export const UnsubscribeIllustration = (
     </svg>
   </div>
 )
+
+export {
+  PleaseConfirmIllustration,
+  ThankYouIllustration,
+  UnsubscribeIllustration,
+}
