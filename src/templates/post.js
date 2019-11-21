@@ -29,35 +29,41 @@ export default function Post({ data: { site, post } }) {
             width: 100%;
           `}
         >
-          <h1
-            css={css`
-              text-align: center;
-              margin-bottom: 20px;
-            `}
-          >
-            {title}
-          </h1>
           <div
             css={css`
-              display: flex;
-              justify-content: center;
-              margin-bottom: 20px;
-              h3,
-              span {
-                text-align: center;
-                font-size: 15px;
-                opacity: 0.6;
-                font-weight: normal;
-                margin: 0 5px;
-              }
+              margin-bottom: ${rhythm(1)};
             `}
           >
-            {date && <h3>{date}</h3>}
+            <h1
+              css={css`
+                text-align: center;
+                margin-bottom: ${rhythm(1)};
+              `}
+            >
+              {title}
+            </h1>
+
+            {date && (
+              <span
+                css={css`
+                  display: block;
+                  text-align: center;
+                  font-size: ${rhythm(4 / 7)};
+                  opacity: 0.6;
+                  font-weight: normal;
+                  margin: 0 5px;
+                `}
+              >
+                {date}
+              </span>
+            )}
           </div>
+
           {banner && (
             <div
               css={theme => css`
-                padding: 30px;
+                padding: ${rhythm(4 / 3)};
+
                 ${theme.media.maxSM} {
                   padding: 0;
                 }
@@ -66,18 +72,20 @@ export default function Post({ data: { site, post } }) {
               <Img sizes={banner.childImageSharp.fluid} />
             </div>
           )}
-          <br />
-          {description ? (
+
+          {description && (
             <div
               css={css`
                 font-style: italic;
                 text-align: center;
+                margin-top: ${rhythm(1 / 3)};
                 margin-bottom: ${rhythm(2)};
               `}
             >
               {description}
             </div>
-          ) : null}
+          )}
+
           <MDXRenderer>{post.code.body}</MDXRenderer>
 
           <div

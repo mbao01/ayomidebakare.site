@@ -1,11 +1,11 @@
 ---
 date: 2019-11-20
-expiryDate: 2019-11-21
-title: 'Something sweet is cooking'
+expiryDate: 2019-11-22
+title: "Here's to the crazy ones"
 type: 'Word'
 published: true
 unlisted: true
-categories: ['test']
+categories: ['quote']
 images: './images'
 ---
 

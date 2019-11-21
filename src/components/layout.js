@@ -15,6 +15,7 @@ export const styles = theme => css`
   ${theme.media.maxSM} {
     p,
     em,
+    article,
     strong {
       font-size: ${rhythm(2 / 3)};
     }

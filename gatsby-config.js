@@ -162,6 +162,7 @@ module.exports = {
                 description
                 siteUrl
                 site_url: siteUrl
+                author
               }
             }
           }
