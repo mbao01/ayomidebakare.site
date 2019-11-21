@@ -41,7 +41,6 @@ export const styles = theme => css`
     overflow-x: hidden;
     overflow-y: auto !important;
     -ms-overflow-style: scrollbar;
-    -webkit-tap-highlight-color: ${theme.colors.black.base};
   }
   body {
     color: ${theme.textColor};

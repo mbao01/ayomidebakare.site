@@ -9,9 +9,11 @@ export default () => (
   <Layout noSubscribeForm>
     <div
       css={css`
+        margin: ${rhythm(2)} auto;
+
         h2 {
           font-size: ${rhythm(1.3)};
-          margin-bottom: ${rhythm(0.4)};
+          margin-bottom: ${rhythm(2 / 5)};
         }
         p {
           max-width: 440px;
@@ -20,9 +22,10 @@ export default () => (
     >
       <Message
         illustration={UnsubscribeIllustration}
-        body={"You just hit a route that doesn't exist... the sadness."}
+        body={
+          "It looks like you're looking for what doesn't exist... the sadness."
+        }
         title="NOT FOUND"
-        fullscreen={true}
       />
     </div>
   </Layout>
