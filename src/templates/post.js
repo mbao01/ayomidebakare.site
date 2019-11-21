@@ -63,10 +63,7 @@ export default function Post({ data: { site, post } }) {
                 }
               `}
             >
-              <Img
-                sizes={banner.childImageSharp.fluid}
-                alt={site.siteMetadata.keywords.join(', ')}
-              />
+              <Img sizes={banner.childImageSharp.fluid} />
             </div>
           )}
           <br />
