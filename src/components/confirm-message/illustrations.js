@@ -72,7 +72,7 @@ const NotificationFadeIn = keyframes`
 }
 `
 // SVG
-export const PleaseConfirmIllustration = (
+const PleaseConfirmIllustration = (
   <div
     css={css`
       .paper {
@@ -271,7 +271,7 @@ to, 100% {
 }
 `
 // SVG
-export const ThankYouIllustration = (
+const ThankYouIllustration = (
   <div
     css={css`
       .sign {
@@ -438,7 +438,7 @@ to, 100% {
 }
 `
 // SVG
-export const UnsubscribeIllustration = (
+const UnsubscribeIllustration = (
   <div
     css={css`
       .pieces {
@@ -552,3 +552,9 @@ export const UnsubscribeIllustration = (
     </svg>
   </div>
 )
+
+export {
+  PleaseConfirmIllustration,
+  ThankYouIllustration,
+  UnsubscribeIllustration,
+}
