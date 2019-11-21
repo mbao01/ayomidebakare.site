@@ -8,7 +8,7 @@ import Link from '../components/link'
 import PostCard from '../components/post/post-card'
 import { rhythm } from '../lib/typography'
 
-const Blog = ({ data: { site, blog }, pageContext: { pagination } }) => {
+const Blog = ({ data: { blog }, pageContext: { pagination } }) => {
   const { page, nextPagePath, previousPagePath } = pagination
 
   const posts = page
@@ -22,7 +22,7 @@ const Blog = ({ data: { site, blog }, pageContext: { pagination } }) => {
     .filter(post => post !== undefined)
 
   return (
-    <Layout site={site}>
+    <Layout>
       <SEO />
       <Container>
         {posts.map(({ node: post }) => (
@@ -72,12 +72,6 @@ export default Blog
 
 export const pageQuery = graphql`
   query {
-    site {
-      siteMetadata {
-        title
-        image
-      }
-    }
     blog: allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
       edges {
         node {

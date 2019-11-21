@@ -8,9 +8,9 @@ import {
   UnsubscribeIllustration,
 } from '../components/confirm-message/illustrations'
 
-export default ({ data: { site, latestArticle } }) => {
+export default ({ data: { latestArticle } }) => {
   return (
-    <Layout site={site} noSubscribeForm>
+    <Layout noSubscribeForm>
       <div>
         <Message
           illustration={PleaseConfirmIllustration}

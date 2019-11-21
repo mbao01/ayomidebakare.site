@@ -8,9 +8,9 @@ import { rhythm } from '../lib/typography'
 import PostCard from '../components/post/post-card'
 import Announcement from '../components/announcement'
 
-export default function Index({ data: { site, blog } }) {
+export default function Index({ data: { blog } }) {
   return (
-    <Layout site={site}>
+    <Layout>
       <Container maxWidth="80%">
         <div
           css={theme => css`
@@ -66,16 +66,6 @@ export default function Index({ data: { site, blog } }) {
 
 export const pageQuery = graphql`
   query {
-    site {
-      siteMetadata {
-        title
-        image
-        author {
-          name
-          minibio
-        }
-      }
-    }
     blog: allMdx(
       limit: 5
       sort: { fields: [frontmatter___date], order: DESC }

@@ -17,7 +17,7 @@ export default function Post({ data: { site, post } }) {
   const blogPostUrl = `${config.siteUrl}${slug}`
 
   return (
-    <Layout site={site} frontmatter={post.fields}>
+    <Layout frontmatter={post.fields}>
       <SEO
         frontmatter={post.fields}
         metaImage={get(post, 'fields.banner.childImageSharp.fluid.src')}
@@ -109,13 +109,6 @@ export default function Post({ data: { site, post } }) {
 
 export const pageQuery = graphql`
   query($id: String!) {
-    site {
-      siteMetadata {
-        title
-        image
-        keywords
-      }
-    }
     post: mdx(fields: { id: { eq: $id } }) {
       fields {
         editLink

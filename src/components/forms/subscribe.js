@@ -77,18 +77,6 @@ const Subscribe = (
         padding: ${rhythm(1 / 2)};
       `}
     >
-      {!successful && (
-        <h4
-          css={css`
-            margin-bottom: ${rhythm(1 / 2)};
-            margin-top: 0;
-            text-align: center;
-          `}
-        >
-          {header}
-        </h4>
-      )}
-
       <Formik
         initialValues={{
           email_address: '',
@@ -100,45 +88,59 @@ const Subscribe = (
         render={() => (
           <>
             {!successful && (
-              <Form
-                css={theme => css`
-                  display: flex;
-                  padding: ${rhythm(1 / 2)} 0;
-                  justify-content: center;
-                  align-items: center;
-                  flex-wrap: wrap;
-
-                  ${theme.media.maxXS} {
-                    flex-flow: column;
-                  }
-                `}
-              >
-                <Input
-                  name="first_name"
-                  placeholder="First Name e.g Clem"
-                  label="your first name"
-                />
-                <Input
-                  name="email_address"
-                  type="email"
-                  placeholder="Email e.g ck@clem.ng"
-                  label="your email address"
-                />
-                <button
+              <>
+                <h4
                   css={css`
-                    font-size: ${rhythm(4 / 7)};
-                    margin: ${rhythm(1 / 4)} ${rhythm(1 / 2)};
+                    margin-bottom: ${rhythm(1 / 2)};
+                    margin-top: 0;
+                    text-align: center;
                   `}
-                  data-element="submit"
-                  type="submit"
-                  disabled={pending}
                 >
-                  {!pending && 'Subscribe'}
-                  {pending && 'Subscribing...'}
-                </button>
-              </Form>
+                  {header}
+                </h4>
+
+                <Form
+                  css={theme => css`
+                    display: flex;
+                    padding: ${rhythm(1 / 2)} 0;
+                    justify-content: center;
+                    align-items: center;
+                    flex-wrap: wrap;
+
+                    ${theme.media.maxXS} {
+                      flex-flow: column;
+                    }
+                  `}
+                >
+                  <Input
+                    name="first_name"
+                    placeholder="First Name e.g Clem"
+                    label="your first name"
+                  />
+                  <Input
+                    name="email_address"
+                    type="email"
+                    placeholder="Email e.g ck@clem.ng"
+                    label="your email address"
+                  />
+                  <button
+                    css={css`
+                      font-size: ${rhythm(4 / 7)};
+                      margin: ${rhythm(1 / 4)} ${rhythm(1 / 2)};
+                    `}
+                    data-element="submit"
+                    type="submit"
+                    disabled={pending}
+                  >
+                    {!pending && 'Subscribe'}
+                    {pending && 'Subscribing...'}
+                  </button>
+                </Form>
+              </>
             )}
+
             {submitted && !pending && <PostSubmissionMessage />}
+
             {error && (
               <div
                 css={css`

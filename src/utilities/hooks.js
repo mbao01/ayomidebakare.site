@@ -48,8 +48,6 @@ function useFetch({ url, method = 'post', headers = {}, data }) {
 
   const dataString = !!data && JSON.stringify(data)
 
-  console.log('Data: ', data)
-
   useEffect(
     () => {
       if (url && dataString) {
