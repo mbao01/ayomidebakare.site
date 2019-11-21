@@ -31,6 +31,9 @@ function fetchReducer(state, { type, response, error }) {
     case 'error': {
       return { error, response: null, pending: false }
     }
+    case 'reset': {
+      return { error: null, response: null, pending: false }
+    }
     default:
       throw new Error(`Unsupported type: ${type}`)
   }
@@ -44,6 +47,8 @@ function useFetch({ url, method = 'post', headers = {}, data }) {
   })
 
   const dataString = !!data && JSON.stringify(data)
+
+  console.log('Data: ', data)
 
   useEffect(
     () => {
@@ -64,6 +69,10 @@ function useFetch({ url, method = 'post', headers = {}, data }) {
             return dispatch({ type: 'success', response: r && r.json() })
           })
           .catch(error => dispatch({ type: 'error', error }))
+      }
+
+      return () => {
+        dispatch({ type: 'reset' })
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps

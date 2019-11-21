@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useCallback } from 'react'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { css } from '@emotion/core'
@@ -12,26 +12,19 @@ import { useFetch } from '../../utilities/hooks'
 
 const SubscribeSchema = Yup.object().shape({
   email_address: Yup.string()
-    .email('Invalid email address')
-    .required('Required'),
-  first_name: Yup.string(),
+    .email('🙄 Invalid email')
+    .required('Hey👋, required'),
+  first_name: Yup.string().required("What's your name? 🤓"),
 })
 
 const PostSubmissionMessage = () => {
   return (
-    <div
-      css={theme => css`
-        max-width: 280px;
-        color: ${theme.colors.white.base};
-      `}
-    >
-      <Message
-        illustration={PleaseConfirmIllustration}
-        title="Great, one last thing..."
-        body="I just sent you an email with the confirmation link. 
+    <Message
+      illustration={PleaseConfirmIllustration}
+      title="Great, one last thing..."
+      body="I just sent you an email with the confirmation link. 
           **Please check your inbox!**"
-      />
-    </div>
+    />
   )
 }
 
@@ -41,12 +34,13 @@ const Subscribe = (
 ) => {
   const [values, setValues] = useState()
 
-  const { email_address, first_name } = values || {}
+  const { email_address, first_name, created } = values || {}
 
   const data =
     email_address && first_name
       ? {
           email_address,
+          created,
           merge_fields: {
             FIRST_NAME: first_name,
           },
@@ -61,9 +55,11 @@ const Subscribe = (
     },
   })
 
-  const errorMessage = error ? 'Something went wrong!' : null
-  const submitted = Boolean(response)
+  const handleSubmit = useCallback(_values => {
+    setValues({ ..._values, created: new Date() })
+  }, [])
 
+  const submitted = Boolean(response)
   const successful = response && response.status === 'success'
 
   if (submitted && mixpanel) {
@@ -84,7 +80,7 @@ const Subscribe = (
       {!successful && (
         <h4
           css={css`
-            margin-bottom: ${rhythm(1)};
+            margin-bottom: ${rhythm(1 / 2)};
             margin-top: 0;
             text-align: center;
           `}
@@ -97,16 +93,17 @@ const Subscribe = (
         initialValues={{
           email_address: '',
           first_name: '',
-          created: Date.now(),
         }}
         validationSchema={SubscribeSchema}
-        onSubmit={setValues}
+        onSubmit={handleSubmit}
+        enableReinitialize={submitted}
         render={() => (
           <>
             {!successful && (
               <Form
                 css={theme => css`
                   display: flex;
+                  padding: ${rhythm(1 / 2)} 0;
                   justify-content: center;
                   align-items: center;
                   flex-wrap: wrap;
@@ -141,10 +138,8 @@ const Subscribe = (
                 </button>
               </Form>
             )}
-            {submitted && !pending && (
-              <PostSubmissionMessage response={response} />
-            )}
-            {errorMessage && (
+            {submitted && !pending && <PostSubmissionMessage />}
+            {error && (
               <div
                 css={css`
                   margin: ${rhythm(1 / 2)};
@@ -161,7 +156,7 @@ const Subscribe = (
                     text-align: center;
                   `}
                 >
-                  {errorMessage}
+                  {'Something went wrong!'}
                 </span>
               </div>
             )}
