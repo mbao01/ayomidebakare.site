@@ -48,7 +48,7 @@ const Subscribe = (
       : null
 
   const { pending, response, error } = useFetch({
-    url: 'http://x.com',
+    url: process.env.MAILCHIMP_BUCKET,
     data,
     headers: {
       authorization: `Basic ${btoa(`any:${process.env.MAILCHIMP_API_KEY}`)}`,
