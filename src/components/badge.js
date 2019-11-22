@@ -2,36 +2,40 @@ import React from 'react'
 import Link from './link'
 import { css } from '@emotion/core'
 import { rhythm } from '../lib/typography'
-import theme from '../../config/theme'
 
-const abBadge = css`
-  text-transform: capitalize;
-  margin-right: ${rhythm(0.2)};
-  a {
-    color: ${theme.colors.white};
-    padding: ${rhythm(0.1)} ${rhythm(0.25)};
-    border-radius: 3px;
-    background: ${theme.colors.primary};
-    font-size: 12px;
+const Badge = ({ text, link }) => {
+  return (
+    <small
+      css={theme => css`
+        text-transform: capitalize;
+        margin-right: ${rhythm(1 / 5)};
+        margin-bottom: ${rhythm(2 / 5)};
 
-    :hover,
-    :focus {
-      color: ${theme.colors.white};
-      background: ${theme.colors.link_color_hover};
-    }
-  }
-`
+        span,
+        a {
+          background-color: ${theme.linkColor};
+          border-radius: 10px;
+          color: ${theme.colors.white.base};
+          font-size: ${rhythm(1 / 2)};
+          padding: ${rhythm(1 / 10)} ${rhythm(2 / 5)};
+          text-decoration: none;
+        }
 
-const Badge = ({ text, link }) => (
-  <small css={abBadge}>
-    {link ? (
-      <Link aria-label={`View ${text}`} to={link}>
-        {text}
-      </Link>
-    ) : (
-      { text }
-    )}
-  </small>
-)
+        span:hover,
+        a:hover {
+          background-color: ${theme.linkHoverColor};
+        }
+      `}
+    >
+      {link ? (
+        <Link aria-label={`View ${text}`} to={link}>
+          {text}
+        </Link>
+      ) : (
+        <span>{text}</span>
+      )}
+    </small>
+  )
+}
 
 export default Badge

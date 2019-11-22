@@ -1,10 +1,10 @@
 import styled from '@emotion/styled'
+import { rhythm } from '../../lib/typography'
 
 export default styled.h2`
+  font-size: ${rhythm(2 / 3)};
   text-align: left;
-  font-size: 18px;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin: ${rhythm(1)} 0;
   font-weight: 900;
   line-height: 1.1;
 `

@@ -23,8 +23,6 @@ And most important, to friends, colleagues and family that've in anyway made me 
 
 You can send an email
 
-📨 [`hi@ayomidebakare.site`](mailto:hi@ayomidebakare.site)
-
-📨 [`ayomidebakare@etrack.africa`](mailto:ayomidebakare@etrack.africa)
+📨 [`poke@ayomidebakare.site`](mailto:poke@ayomidebakare.site)
 
 or on Twitter [@mbao_01](https://twitter.com/mbao_01 '@mbao_01')

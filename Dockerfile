@@ -8,13 +8,13 @@ WORKDIR /ayomidebakare.site
 COPY . /ayomidebakare.site
 
 # Globally install dependencies we may need manually to run from the cli
-RUN npm i -g gatsby-cli@2.4.17
+RUN npm i -g gatsby-cli@2.8.9
 
 # Install dependencies
 RUN npm i
 
 # Mount the node_modules directory as a volume to bind it at run time
-VOLUME ["/ayomidebakare.site"]
+VOLUME ["/ayomidebakare.site", "/ayomidebakare.site/node_modules"]
 
 EXPOSE 5553
 

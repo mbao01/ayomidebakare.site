@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/7bb17284-cecf-4bb6-9a85-a7cd8b296dc4/deploy-status)](https://app.netlify.com/sites/ayomidebakare/deploys)
+
 # Ayomide Bakare's Blog
 
 ###### Special thanks to Egghead.io (all things web) and [Kent C. Dodds](https://kentcdodds.com)!

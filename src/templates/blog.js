@@ -5,10 +5,10 @@ import Container from '../components/container'
 import SEO from '../components/seo'
 import Layout from '../components/layout'
 import Link from '../components/link'
-import theme from '../../config/theme'
 import PostCard from '../components/post/post-card'
+import { rhythm } from '../lib/typography'
 
-const Blog = ({ data: { site, blog }, pageContext: { pagination } }) => {
+const Blog = ({ data: { blog }, pageContext: { pagination } }) => {
   const { page, nextPagePath, previousPagePath } = pagination
 
   const posts = page
@@ -22,48 +22,45 @@ const Blog = ({ data: { site, blog }, pageContext: { pagination } }) => {
     .filter(post => post !== undefined)
 
   return (
-    <Layout
-      site={site}
-      headerColor={theme.colors.primary}
-      headerBg={theme.brand.secondary}
-    >
+    <Layout>
       <SEO />
-      <Container
-        noVerticalPadding
-        css={css`
-          a,
-          p {
-          }
-          h2 {
-            a {
-              color: inherit;
-            }
-          }
-          small {
-            display: block;
-          }
-        `}
-      >
+      <Container>
         {posts.map(({ node: post }) => (
           <PostCard key={post.id} post={post} type="large" />
         ))}
-        <br />
-        <br />
-        <div>
+
+        <div
+          css={css`
+            clear: both;
+            height: ${rhythm(1)};
+          `}
+        >
           {nextPagePath && (
-            <Link to={nextPagePath} aria-label="View next page">
-              Next Page →
-            </Link>
+            <small
+              css={css`
+                float: left;
+              `}
+            >
+              <Link to={nextPagePath} aria-label="View next page">
+                Next Page →
+              </Link>
+            </small>
           )}
           {previousPagePath && (
-            <Link to={previousPagePath} aria-label="View previous page">
-              ← Previous Page
-            </Link>
+            <small
+              css={css`
+                float: right;
+              `}
+            >
+              <Link to={previousPagePath} aria-label="View previous page">
+                ← Previous Page
+              </Link>
+            </small>
           )}
         </div>
         <hr
           css={css`
-            margin: 50px 0;
+            margin: 0;
           `}
         />
       </Container>
@@ -75,12 +72,6 @@ export default Blog
 
 export const pageQuery = graphql`
   query {
-    site {
-      siteMetadata {
-        title
-        image
-      }
-    }
     blog: allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
       edges {
         node {
