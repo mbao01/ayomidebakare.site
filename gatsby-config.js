@@ -28,11 +28,7 @@ module.exports = {
     image: config.siteLogoCircle,
     author: {
       name: config.author,
-      minibio: `
-        <strong>egghead</strong> is the premier place on the internet for 
-        experienced developers to enhance their skills and stay current
-        in the fast-faced field of web development.
-      `,
+      minibio: config.authorBio,
     },
     organization: {
       name: config.organization,
@@ -162,7 +158,10 @@ module.exports = {
                 description
                 siteUrl
                 site_url: siteUrl
-                author
+                author {
+                  name
+                  minibio
+                }
               }
             }
           }

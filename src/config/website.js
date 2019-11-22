@@ -10,6 +10,11 @@ module.exports = {
   siteDescription:
     'Hey! Learn from my experiences in building a career in technology',
   author: 'Ayomide Bakare', // Author for schemaORGJSONLD
+  authorBio: `
+    <strong>egghead</strong> is the premier place on the internet for 
+    experienced developers to enhance their skills and stay current
+    in the fast-faced field of web development.
+  `,
   organization: 'Unparked LLC',
 
   // siteFBAppID: '123456789', // Facebook App ID - Optional
