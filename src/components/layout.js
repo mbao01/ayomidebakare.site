@@ -61,7 +61,7 @@ export const styles = theme => css`
     margin: ${rhythm(1)} 0;
   }
   input {
-    border: 1px solid ${theme.colors.grey.light};
+    border: 1px solid #dfdfdf;
     border-radius: 4px;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
     height: 32px;
