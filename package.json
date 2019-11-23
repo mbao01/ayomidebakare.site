@@ -85,7 +85,7 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop -p 5553 -H 0.0.0.0",
-    "start": "serve public/",
+    "start": "gatsby serve -p 5552 -H 0.0.0.0 public/",
     "lint": "eslint .",
     "now-build": "npm run build",
     "prettier": "prettier --config .prettierrc --write \"**/*{.js,.jsx,.md,.mdx,.json,.scss}\"",

@@ -53,12 +53,12 @@ const Subscribe = (
       : null
 
   const { pending, response, error } = useFetch({
-    url: process.env.MAILCHIMP_PROXY_URL,
+    url: `${process.env.GATSBY_MAILCHIMP_PROXY_URL}`,
     data,
     headers: {
       'xp-content-type': 'application/json',
       'xp-authorization': `Basic ${btoa(
-        `any:${process.env.MAILCHIMP_API_KEY}`,
+        `any:${process.env.GATSBY_MAILCHIMP_API_KEY}`,
       )}`,
     },
   })
@@ -181,4 +181,4 @@ Subscribe.contextTypes = {
   mixpanel: PropTypes.object,
 }
 
-export default cold(Subscribe)
+export default Subscribe
