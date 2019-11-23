@@ -6,7 +6,6 @@ import { rhythm } from '../../lib/typography'
 import Message from '../confirm-message/message'
 import { PleaseConfirmIllustration } from '../confirm-message/illustrations'
 import PropTypes from 'prop-types'
-import { cold } from 'react-hot-loader'
 import Input from './input'
 import { useFetch } from '../../utilities/hooks'
 
@@ -49,6 +48,7 @@ const Subscribe = (
               },
             },
           ],
+          update_existing: true,
         }
       : null
 
@@ -68,7 +68,7 @@ const Subscribe = (
   }, [])
 
   const submitted = Boolean(response)
-  const successful = response && response.status === 'success'
+  const successful = response && !response.error_count
 
   if (submitted && mixpanel) {
     mixpanel.people.set_once(data)
@@ -147,7 +147,7 @@ const Subscribe = (
               </>
             )}
 
-            {submitted && !pending && <PostSubmissionMessage />}
+            {successful && !pending && <PostSubmissionMessage />}
 
             {error && (
               <div

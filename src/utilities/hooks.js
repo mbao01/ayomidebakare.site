@@ -71,7 +71,10 @@ function useFetch({ url, method = 'post', headers = {}, data }) {
 
             const { error, errors, message = 'Something went wrong' } = r
 
-            if (status && !status.startsWith('2')) {
+            if (
+              (status && !status.startsWith('2')) ||
+              (errors && errors.length > 0)
+            ) {
               // eslint-disable-next-line babel/new-cap
               throw CustomError(status, errors || error || r, message)
             }
