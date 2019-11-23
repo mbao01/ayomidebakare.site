@@ -52,19 +52,21 @@ const Subscribe = (
         }
       : null
 
-  const a = `${process.env.MAILCHIMP_PROXY_URL} ::: ${
-    process.env.MAILCHIMP_API_KEY
-  } ::: ${process.env.MIXPANEL_TOKEN} ::: ${process.env.GOOGLE_UID} `
+  const a = `${process.env.GATSBY_MAILCHIMP_PROXY_URL} ::: ${
+    process.env.GATSBY_MAILCHIMP_API_KEY
+  } ::: ${process.env.GATSBY_MIXPANEL_TOKEN} ::: ${
+    process.env.GATSBY_GOOGLE_UID
+  } `
 
   console.log('ENVS: ', a)
 
   const { pending, response, error } = useFetch({
-    url: `${process.env.MAILCHIMP_PROXY_URL}`,
+    url: `${process.env.GATSBY_MAILCHIMP_PROXY_URL}`,
     data,
     headers: {
       'xp-content-type': 'application/json',
       'xp-authorization': `Basic ${btoa(
-        `any:${process.env.MAILCHIMP_API_KEY}`,
+        `any:${process.env.GATSBY_MAILCHIMP_API_KEY}`,
       )}`,
     },
   })

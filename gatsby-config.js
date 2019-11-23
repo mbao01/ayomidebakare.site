@@ -140,7 +140,7 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-mixpanel',
       options: {
-        apiToken: process.env.MIXPANEL_TOKEN, // required
+        apiToken: process.env.GATSBY_MIXPANEL_TOKEN, // required
         // optional fields, default values
         debug: false, // if true activate debug mode on mixpanel library
         enableOnDevMode: false, // if false mixpanel will be activated on NODE_ENV=production only
