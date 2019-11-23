@@ -147,7 +147,7 @@ const Subscribe = (
               </>
             )}
 
-            {successful && !pending && <PostSubmissionMessage />}
+            {submitted && !pending && <PostSubmissionMessage />}
 
             {error && (
               <div
