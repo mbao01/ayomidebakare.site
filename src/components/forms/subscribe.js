@@ -52,8 +52,14 @@ const Subscribe = (
         }
       : null
 
+  const a = `${process.env.MAILCHIMP_PROXY_URL} ::: ${
+    process.env.MAILCHIMP_API_KEY
+  } ::: ${process.env.MIXPANEL_TOKEN} ::: ${process.env.GOOGLE_UID} `
+
+  console.log('ENVS: ', a)
+
   const { pending, response, error } = useFetch({
-    url: process.env.MAILCHIMP_PROXY_URL,
+    url: `${process.env.MAILCHIMP_PROXY_URL}`,
     data,
     headers: {
       'xp-content-type': 'application/json',
