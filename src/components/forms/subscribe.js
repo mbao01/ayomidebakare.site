@@ -48,6 +48,7 @@ const Subscribe = (
               },
             },
           ],
+          update_existing: true,
         }
       : null
 
