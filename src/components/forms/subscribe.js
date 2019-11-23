@@ -39,19 +39,27 @@ const Subscribe = (
   const data =
     email_address && first_name
       ? {
-          email_address,
-          created,
-          merge_fields: {
-            FIRST_NAME: first_name,
-          },
+          members: [
+            {
+              email_address,
+              created,
+              status: 'subscribed',
+              merge_fields: {
+                FIRST_NAME: first_name,
+              },
+            },
+          ],
         }
       : null
 
   const { pending, response, error } = useFetch({
-    url: process.env.MAILCHIMP_BUCKET,
+    url: process.env.MAILCHIMP_PROXY_URL,
     data,
     headers: {
-      authorization: `Basic ${btoa(`any:${process.env.MAILCHIMP_API_KEY}`)}`,
+      'xp-content-type': 'application/json',
+      'xp-authorization': `Basic ${btoa(
+        `any:${process.env.MAILCHIMP_API_KEY}`,
+      )}`,
     },
   })
 

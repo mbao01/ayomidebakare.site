@@ -18,14 +18,3 @@ function MarkdownPage({ children, pageContext: { frontmatter } }) {
 }
 
 export default MarkdownPage
-
-export const pageQuery = graphql`
-  query {
-    site {
-      siteMetadata {
-        title
-        image
-      }
-    }
-  }
-`
