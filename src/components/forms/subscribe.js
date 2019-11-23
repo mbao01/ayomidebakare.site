@@ -52,14 +52,6 @@ const Subscribe = (
         }
       : null
 
-  const a = `${process.env.GATSBY_MAILCHIMP_PROXY_URL} ::: ${
-    process.env.GATSBY_MAILCHIMP_API_KEY
-  } ::: ${process.env.GATSBY_MIXPANEL_TOKEN} ::: ${
-    process.env.GATSBY_GOOGLE_UID
-  } `
-
-  console.log('ENVS: ', a)
-
   const { pending, response, error } = useFetch({
     url: `${process.env.GATSBY_MAILCHIMP_PROXY_URL}`,
     data,
