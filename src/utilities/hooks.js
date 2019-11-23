@@ -1,4 +1,5 @@
 import { useReducer, useEffect, useRef } from 'react'
+import { CustomError } from '../lib/custom-error'
 
 function useInterval(callback, delay) {
   const savedCallback = useRef()
@@ -63,10 +64,26 @@ function useFetch({ url, method = 'post', headers = {}, data }) {
             ...headers,
           },
         })
-          .then(r => {
-            return dispatch({ type: 'success', response: r && r.json() })
+          .then(async r => {
+            const status = `${r.status}`
+
+            r = r && (await r.json())
+
+            const { error, errors, message = 'Something went wrong' } = r
+
+            if (status && !status.startsWith('2')) {
+              // eslint-disable-next-line babel/new-cap
+              throw CustomError(status, errors || error || r, message)
+            }
+
+            return r
           })
-          .catch(error => dispatch({ type: 'error', error }))
+          .then(res => {
+            return dispatch({ type: 'success', response: res })
+          })
+          .catch(e => {
+            dispatch({ type: 'error', error: e && (e.error || e.errors) })
+          })
       }
 
       return () => {

@@ -147,7 +147,7 @@ const Subscribe = (
               </>
             )}
 
-            {submitted && !pending && <PostSubmissionMessage />}
+            {successful && !pending && <PostSubmissionMessage />}
 
             {error && (
               <div
@@ -181,4 +181,4 @@ Subscribe.contextTypes = {
   mixpanel: PropTypes.object,
 }
 
-export default cold(Subscribe)
+export default Subscribe
