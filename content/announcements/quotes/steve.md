@@ -1,6 +1,6 @@
 ---
 date: 2019-11-20
-expiryDate: 2019-11-22
+expiryDate: 2019-12-01
 title: "Here's to the crazy ones"
 type: 'Word'
 published: true
