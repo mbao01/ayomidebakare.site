@@ -5,8 +5,8 @@ module.exports = {
   siteTitleShort: 'ayomidebakare', // short_name for manifest
   siteUrl: 'https://ayomidebakare.site', // Domain of your site. No trailing slash!
   siteLanguage: 'en', // Language Tag on <html> element
-  siteLogo: 'images/logo.png', // Used for SEO and manifest, path to your image you placed in the 'static' folder
-  siteLogoCircle: 'images/logo-circle.png', // Used for SEO and manifest, path to your image you placed in the 'static' folder
+  siteLogo: 'images/ayomide-logo.png', // Used for SEO and manifest, path to your image you placed in the 'static' folder
+  siteLogoCircle: 'images/ayomide-circle_logo.png', // Used for SEO and manifest, path to your image you placed in the 'static' folder
   siteDescription:
     'Hey! Learn from my experiences in building a career in technology',
   author: 'Ayomide Bakare', // Author for schemaORGJSONLD
