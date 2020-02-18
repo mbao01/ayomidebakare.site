@@ -50,6 +50,10 @@ const abHeader = theme => css`
       font-weight: bold;
     }
 
+    .abNavRight {
+      display: flex;
+    }
+
     .abNavSocial {
       display: inline;
 
@@ -146,8 +150,19 @@ export default ({ dark, toggleDark }) => {
             )}
           </div>
 
-          <div className="abToggler" onClick={toggleDark}>
-            <FontAwesomeIcon icon={dark ? faSun : faMoon} />
+          <div className="abNavRight">
+            <Link
+              to="/about"
+              css={css`
+                display: flex;
+                margin: 0 ${rhythm(1)};
+              `}
+            >
+              About
+            </Link>
+            <div className="abToggler" onClick={toggleDark}>
+              <FontAwesomeIcon icon={dark ? faSun : faMoon} />
+            </div>
           </div>
         </nav>
       </Container>
