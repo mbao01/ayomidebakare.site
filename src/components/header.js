@@ -31,6 +31,7 @@ const abHeader = theme => css`
         ? theme.colors.white.base
         : theme.linkHoverColor};
     }
+
     .abNavBrand {
       display: flex;
       align-items: center;
@@ -50,6 +51,23 @@ const abHeader = theme => css`
       font-weight: bold;
     }
 
+    .abNavRight {
+      display: flex;
+
+      ${theme.media.maxSM} {
+        flex-direction: column;
+
+        a {
+          order: 2;
+          margin: 0;
+        }
+
+        .abToggler {
+          justify-content: flex-end;
+        }
+      }
+    }
+
     .abNavSocial {
       display: inline;
 
@@ -67,6 +85,8 @@ const abHeader = theme => css`
 
     .abToggler {
       cursor: pointer;
+      display: flex;
+      align-items: center;
 
       :hover,
       :focus {
@@ -146,8 +166,19 @@ export default ({ dark, toggleDark }) => {
             )}
           </div>
 
-          <div className="abToggler" onClick={toggleDark}>
-            <FontAwesomeIcon icon={dark ? faSun : faMoon} />
+          <div className="abNavRight">
+            <Link
+              to="/about"
+              css={css`
+                display: flex;
+                margin: 0 ${rhythm(1)};
+              `}
+            >
+              About
+            </Link>
+            <div className="abToggler" onClick={toggleDark}>
+              <FontAwesomeIcon icon={dark ? faSun : faMoon} />
+            </div>
           </div>
         </nav>
       </Container>
