@@ -31,6 +31,7 @@ const abHeader = theme => css`
         ? theme.colors.white.base
         : theme.linkHoverColor};
     }
+
     .abNavBrand {
       display: flex;
       align-items: center;
@@ -52,6 +53,19 @@ const abHeader = theme => css`
 
     .abNavRight {
       display: flex;
+
+      ${theme.media.maxSM} {
+        flex-direction: column;
+
+        a {
+          order: 2;
+          margin: 0;
+        }
+
+        .abToggler {
+          justify-content: flex-end;
+        }
+      }
     }
 
     .abNavSocial {
@@ -71,6 +85,8 @@ const abHeader = theme => css`
 
     .abToggler {
       cursor: pointer;
+      display: flex;
+      align-items: center;
 
       :hover,
       :focus {
