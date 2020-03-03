@@ -3,6 +3,7 @@ import { css } from '@emotion/core'
 import theme from 'prism-react-renderer/themes/oceanicNext'
 import Highlight, { defaultProps } from 'prism-react-renderer'
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+import { rhythm } from '../../lib/typography'
 
 const Code = ({ codeString, language, ...props }) => {
   if (props['react-live']) {
@@ -22,7 +23,10 @@ const Code = ({ codeString, language, ...props }) => {
         theme={theme}
       >
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
-          <pre className={className} style={style}>
+          <pre
+            className={className}
+            style={{ ...style, marginBottom: rhythm(1) }}
+          >
             {tokens.map((line, i) => (
               <div {...getLineProps({ line, key: i })} key={i}>
                 <span

@@ -5,6 +5,7 @@ import { MDXProvider } from '@mdx-js/tag'
 import { Global, css } from '@emotion/core'
 import styled from '@emotion/styled'
 import mdxComponents from './mdx'
+import { transparentize } from 'polished'
 import { rhythm } from '../lib/typography'
 import { ThemeProvider } from 'emotion-theming'
 import ThemeContext from '../context/theme'
@@ -52,7 +53,15 @@ export const styles = theme => css`
   }
   h1,
   h2 {
-    margin: ${rhythm(1)} 0;
+    margin: ${rhythm(2)} 0 ${rhythm(1)} 0;
+  }
+  h3,
+  h4 {
+    margin: ${rhythm(1 / 2)} 0;
+  }
+  h5,
+  h6 {
+    margin: ${rhythm(1 / 4)} 0;
   }
   hr {
     background: none;
@@ -138,12 +147,37 @@ export const styles = theme => css`
   blockquote {
     border-left: 5px solid ${theme.linkColor};
     padding-left: 1rem !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
+    margin: 0 0 ${rhythm(1)} 0 !important;
     font-style: italic;
+    color: ${theme.linkHoverColor};
     p {
       line-height: 1.3 !important;
     }
+  }
+  p {
+    margin: 0 0 ${rhythm(1)} 0;
+    text-align: left;
+    line-height: 1.7;
+  }
+  ul {
+    margin: 0 0 ${rhythm(1)} 0;
+  }
+  li,
+  ol {
+    margin: 0 0 ${rhythm(1 / 2)} 0;
+  }
+  ul,
+  ol,
+  li {
+    list-style: inherit;
+    list-style-position: inside;
+    margin-left: 0;
+  }
+  code {
+    color: ${theme.colors.red.light};
+    padding: 2px 4px;
+    background: ${transparentize(0.9, theme.colors.grey.light)};
+    border-radius: 4px;
   }
   [tabindex='-1']:focus {
     outline: none !important;
