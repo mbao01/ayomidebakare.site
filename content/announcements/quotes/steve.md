@@ -1,10 +1,10 @@
 ---
-date: 2019-11-20
-expiryDate: 2019-12-01
+date: 2020-03-03
+expiryDate: 2020-03-06
 title: "Here's to the crazy ones"
 type: 'Word'
 published: true
-unlisted: true
+unlisted: false
 categories: ['quote']
 images: './images'
 ---
