@@ -13,7 +13,15 @@ import { get } from 'lodash'
 import { PostCategories } from '../components/post/post-card'
 
 export default function Post({ data: { site, post } }) {
-  const { editLink, title, slug, date, description, banner } = post.fields
+  const {
+    editLink,
+    title,
+    slug,
+    date,
+    description,
+    banner,
+    bannerCredit,
+  } = post.fields
   const blogPostUrl = `${config.siteUrl}${slug}`
 
   return (
@@ -69,6 +77,17 @@ export default function Post({ data: { site, post } }) {
                 }
               `}
             >
+              <div
+                css={css`
+                  text-align: right;
+                  font-size: ${rhythm(4 / 7)};
+                  opacity: 0.6;
+                  font-weight: normal;
+                  margin-bottom: 4px;
+                `}
+              >
+                <span>{bannerCredit}</span>
+              </div>
               <Img sizes={banner.childImageSharp.fluid} />
             </div>
           )}
@@ -120,6 +139,7 @@ export const pageQuery = graphql`
         title
         date(formatString: "MMMM DD, YYYY")
         description
+        bannerCredit
         categories
         banner {
           ...bannerImage720
