@@ -26,8 +26,8 @@ export default ({ data: { latestArticle } }) => {
             illustration={ThankYouIllustration}
             title="Success! Thank you!"
             body="In case you haven’t seen already, here’s my latest article:"
-            articleTitle={post.frontmatter.title}
-            articleSlug={post.frontmatter.slug}
+            articleTitle={post.fields.title}
+            articleSlug={post.fields.slug}
           />
         ))}
       </div>
@@ -53,7 +53,7 @@ export const latestArticle = graphql`
     latestArticle: allMdx(
       limit: 1
       sort: { fields: [frontmatter___date], order: DESC }
-      filter: { frontmatter: { published: { ne: false } } }
+      filter: { fields: { published: { ne: false } } }
     ) {
       totalCount
       edges {
@@ -62,17 +62,12 @@ export const latestArticle = graphql`
           fields {
             title
             slug
+            date(formatString: "MMMM DD, YYYY")
           }
           parent {
             ... on File {
               sourceInstanceName
             }
-          }
-          frontmatter {
-            title
-            date(formatString: "MMMM DD, YYYY")
-
-            slug
           }
         }
       }

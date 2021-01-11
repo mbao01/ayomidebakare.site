@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import SchemaOrg from './schema-org'
 import config from '../../config/website'
 
-const SEO = ({ postData, frontmatter = null, postImage, isBlogPost }) => {
+const SEO = ({ postData, fields = null, postImage, isBlogPost }) => {
   const {
     site: { siteMetadata: seo },
   } = useStaticQuery(graphql`
@@ -33,7 +33,7 @@ const SEO = ({ postData, frontmatter = null, postImage, isBlogPost }) => {
       }
     }
   `)
-  const postMeta = frontmatter || postData.childMarkdownRemark.frontmatter || {}
+  const postMeta = fields || postData.childMarkdownRemark.fields || {}
   const title = isBlogPost ? postMeta.title : config.siteTitle
   const description = postMeta.description || seo.description
   const image = postImage ? `${seo.canonicalUrl}${postImage}` : seo.image
@@ -85,7 +85,7 @@ SEO.propTypes = {
   isBlogPost: PropTypes.bool,
   postData: PropTypes.shape({
     childMarkdownRemark: PropTypes.shape({
-      frontmatter: PropTypes.any,
+      fields: PropTypes.any,
       excerpt: PropTypes.any,
     }),
   }),

@@ -184,7 +184,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
         break
       }
       case 'JupyterNotebook': {
-        data = { ...node.json.metadata }
+        data = { ...node.metadata }
         break
       }
       default: {
@@ -256,6 +256,12 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       name: 'description',
       node,
       value: data.description,
+    })
+
+    createNodeField({
+      name: 'excerpt',
+      node,
+      value: data.excerpt,
     })
 
     createNodeField({
@@ -331,6 +337,7 @@ exports.createPages = async ({ actions, graphql }) => {
         title
         slug
         description
+        excerpt
         categories
         date
         redirects
@@ -348,23 +355,21 @@ exports.createPages = async ({ actions, graphql }) => {
           sourceInstanceName
         }
       }
-      excerpt(pruneLength: 250)
       fields {
         title
         slug
         description
+        excerpt
         categories
         date
         redirects
       }
-      code {
-        scope
-      }
+      html
     }
     query {
       blog: allMdx(
         filter: {
-          frontmatter: { published: { ne: false } }
+          fields: { published: { ne: false } }
           fileAbsolutePath: { regex: "//content/blog//" }
         }
         sort: { order: DESC, fields: [frontmatter___date] }
@@ -375,9 +380,9 @@ exports.createPages = async ({ actions, graphql }) => {
           }
         }
       }
-      jupyterBlog: allJupyterNotebook(
+      notebook: allJupyterNotebook(
         filter: {
-          metadata: { published: { ne: false } }
+          fields: { published: { ne: false } }
           fileAbsolutePath: { regex: "//content/blog//" }
         }
         sort: { order: DESC, fields: [metadata___date] }
@@ -390,7 +395,7 @@ exports.createPages = async ({ actions, graphql }) => {
       }
       announcements: allMdx(
         filter: {
-          frontmatter: { published: { ne: false } }
+          fields: { published: { ne: false } }
           fileAbsolutePath: { regex: "//content/announcements//" }
         }
         sort: { order: DESC, fields: [frontmatter___date] }
@@ -423,7 +428,7 @@ exports.createPages = async ({ actions, graphql }) => {
     }
   `)
 
-  const { blog, jupyterBlog } = data
+  const { blog, notebook } = data
 
   if (errors) {
     return Promise.reject(errors)
@@ -438,8 +443,8 @@ exports.createPages = async ({ actions, graphql }) => {
 
   createBlogPages({
     blogPath: '/blog',
-    data: jupyterBlog,
-    paginationTemplate: path.resolve(`src/templates/blog.js`),
+    data: notebook,
+    paginationTemplate: path.resolve(`src/templates/notebook.js`),
     actions,
   })
 }

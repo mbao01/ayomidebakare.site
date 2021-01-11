@@ -13,7 +13,7 @@ module.exports = {
     title: config.siteTitle,
     twitterHandle: config.twitterHandle,
     description: config.siteDescription,
-    keywords: ['Video Blogger'],
+    keywords: ['Blog and Notebooks'],
     canonicalUrl: config.siteUrl,
     hotRoutes: [
       {
@@ -178,35 +178,68 @@ module.exports = {
         `,
         feeds: [
           {
-            serialize: ({ query: { site, allMdx } }) => {
-              return allMdx.edges.map(edge => {
+            serialize: ({ query: { site, allMdx, allJupyterNotebook } }) => {
+              const mdx = allMdx.edges.map(edge => {
                 return {
-                  ...edge.node.frontmatter,
+                  ...edge.node.fields,
                   ...{
                     description: edge.node.excerpt,
                     date: edge.node.fields.date,
+                    timestamp: new Date(edge.node.fields.date).getTime(),
                     url: site.siteMetadata.siteUrl + edge.node.fields.slug,
                     guid: site.siteMetadata.siteUrl + edge.node.fields.slug,
                   },
                 }
               })
+
+              const notebooks = allJupyterNotebook.edges.map(edge => {
+                return {
+                  ...edge.node.fields,
+                  ...{
+                    description: edge.node.fields.excerpt,
+                    date: edge.node.fields.date,
+                    timestamp: new Date(edge.node.fields.date).getTime(),
+                    url: site.siteMetadata.siteUrl + edge.node.fields.slug,
+                    guid: site.siteMetadata.siteUrl + edge.node.fields.slug,
+                  },
+                }
+              })
+
+              return [...mdx, ...notebooks].sort(
+                (a, b) => b.timestamp - a.timestamp,
+              )
             },
             query: `
               {
                 allMdx(
                   limit: 1000,
-                  filter: { frontmatter: { published: { ne: false } } }
+                  filter: { fields: { published: { ne: false } } }
                   sort: { order: DESC, fields: [frontmatter___date] }
                 ) {
                   edges {
                     node {
                       excerpt(pruneLength: 250)
-                      fields { 
+                      fields {
+                        title
                         slug
+                        excerpt
                         date
                       }
-                      frontmatter {
+                    }
+                  }
+                }
+                allJupyterNotebook(
+                  limit: 1000,
+                  filter: { fields: { published: { ne: false } } }
+                  sort: { order: DESC, fields: [metadata___date] }
+                ) {
+                  edges {
+                    node {
+                      fields {
                         title
+                        slug
+                        excerpt
+                        date
                       }
                     }
                   }

@@ -75,19 +75,19 @@ export const PostCategories = ({ categories }) => (
   </div>
 )
 
-export default ({ post: { excerpt, fields, frontmatter }, type = 'small' }) => (
+export default ({ post: { excerpt, fields }, type = 'small' }) => (
   <PostCard>
     {type === 'small' ? (
       <SmallPostCard>
         <PostTitle>
-          <Link to={fields.slug} aria-label={`View ${frontmatter.title}`}>
-            {frontmatter.title}
+          <Link to={fields.slug} aria-label={`View ${fields.title}`}>
+            {fields.title}
           </Link>
         </PostTitle>
 
-        <small>{frontmatter.date}</small>
+        <small>{fields.date}</small>
 
-        <PostDescription>{excerpt}</PostDescription>
+        <PostDescription>{excerpt || fields.excerpt}</PostDescription>
 
         <div
           css={css`
@@ -99,7 +99,7 @@ export default ({ post: { excerpt, fields, frontmatter }, type = 'small' }) => (
         >
           <PostCategories categories={fields.categories} />
 
-          <Link to={fields.slug} aria-label={`View ${frontmatter.title}`}>
+          <Link to={fields.slug} aria-label={`View ${fields.title}`}>
             <small>Read</small>
           </Link>
         </div>
@@ -107,37 +107,37 @@ export default ({ post: { excerpt, fields, frontmatter }, type = 'small' }) => (
         <Share
           type="icon"
           url={`${config.siteUrl}${fields.slug}`}
-          title={frontmatter.title}
+          title={fields.title}
           twitterHandle={config.twitterHandle}
         />
       </SmallPostCard>
     ) : type === 'large' ? (
       <LargePostCard>
-        {frontmatter.banner && (
+        {fields.banner && (
           <PostBanner>
             <Link
-              aria-label={`View ${frontmatter.title} article`}
+              aria-label={`View ${fields.title} article`}
               to={`${fields.slug}`}
             >
-              <Img sizes={frontmatter.banner.childImageSharp.fluid} />
+              <Img sizes={fields.banner.childImageSharp.fluid} />
             </Link>
             <div>
-              <small>{frontmatter.bannerCredit}</small>
+              <small>{fields.bannerCredit}</small>
             </div>
           </PostBanner>
         )}
         <PostTitle>
           <Link
-            aria-label={`View ${frontmatter.title} article`}
+            aria-label={`View ${fields.title} article`}
             to={`${fields.slug}`}
           >
-            {frontmatter.title}
+            {fields.title}
           </Link>
         </PostTitle>
 
-        <small>{frontmatter.date}</small>
+        <small>{fields.date}</small>
 
-        <PostDescription>{excerpt}</PostDescription>
+        <PostDescription>{excerpt || fields.excerpt}</PostDescription>
         <div
           css={css`
             display: flex;
@@ -148,7 +148,7 @@ export default ({ post: { excerpt, fields, frontmatter }, type = 'small' }) => (
         >
           <PostCategories categories={fields.categories} />
 
-          <Link to={fields.slug} aria-label={`View ${frontmatter.title}`}>
+          <Link to={fields.slug} aria-label={`View ${fields.title}`}>
             <small>Read</small>
           </Link>
         </div>

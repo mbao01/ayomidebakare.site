@@ -8,12 +8,12 @@ import Link from '../components/link'
 import PostCard from '../components/post/post-card'
 import { rhythm } from '../lib/typography'
 
-const Blog = ({ data: { blog }, pageContext: { pagination } }) => {
+const Notebook = ({ data: { notebook }, pageContext: { pagination } }) => {
   const { page, nextPagePath, previousPagePath } = pagination
 
   const posts = page
     .map(id =>
-      blog.edges.find(
+      notebook.edges.find(
         edge =>
           edge.node.id === id &&
           edge.node.parent.sourceInstanceName !== 'pages',
@@ -68,19 +68,21 @@ const Blog = ({ data: { blog }, pageContext: { pagination } }) => {
   )
 }
 
-export default Blog
+export default Notebook
 
 export const pageQuery = graphql`
   query {
-    blog: allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
+    notebook: allJupyterNotebook(
+      sort: { fields: [metadata___date], order: DESC }
+    ) {
       edges {
         node {
-          excerpt(pruneLength: 300)
           id
           fields {
             title
             slug
             categories
+            excerpt
             date(formatString: "MMMM DD, YYYY")
             banner {
               ...bannerImage640

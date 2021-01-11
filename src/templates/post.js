@@ -11,8 +11,24 @@ import Share, { SocialEngagement } from '../components/share'
 import config from '../config/website'
 import { get } from 'lodash'
 import { PostCategories } from '../components/post/post-card'
+import styled from '@emotion/styled'
 
-export default function Post({ data: { site, post } }) {
+const NotebookContainer = styled.div`
+  pre {
+    ${({ theme }) => !theme.isDark && 'background-color: #fafafa !important;'}
+  }
+
+  code {
+    :not(span) {
+      ${({ theme }) => theme.isDark && 'color: #b5c3d8 !important;'}
+    }
+    padding: 0;
+    background: unset;
+  }
+`
+
+export default function Post({ data: { mdx, notebook } }) {
+  const post = mdx || notebook
   const {
     editLink,
     title,
@@ -25,9 +41,9 @@ export default function Post({ data: { site, post } }) {
   const blogPostUrl = `${config.siteUrl}${slug}`
 
   return (
-    <Layout frontmatter={post.fields}>
+    <Layout fields={post.fields}>
       <SEO
-        frontmatter={post.fields}
+        fields={post.fields}
         metaImage={get(post, 'fields.banner.childImageSharp.fluid.src')}
         isBlogPost
       />
@@ -105,7 +121,12 @@ export default function Post({ data: { site, post } }) {
             </div>
           )}
 
-          <MDXRenderer>{post.code.body}</MDXRenderer>
+          {post.code && <MDXRenderer>{post.code.body}</MDXRenderer>}
+          {post.html && (
+            <NotebookContainer
+              dangerouslySetInnerHTML={{ __html: post.html }}
+            />
+          )}
 
           <div
             css={css`
@@ -133,7 +154,7 @@ export default function Post({ data: { site, post } }) {
 
 export const pageQuery = graphql`
   query($id: String!) {
-    post: mdx(fields: { id: { eq: $id } }) {
+    mdx(fields: { id: { eq: $id } }) {
       fields {
         editLink
         title
@@ -150,6 +171,22 @@ export const pageQuery = graphql`
       code {
         body
       }
+    }
+    notebook: jupyterNotebook(fields: { id: { eq: $id } }) {
+      fields {
+        editLink
+        title
+        date(formatString: "MMMM DD, YYYY")
+        description
+        bannerCredit
+        categories
+        banner {
+          ...bannerImage720
+        }
+        slug
+        keywords
+      }
+      html
     }
   }
 `

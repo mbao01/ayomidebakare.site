@@ -8,7 +8,7 @@ import { rhythm } from '../lib/typography'
 import PostCard from '../components/post/post-card'
 import Announcement from '../components/announcement'
 
-export default function Index({ data: { blog } }) {
+export default function Index({ data: { blog, notebook } }) {
   return (
     <Layout>
       <Container maxWidth="80%">
@@ -60,6 +60,39 @@ export default function Index({ data: { blog } }) {
           </small>
         </div>
       </Container>
+      <Container
+        maxWidth={720}
+        css={css`
+          padding-bottom: 0;
+          background-color: rgba(120, 120, 120, 0.01);
+        `}
+      >
+        <h2
+          css={css`
+            font-size: ${rhythm(1)};
+          `}
+        >
+          Notebooks
+        </h2>
+
+        {notebook &&
+          notebook.edges &&
+          notebook.edges.map(({ node: post }) => (
+            <PostCard key={post.id} post={post} type="small" />
+          ))}
+
+        <div>
+          <small>
+            <Link
+              to="/blog"
+              aria-label="Visit blog page"
+              className="button-secondary"
+            >
+              View all notebooks
+            </Link>
+          </small>
+        </div>
+      </Container>
     </Layout>
   )
 }
@@ -70,7 +103,7 @@ export const pageQuery = graphql`
       limit: 5
       sort: { fields: [frontmatter___date], order: DESC }
       filter: {
-        frontmatter: { published: { ne: false } }
+        fields: { published: { ne: false } }
         fileAbsolutePath: { regex: "//content/blog//" }
       }
     ) {
@@ -82,15 +115,6 @@ export const pageQuery = graphql`
             title
             slug
             categories
-            date
-          }
-          parent {
-            ... on File {
-              sourceInstanceName
-            }
-          }
-          frontmatter {
-            title
             date(formatString: "MMMM DD, YYYY")
             description
             banner {
@@ -101,6 +125,45 @@ export const pageQuery = graphql`
               }
             }
             keywords
+          }
+          parent {
+            ... on File {
+              sourceInstanceName
+            }
+          }
+        }
+      }
+    }
+    notebook: allJupyterNotebook(
+      limit: 5
+      sort: { fields: [metadata___date], order: DESC }
+      filter: {
+        fields: { published: { ne: false } }
+        fileAbsolutePath: { regex: "//content/blog//" }
+      }
+    ) {
+      edges {
+        node {
+          id
+          fields {
+            title
+            slug
+            categories
+            date(formatString: "MMMM DD, YYYY")
+            description
+            banner {
+              childImageSharp {
+                sizes(maxWidth: 720) {
+                  ...GatsbyImageSharpSizes
+                }
+              }
+            }
+            keywords
+          }
+          parent {
+            ... on File {
+              sourceInstanceName
+            }
           }
         }
       }
