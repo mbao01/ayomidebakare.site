@@ -85,7 +85,7 @@ export default () => {
     query {
       announcements: allMdx(
         filter: {
-          frontmatter: { published: { ne: false } }
+          fields: { published: { ne: false } }
           fileAbsolutePath: { regex: "//content/announcements//" }
         }
         sort: { order: DESC, fields: [frontmatter___date] }

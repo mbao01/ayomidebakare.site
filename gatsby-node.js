@@ -171,15 +171,32 @@ function createBlogPages({ blogPath, data, paginationTemplate, actions }) {
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions
 
-  if (node.internal.type === `Mdx`) {
+  if (
+    node.internal.type === `Mdx` ||
+    node.internal.type === `JupyterNotebook`
+  ) {
+    let data = {}
     const parent = getNode(node.parent)
-    let slug =
-      node.frontmatter.slug ||
-      createFilePath({ node, getNode, basePath: `pages` })
+
+    switch (node.internal.type) {
+      case 'Mdx': {
+        data = { ...node.frontmatter }
+        break
+      }
+      case 'JupyterNotebook': {
+        data = { ...node.metadata }
+        break
+      }
+      default: {
+        break
+      }
+    }
+
+    let slug = data.slug || createFilePath({ node, getNode, basePath: `pages` })
 
     //::TODO:: Find a wasy to scope fields to particular directory or Mdx data
     if (node.fileAbsolutePath.includes('content/blog/')) {
-      slug = `/blog/${node.frontmatter.slug || slugify(parent.name)}`
+      slug = `/blog/${data.slug || slugify(parent.name)}`
     }
 
     // Create common fields
@@ -192,31 +209,31 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
     createNodeField({
       name: 'published',
       node,
-      value: node.frontmatter.published,
+      value: data.published,
     })
 
     createNodeField({
       name: 'unlisted',
       node,
-      value: node.frontmatter.unlisted,
+      value: data.unlisted,
     })
 
     createNodeField({
       name: 'title',
       node,
-      value: node.frontmatter.title,
+      value: data.title,
     })
 
     createNodeField({
       name: 'date',
       node,
-      value: node.frontmatter.date ? node.frontmatter.date.split(' ')[0] : '',
+      value: data.date ? data.date.split(' ')[0] : '',
     })
 
     createNodeField({
       name: 'categories',
       node,
-      value: node.frontmatter.categories || [],
+      value: data.categories || [],
     })
 
     createNodeField({
@@ -232,19 +249,25 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
     createNodeField({
       name: 'author',
       node,
-      value: node.frontmatter.author || 'Ayomide Bakare',
+      value: data.author || 'Ayomide Bakare',
     })
 
     createNodeField({
       name: 'description',
       node,
-      value: node.frontmatter.description,
+      value: data.description,
+    })
+
+    createNodeField({
+      name: 'excerpt',
+      node,
+      value: data.excerpt,
     })
 
     createNodeField({
       name: 'plainTextDescription',
       node,
-      value: stripMarkdown(node.frontmatter.description),
+      value: stripMarkdown(data.description),
     })
 
     createNodeField({
@@ -256,46 +279,44 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
     createNodeField({
       name: 'banner',
       node,
-      value: node.frontmatter.banner,
+      value: data.banner,
     })
 
     createNodeField({
       name: 'bannerCredit',
       node,
-      value: node.frontmatter.bannerCredit,
+      value: data.bannerCredit,
     })
 
     createNodeField({
       name: 'keywords',
       node,
-      value: node.frontmatter.keywords || [],
+      value: data.keywords || [],
     })
 
     createNodeField({
       name: 'redirects',
       node,
-      value: node.frontmatter.redirects,
+      value: data.redirects,
     })
 
     // Create fields from Announcements
     createNodeField({
       name: 'expiryDate',
       node,
-      value: node.frontmatter.expiryDate
-        ? node.frontmatter.expiryDate.split(' ')[0]
-        : '',
+      value: data.expiryDate ? data.expiryDate.split(' ')[0] : '',
     })
 
     createNodeField({
       name: 'type',
       node,
-      value: node.frontmatter.type,
+      value: data.type,
     })
 
     createNodeField({
       name: 'images',
       node,
-      value: node.frontmatter.images,
+      value: data.images,
     })
   }
 }
@@ -316,6 +337,7 @@ exports.createPages = async ({ actions, graphql }) => {
         title
         slug
         description
+        excerpt
         categories
         date
         redirects
@@ -324,10 +346,30 @@ exports.createPages = async ({ actions, graphql }) => {
         scope
       }
     }
+    fragment JupyterPostDetails on JupyterNotebook {
+      fileAbsolutePath
+      id
+      parent {
+        ... on File {
+          name
+          sourceInstanceName
+        }
+      }
+      fields {
+        title
+        slug
+        description
+        excerpt
+        categories
+        date
+        redirects
+      }
+      html
+    }
     query {
       blog: allMdx(
         filter: {
-          frontmatter: { published: { ne: false } }
+          fields: { published: { ne: false } }
           fileAbsolutePath: { regex: "//content/blog//" }
         }
         sort: { order: DESC, fields: [frontmatter___date] }
@@ -338,9 +380,22 @@ exports.createPages = async ({ actions, graphql }) => {
           }
         }
       }
+      notebook: allJupyterNotebook(
+        filter: {
+          fields: { published: { ne: false } }
+          fileAbsolutePath: { regex: "//content/blog//" }
+        }
+        sort: { order: DESC, fields: [metadata___date] }
+      ) {
+        edges {
+          node {
+            ...JupyterPostDetails
+          }
+        }
+      }
       announcements: allMdx(
         filter: {
-          frontmatter: { published: { ne: false } }
+          fields: { published: { ne: false } }
           fileAbsolutePath: { regex: "//content/announcements//" }
         }
         sort: { order: DESC, fields: [frontmatter___date] }
@@ -373,7 +428,7 @@ exports.createPages = async ({ actions, graphql }) => {
     }
   `)
 
-  const { blog } = data
+  const { blog, notebook } = data
 
   if (errors) {
     return Promise.reject(errors)
@@ -383,6 +438,13 @@ exports.createPages = async ({ actions, graphql }) => {
     blogPath: '/blog',
     data: blog,
     paginationTemplate: path.resolve(`src/templates/blog.js`),
+    actions,
+  })
+
+  createBlogPages({
+    blogPath: '/blog',
+    data: notebook,
+    paginationTemplate: path.resolve(`src/templates/notebook.js`),
     actions,
   })
 }

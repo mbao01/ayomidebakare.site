@@ -265,7 +265,7 @@ class Layout extends React.Component {
 
   render() {
     const {
-      frontmatter = {},
+      fields = {},
       children,
       noFooter,
       noHeader,
@@ -299,19 +299,18 @@ class Layout extends React.Component {
 
                 <Wrapper>
                   <Helmet
-                    title={frontmatter.title || data.site.siteMetadata.title}
+                    title={fields.title || data.site.siteMetadata.title}
                     meta={[
                       {
                         name: 'description',
                         content:
-                          frontmatter.description ||
+                          fields.description ||
                           data.site.siteMetadata.description,
                       },
                       {
                         name: 'keywords',
                         content:
-                          frontmatter.keywords ||
-                          data.site.siteMetadata.keywords,
+                          fields.keywords || data.site.siteMetadata.keywords,
                       },
                     ]}
                   >
