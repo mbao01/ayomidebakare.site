@@ -3,10 +3,14 @@ import Container from '../components/container'
 import SEO from '../components/seo'
 import Layout from '../components/layout'
 
-function MarkdownPage({ children, pageContext: { fields } }) {
+function MarkdownPage({ children, pageContext: { frontmatter } }) {
   return (
-    <Layout pageTitle={fields.title} noFooter={fields.noFooter} fields={fields}>
-      <SEO fields={fields} />
+    <Layout
+      pageTitle={frontmatter.title}
+      noFooter={frontmatter.noFooter}
+      fields={frontmatter}
+    >
+      <SEO fields={frontmatter} />
       <Container maxWidth={700}>{children}</Container>
     </Layout>
   )
