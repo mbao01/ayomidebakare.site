@@ -151,6 +151,7 @@ export const pageQuery = graphql`
             categories
             date(formatString: "MMMM DD, YYYY")
             description
+            excerpt
             banner {
               childImageSharp {
                 sizes(maxWidth: 720) {
