@@ -82,6 +82,16 @@ module.exports = {
         ],
       },
     },
+    {
+      resolve: `@rafaelquintanilha/gatsby-transformer-ipynb`,
+      extensions: ['.ipynb'],
+      options: {
+        notebookProps: {
+          displayOrder: ['image/png', 'text/html', 'text/plain'],
+          showPrompt: false,
+        },
+      },
+    },
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',
     'gatsby-plugin-emotion',
