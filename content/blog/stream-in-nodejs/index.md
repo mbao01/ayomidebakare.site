@@ -4,6 +4,7 @@ date: 2020-03-03
 title: 'Stream in Node.js'
 author: 'Ayomide Bakare'
 description: 'Stream is one of the most important APIs in Node.js'
+excerpt: ''
 categories: ['post']
 keywords: ['nodejs', 'stream', 'nodejs api']
 banner: './images/banner.jpg'
