@@ -83,9 +83,6 @@
   ],
   "license": "MIT",
   "main": "n/a",
-  "resolutions": {
-    "sharp": "0.24.0"
-  },
   "scripts": {
     "build": "gatsby clean && gatsby build",
     "develop": "gatsby develop -p 5553 -H 0.0.0.0",
