@@ -84,7 +84,7 @@
   "license": "MIT",
   "main": "n/a",
   "scripts": {
-    "build": "gatsby build",
+    "build": "gatsby clean && gatsby build",
     "develop": "gatsby develop -p 5553 -H 0.0.0.0",
     "start": "gatsby serve -p 5552 -H 0.0.0.0 public/",
     "lint": "eslint .",
